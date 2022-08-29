@@ -1,0 +1,29 @@
+{% if mock %}
+<div>
+    <h1>Details</h1>
+    <!-- request -->
+    {% include "admin/mocks/mocks_definition_details.html" %}
+
+    <h1>Request</h1>
+    <!-- request -->
+    {% include "admin/mocks/mocks_definition_request.html" %}
+
+    <h1>Responses</h1>
+    <div class="dropdown-divider"></div>
+    <!-- responses -->
+    {% include "admin/mocks/mocks_definition_responses.html" %}
+
+    <!-- response new -->
+    {% include "admin/mocks/mocks_definition_response_new.html" %}
+    <div class="dropdown-divider"></div>
+
+    {% if response %}
+    <!-- response -->
+    <h1>Response</h1>
+    {% include "admin/mocks/mocks_definition_response.html" %}
+    {% include "admin/mocks/mocks_definition_response_type.html" %}
+    {% include "admin/mocks/mocks_definition_response_settings.html" %}
+    {% endif %}
+
+</div>
+{% endif %}

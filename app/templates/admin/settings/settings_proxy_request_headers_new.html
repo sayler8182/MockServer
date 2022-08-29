@@ -1,0 +1,16 @@
+{% if proxy %}
+<form method="post" action="{{ url_for('settings.proxy_request_headers_new', proxy_id=proxy.id) }}">
+    <div class="form-group form-inline d-flex">
+        <div class="input-group flex-grow-1">
+            <input name="settings_form_input_request_header_name" type="text" class="form-control" placeholder="Name">
+            <div class="input-group-text">=</div>
+            <input name="settings_form_input_request_header_value" type="text" class="form-control" placeholder="Value">
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Add header">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}

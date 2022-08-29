@@ -1,0 +1,22 @@
+{% if response %}
+<form method="post"  action="{{ url_for('mocks.mock_response_update_status', mock_id=mock.id, response_id=response.id) }}">
+    <div class="form-group form-inline d-flex">
+        <div class="input-group flex-grow-1">
+            <select id="mocks_definition_response_form_status" name="mocks_definition_response_form_status"
+                    class="custom-select btn btn-primary" onchange="this.form.submit()">
+                {% for code in configuration.response_supported_codes %}
+                <option class="text-left" value="{{ code.code }}" {{
+                   conditional_value(response.status == code.code, 'selected') }}>
+                    {{ code.code }} - {{ code.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Save status">
+                <i class="fa fa-save"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}

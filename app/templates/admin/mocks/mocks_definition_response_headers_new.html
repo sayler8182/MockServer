@@ -1,0 +1,17 @@
+{% if response %}
+<form method="post" action="{{ url_for('mocks.mock_response_headers_new', mock_id=mock.id, response_id=response.id) }}">
+    <div class="form-group form-inline d-flex">
+        <div class="input-group flex-grow-1">
+            <input name="mocks_definition_response_form_input_response_header_name" type="text" class="form-control" placeholder="Name">
+            <div class="input-group-text">=</div>
+            <input name="mocks_definition_response_form_input_response_header_value" type="text" class="form-control"
+                   placeholder="Value">
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Add header">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}

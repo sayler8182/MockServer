@@ -1,0 +1,22 @@
+<div class="d-flex">
+    <form method="post" action="{{ url_for('mocks.mock_new') }}">
+        <div class="form-group form-inline">
+            <button type="submit" class="btn btn-success">Add new</button>
+        </div>
+    </form>
+    <form method="post" action="{{ url_for('mocks.mock_export_mocks') }}">
+        <button type="submit" class="btn btn-info ml-1" data-toggle="tooltip" title="Export">
+            <i class="fa fa-download"></i>
+        </button>
+    </form>
+    <form>
+        <button id="mocks_form_file_import_picker" type="button" class="btn btn-info ml-1" data-toggle="tooltip" title="Import">
+            <i class="fa fa-upload"></i>
+        </button>
+    </form>
+    <form method="post" action="{{ url_for('mocks.mock_remove_all') }}">
+        <button type="submit" class="btn btn-danger ml-1" data-toggle="tooltip" title="Remove all">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+</div>

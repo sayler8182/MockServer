@@ -1,0 +1,29 @@
+{% if mock.request %}
+<form method="post" action="{{ url_for('mocks.mock_request_update', mock_id=mock.id) }}">
+    <div class="form-group form-inline d-flex">
+        <div class="d-flex flex-grow-1">
+            <div class="input-group mr-2">
+                <select id="mocks_definition_form_request_method" name="mocks_definition_form_request_method"
+                        class="custom-select btn btn-primary" onchange="this.form.submit()">
+                    {% for method in configuration.request_supported_methods %}
+                    <option class="text-left" value="{{ method.value }}" {{ conditional_value(mock.request.method == method, 'selected') }}>
+                        {{ method.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-group flex-grow-1">
+                <label class="mr-2" for="mocks_definition_form_request_path">{{ conditional_value(configuration.settings.proxy.path, configuration.settings.proxy.path) }}</label>
+                <input id="mocks_definition_form_request_path" name="mocks_definition_form_request_path"
+                       class="form-control" placeholder="Path"
+                       value="{{ mock.request.path or '' }}">
+            </div>
+            <div class="ml-2">
+                <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Save request">
+                    <i class="fa fa-save"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}

@@ -1,0 +1,40 @@
+{% if proxies %}
+<div class="form-group">
+    {% for proxy_item in proxies %}
+    <div class="mb-1">
+        <div class="d-flex">
+            <div>
+                {% set style = conditional_value(proxy_item.is_enabled, 'bg-success', 'bg-warning') %}
+                <div style="width:4px;" class="h-100 {{ style }}"></div>
+            </div>
+            <div>
+                {% set style_default = conditional_value(proxy and proxy_item.id == proxy.id, 'bg-primary', 'bg-light') %}
+                {% set style = conditional_value(proxy_item.is_selected, 'bg-info', style_default) %}
+                <div style="width:4px;" class="h-100 {{ style }}"></div>
+            </div>
+            <form class="d-flex flex-grow-1 overflow-hidden" method="get"
+                  action="{{ url_for('settings.proxy', proxy_id=proxy_item.id) }}">
+                {% set style_default = conditional_value(proxy and proxy_item.id == proxy.id, 'btn-primary', 'btn-light') %}
+                {% set style_enabled = conditional_value(proxy_item.is_selected, 'btn-success', style_default) %}
+                {% set style = conditional_value(proxy and proxy and proxy_item.id == proxy.id, style_default, style_enabled) %}
+                <button type="submit"
+                        class="btn {{ style }} flex-grow-1 text-left text-truncate">
+                    {{ proxy_item.name or '' }} {{ '(' + proxy_item.path + ')' if proxy_item.path else '' }}
+                </button>
+            </form>
+            <form method="post"
+                  action="{{ url_for('settings.proxy_remove', proxy_id=proxy_item.id) }}">
+                <button type="submit" class="btn btn-danger" {{ conditional_value(proxy_item.is_selected, 'disabled') }} data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </form>
+            <form method="post" action="{{ url_for('settings.proxy_export_proxy', proxy_id=proxy_item.id) }}">
+                <button type="submit" class="btn btn-info" data-toggle="tooltip" title="Export">
+                    <i class="fa fa-download"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

@@ -1,0 +1,44 @@
+<script>
+    $(document).ready(function () {
+        $("[data-toggle=tooltip").tooltip();
+
+        $('#settings_proxy_form_file_import_picker').click(function() {
+            openFileDialog(importAccept, function(event) {
+                if (this.files.length > 0) {
+                    var formData = new FormData();
+                    console.log(this.files[0])
+                    formData.append("settings_proxy_form_file_import", this.files[0], "file");
+                    $.ajax({
+                        url: `/admin/settings/proxy/import`,
+                        type: `post`,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            window.location = response
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#settings_form_proxy_is_selected').change(function() {
+            let proxy_id = $(this).data('proxy-id')
+            if (this.checked) {
+                $.post(`/admin/settings/proxy/${proxy_id}/select`, function(data) {
+                    window.location = data
+                })
+            } else {
+                this.checked = true
+            }
+        });
+
+        $('#settings_form_proxy_is_enabled').change(function() {
+            let proxy_id = $(this).data('proxy-id')
+            let endpoint = this.checked ? 'enable' : 'disable'
+            $.post(`/admin/settings/proxy/${proxy_id}/${endpoint}`, function(data) {
+                window.location = data
+            })
+        });
+    });
+</script>

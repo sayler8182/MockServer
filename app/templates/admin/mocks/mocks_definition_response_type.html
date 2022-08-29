@@ -1,0 +1,17 @@
+{% if response %}
+<form method="post" action="{{ url_for('mocks.mock_response_update_type', mock_id=mock.id, response_id=response.id) }}">
+    <div class="form-group form-inline">
+        <div class="input-group">
+            <label for="mocks_definition_response_form_type" class="mr-2">Response type</label>
+            <select id="mocks_definition_response_form_type" name="mocks_definition_response_form_type"
+                    class="custom-select btn btn-primary" onchange="this.form.submit()">
+                {% for type in configuration.response_supported_types %}
+                <option class="text-left" value="{{ type.value }}" {{ conditional_value(response.type == type, 'selected') }}>
+                    {{ type.description }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>
+{% endif %}

@@ -1,0 +1,51 @@
+{% if mock.responses %}
+<form method="post" action="{{ url_for('mocks.mock_method_update', mock_id=mock.id) }}">
+    <div class="form-group form-inline">
+        <div class="input-group">
+            <label for="mocks_definition_form_mock_method" class="mr-2">Responses order</label>
+            <select id="mocks_definition_form_mock_method" name="mocks_definition_form_mock_method"
+                    class="custom-select btn btn-primary" onchange="this.form.submit()">
+                {% for method in configuration.mock_supported_methods %}
+                <option class="text-left" value="{{ method.value }}" {{ conditional_value(mock.method== method,
+                'selected') }}>
+                {{ method.description }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>
+
+<div class="form-group">
+    {% for response_item in mock.responses %}
+    <div class="mb-1">
+        <div class="d-flex">
+            <div>
+                {% set style = conditional_value(response_item.is_enabled, 'bg-success', 'bg-warning') %}
+                <div style="width:4px;" class="h-100 {{ style }}"></div>
+            </div>
+            <div>
+                {% set style_default = conditional_value(response and response_item.id == response.id, 'bg-primary',
+                'bg-light') %}
+                {% set style = conditional_value(response_next and response_item.id == response_next.id,
+                'bg-info', style_default) %}
+                <div style="width:4px;" class="h-100 {{ style }}"></div>
+            </div>
+            <form class="d-flex flex-grow-1 overflow-hidden" method="get"
+                  action="{{ url_for('mocks.mock_response', mock_id=response_item.mock_id, response_id=response_item.id) }}">
+                <button type="submit"
+                        class="btn {{ conditional_value(response and response.id == response_item.id, 'bg-primary text-white', 'bg-light') }} flex-grow-1 text-left text-truncate">
+                    {{ response_item.order + 1 }}: {{ response_item.description}}
+                </button>
+            </form>
+            <form method="post"
+                  action="{{ url_for('mocks.mock_response_remove', mock_id=response_item.mock_id, response_id=response_item.id) }}">
+                <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

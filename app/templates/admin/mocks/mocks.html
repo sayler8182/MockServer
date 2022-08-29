@@ -1,0 +1,20 @@
+{% extends 'admin/base/layout.html' %}
+{% block body %}
+<div class="row">
+    <div class="col-3">
+        <h1>Mocks</h1>
+        <!-- mocks list -->
+        {% include "admin/mocks/mocks_new.html" %}
+        <!-- mocks new -->
+        {% include "admin/mocks/mocks_list.html" %}
+    </div>
+    <div class="col-9">
+        <!-- mocks definition -->
+        {% include "admin/mocks/mocks_definition.html" %}
+    </div>
+</div>
+{% endblock %}
+{% block tail_js %}
+{{ super() }}
+{% include "admin/mocks/mocks.js.html" %}
+{% endblock %}

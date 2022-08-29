@@ -1,0 +1,29 @@
+{% extends 'admin/master.html' %}
+{% block head %}
+<link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+{% endblock %}
+{% block body %}
+{% endblock %}
+{% block tail_js %}
+{{ super() }}
+<script>
+    let importAccept = ".txt, .json, text/plain"
+
+    function copyToClipboard(text) {
+        var textarea = document.createElement("textarea");
+        document.body.appendChild(textarea);
+        textarea.value = text;
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    }
+
+    function openFileDialog(accept, callback) {
+        let inputElement = document.createElement("input");
+        inputElement.type = "file";
+        inputElement.accept = accept;
+        inputElement.addEventListener("change", callback)
+        inputElement.dispatchEvent(new MouseEvent("click"));
+    }
+</script>
+{% endblock %}

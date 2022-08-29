@@ -1,0 +1,42 @@
+{% if proxy %}
+<form method="post" action="{{ url_for('settings.proxy_update', proxy_id=proxy.id) }}">
+    <div class="mt-3">
+        <!-- state selected / deselected -->
+        <div class="form-group form-check form-switch">
+            <input id="settings_form_proxy_is_selected" data-proxy-id="{{ proxy.id }}" class="form-check-input"
+                   type="checkbox" {{
+                   conditional_value(proxy.is_selected, 'checked') }}>
+            <label class="form-check-label" for="settings_form_proxy_is_selected">Selected</label>
+        </div>
+
+        <!-- state enabled / disabled -->
+        <div class="form-group form-check form-switch">
+            <input id="settings_form_proxy_is_enabled" data-proxy-id="{{ proxy.id }}" class="form-check-input"
+                   type="checkbox" {{
+                   conditional_value(proxy.is_enabled, 'checked') }}>
+            <label class="form-check-label" for="settings_form_proxy_is_enabled">Enable</label>
+        </div>
+    </div>
+
+    <div>
+        <!-- name -->
+        <div class="form-group form-inline d-flex">
+            <div class="input-group flex-grow-1">
+                <input name="settings_form_input_proxy_name" type="text" class="form-control" placeholder="Name"
+                       value="{{ proxy.name or '' }}">
+            </div>
+        </div>
+
+        <!-- path -->
+        <div class="form-group form-inline d-flex">
+            <div class="input-group flex-grow-1">
+                <input name="settings_form_input_proxy_path" type="text" class="form-control" placeholder="Proxy path"
+                       value="{{ proxy.path or '' }}">
+            </div>
+            <div class="ml-2">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}

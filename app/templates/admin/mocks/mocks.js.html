@@ -1,0 +1,114 @@
+<script src="{{ url_for('static', filename='scripts/jquery.json-editor.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $("[data-toggle=tooltip").tooltip();
+
+        $('#mocks_form_file_import_picker').click(function() {
+            openFileDialog(importAccept, function(event) {
+                if (this.files.length > 0) {
+                    var formData = new FormData();
+                    console.log(this.files[0])
+                    formData.append("mocks_form_file_import", this.files[0], "file");
+                    $.ajax({
+                        url: `/admin/mocks/import`,
+                        type: `post`,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            window.location = response
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#mocks_definition_response_form_name_force').change(function() {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            let endpoint = this.checked ? 'set' : 'unset'
+            $.post(`/admin/mocks/${mock_id}/${response_id}/${endpoint}`, function(data) {
+                window.location = data
+            })
+        });
+
+        // response options
+        function setPanelParentStyle(object, style) {
+            object.removeClass('btn-primary')
+            object.removeClass('btn-success')
+            object.addClass(style)
+        }
+        function updatePanelParentStyle(object) {
+           let parent = $(`#${$(object).attr('id')}_parent`)
+           if (parent.hasClass('collapsed')) {
+               setPanelParentStyle(parent, 'btn-primary')
+           } else {
+               setPanelParentStyle(parent, 'btn-success')
+           }
+        }
+        $('.response_option').each(function () {
+           updatePanelParentStyle(this)
+        })
+        $('.response_option').on('shown.bs.collapse hidden.bs.collapse', function () {
+            updatePanelParentStyle(this)
+        })
+
+        // response body
+        function normalizeJSON(value, space) {
+            try {
+                let json = JSON.parse(value);
+                return JSON.stringify(json, null, space);
+            } catch (ex) {
+                return value;
+            }
+        }
+        $('#mocks_definition_response_body_json_format').click(function() {
+            let element = document.getElementById("mocks_definition_response_body_json_input");
+            let value = normalizeJSON(element.value, 2);
+            element.value = value;
+        });
+        $('#mocks_definition_response_body_json_copy').click(function() {
+            let element = document.getElementById("mocks_definition_response_body_json_input");
+            let value = normalizeJSON(element.value, 0);
+            copyToClipboard(value);
+        });
+        $('#mocks_definition_response_body_json_save').click(function() {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            let element = document.getElementById("mocks_definition_response_body_json_input");
+            let value = normalizeJSON(element.value, 0);
+            let data = { "body": value }
+            $.post(`/admin/mocks/${mock_id}/${response_id}/body`, data, function(data) {
+                window.location = data
+            })
+        });
+
+        // response body editor
+        let response_body_json_input = $('#mocks_definition_response_body_json_input')
+        let response_body_json_output = $('#mocks_definition_response_body_json_output')
+        function getBodyJsonInput() {
+            try {
+                let value = response_body_json_input.val()
+                if (value.length > 0) {
+                    let json = JSON.parse(value);
+                    response_body_json_output.removeClass('border')
+                    return json
+                } else {
+                    response_body_json_output.removeClass('border')
+                }
+                return
+            } catch (ex) {
+                response_body_json_output.addClass('border')
+                return `${ex}`
+            }
+        }
+        let jsonEditorOptions = { "editable": false }
+        let jsonEditor = new JsonEditor(`#${response_body_json_output.attr('id')}`, getBodyJsonInput(), jsonEditorOptions);
+        response_body_json_input.on('change keyup paste', function() {
+            jsonEditor.load(getBodyJsonInput());
+        });
+
+        // autoformat
+        $('#mocks_definition_response_body_json_format').click()
+    });
+</script>

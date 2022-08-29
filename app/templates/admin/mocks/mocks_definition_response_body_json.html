@@ -1,0 +1,22 @@
+{% if response %}
+<div class="mb-2">
+    <button id="mocks_definition_response_body_json_format" type="button" class="btn btn-primary" data-toggle="tooltip" title="Format JSON">
+        Format
+    </button>
+    <button id="mocks_definition_response_body_json_copy" type="button" class="btn btn-primary" data-toggle="tooltip" title="Copy to pasteboard">
+        Copy
+    </button>
+    <button id="mocks_definition_response_body_json_save" type="button" class="btn btn-success" data-mock-id="{{ mock.id }}" data-response-id="{{ response.id }}" data-toggle="tooltip" title="Save JSON">
+        <i class="fa fa-save"></i>
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <textarea id="mocks_definition_response_body_json_input" class="form-control resize-none h-500px" wrap="off" autocomplete="off">{{ response.body or '' }}</textarea>
+    </div>
+    <div class="col-6">
+        <pre id="mocks_definition_response_body_json_output" class="json-editor-blackbord h-500px border-5 border-danger"></pre>
+    </div>
+</div>
+{% endif %}

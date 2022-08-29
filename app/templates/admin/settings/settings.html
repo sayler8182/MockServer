@@ -1,0 +1,51 @@
+{% extends 'admin/base/layout.html' %}
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="dropdown-divider"></div>
+                <!-- proxy list -->
+                {% include "admin/settings/settings_proxy_list.html" %}
+                <!-- proxy new -->
+                {% include "admin/settings/settings_proxy_new.html" %}
+            </div>
+        </div>
+
+        {% if proxy %}
+        <h1>Proxy mode</h1>
+        <div class="row">
+            <div class="col-6">
+                <div class="dropdown-divider"></div>
+                <!-- proxy definition -->
+                {% include "admin/settings/settings_proxy_definition.html" %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h2>Request headers</h2>
+                <!-- request headers -->
+                {% include "admin/settings/settings_proxy_request_headers.html" %}
+
+                <!-- request headers add-->
+                {% include "admin/settings/settings_proxy_request_headers_new.html" %}
+            </div>
+
+            <div class="col">
+                <h2>Response headers</h2>
+                <!-- request headers -->
+
+                {% include "admin/settings/settings_proxy_response_headers.html" %}
+                <!-- request headers add-->
+                {% include "admin/settings/settings_proxy_response_headers_new.html" %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+{% block tail_js %}
+{{ super() }}
+{% include "admin/settings/settings.js.html" %}
+{% endblock %}

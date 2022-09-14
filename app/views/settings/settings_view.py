@@ -17,10 +17,7 @@ class View(BaseView):
     def proxy(self, proxy_id):
         proxies = settings_controller.proxies()
         proxy = settings_controller.proxy(proxy_id)
-        proxy_request_headers = settings_controller.proxy_request_headers(proxy_id)
-        proxy_response_headers = settings_controller.proxy_response_headers(proxy_id)
-        return self.render('admin/settings/settings.html', proxies=proxies, proxy=proxy,
-                           proxy_request_headers=proxy_request_headers, proxy_response_headers=proxy_response_headers)
+        return self.render('admin/settings/settings.html', proxies=proxies, proxy=proxy)
 
     @expose('proxy/new', methods=[HTTPMethod.POST.value])
     def proxy_new(self):
@@ -66,7 +63,7 @@ class View(BaseView):
     @expose('proxy/<proxy_id>/enable', methods=[HTTPMethod.POST.value])
     def proxy_enable(self, proxy_id):
         call(
-            lambda: settings_controller.proxy_enable(proxy_id, True),
+            lambda: settings_controller.proxy_enable(proxy_id),
             lambda: toast('Proxy has been enabled', category='success')
         )
         return url_for('settings.proxy', proxy_id=proxy_id)
@@ -74,7 +71,7 @@ class View(BaseView):
     @expose('proxy/<proxy_id>/disable', methods=[HTTPMethod.POST.value])
     def proxy_disable(self, proxy_id):
         call(
-            lambda: settings_controller.proxy_enable(proxy_id, False),
+            lambda: settings_controller.proxy_disable(proxy_id),
             lambda: toast('Proxy has been disabled', category='success')
         )
         return url_for('settings.proxy', proxy_id=proxy_id)
@@ -89,7 +86,7 @@ class View(BaseView):
         )
         return redirect(url_for('settings.proxy', proxy_id=proxy_id))
 
-    @expose('proxy/<proxy_id>/request/headers/remove/<header_id>', methods=[HTTPMethod.POST.value])
+    @expose('proxy/<proxy_id>/request/headers/<header_id>/remove', methods=[HTTPMethod.POST.value])
     def proxy_request_headers_remove(self, proxy_id, header_id):
         call(
             lambda: settings_controller.proxy_request_headers_remove(proxy_id, header_id),
@@ -107,7 +104,7 @@ class View(BaseView):
         )
         return redirect(url_for('settings.proxy', proxy_id=proxy_id))
 
-    @expose('proxy/<proxy_id>/response/headers/remove/<header_id>', methods=[HTTPMethod.POST.value])
+    @expose('proxy/<proxy_id>/response/headers/<header_id>/remove', methods=[HTTPMethod.POST.value])
     def proxy_response_headers_remove(self, proxy_id, header_id):
         call(
             lambda: settings_controller.proxy_response_headers_remove(proxy_id, header_id),

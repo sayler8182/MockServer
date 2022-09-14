@@ -30,14 +30,8 @@ class View(BaseView):
         mock = mocks_controller.mock(mock_id)
         response_next = mocks_controller.mock_response_next(mock_id)
         response = mocks_controller.mock_response(mock_id, response_id)
-        mock_request_headers = mocks_controller.mock_request_headers(
-            mock_id, mock.request.id)
-        mock_response_headers = mocks_controller.mock_response_headers(
-            mock_id, response_id)
         return self.render('admin/mocks/mocks.html', configuration=configuration, mocks=mocks, mock=mock,
-                           response_next=response_next,
-                           response=response, mock_request_headers=mock_request_headers,
-                           mock_response_headers=mock_response_headers)
+                           response_next=response_next, response=response)
 
     # mock
     @expose('new', methods=[HTTPMethod.POST.value])
@@ -96,7 +90,7 @@ class View(BaseView):
         )
         return redirect(url_for('mocks.mock', mock_id=mock_id))
 
-    @expose('/<mock_id>', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/update', methods=[HTTPMethod.POST.value])
     def mock_update(self, mock_id):
         name = request.form.get('mocks_definition_form_name')
         call(
@@ -105,17 +99,8 @@ class View(BaseView):
         )
         return redirect(url_for('mocks.mock', mock_id=mock_id))
 
-    @expose('/<mock_id>/method', methods=[HTTPMethod.POST.value])
-    def mock_method_update(self, mock_id):
-        method = request.form.get('mocks_definition_form_mock_method')
-        call(
-            lambda: mocks_controller.mock_method_update(mock_id, method),
-            lambda: toast('Mock has been updated', category='success')
-        )
-        return redirect(url_for('mocks.mock', mock_id=mock_id))
-
     # mock request
-    @expose('/<mock_id>/request', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/request/update', methods=[HTTPMethod.POST.value])
     def mock_request_update(self, mock_id):
         method = request.form.get('mocks_definition_form_request_method')
         path = request.form.get('mocks_definition_form_request_path')
@@ -126,6 +111,15 @@ class View(BaseView):
         return redirect(url_for('mocks.mock', mock_id=mock_id))
 
     # mock response
+    @expose('/<mock_id>/method/update', methods=[HTTPMethod.POST.value])
+    def mock_method_update(self, mock_id):
+        method = request.form.get('mocks_definition_form_mock_method')
+        call(
+            lambda: mocks_controller.mock_method_update(mock_id, method),
+            lambda: toast('Mock has been updated', category='success')
+        )
+        return redirect(url_for('mocks.mock', mock_id=mock_id))
+
     @expose('/<mock_id>/new', methods=[HTTPMethod.POST.value])
     def mock_response_new(self, mock_id):
         response = mocks_controller.mock_response_new(mock_id)
@@ -168,7 +162,7 @@ class View(BaseView):
         )
         return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
 
-    @expose('/<mock_id>/<response_id>', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/update', methods=[HTTPMethod.POST.value])
     def mock_response_update(self, mock_id, response_id):
         name = request.form.get('mocks_definition_response_form_name')
         call(
@@ -178,7 +172,7 @@ class View(BaseView):
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
     # mock response type
-    @expose('/<mock_id>/<response_id>/type', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/update/type', methods=[HTTPMethod.POST.value])
     def mock_response_update_type(self, mock_id, response_id):
         type = request.form.get('mocks_definition_response_form_type')
         call(
@@ -188,7 +182,7 @@ class View(BaseView):
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
     # mock response status
-    @expose('/<mock_id>/<response_id>/status', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/update/status', methods=[HTTPMethod.POST.value])
     def mock_response_update_status(self, mock_id, response_id):
         status = request.form.get('mocks_definition_response_form_status')
         call(
@@ -198,7 +192,7 @@ class View(BaseView):
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
     # mock response headers
-    @expose('/<mock_id>/<response_id>/headers/remove/<header_id>', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/headers/<header_id>/remove', methods=[HTTPMethod.POST.value])
     def mock_response_headers_remove(self, mock_id, response_id, header_id):
         call(
             lambda: mocks_controller.mock_response_headers_remove(mock_id, response_id, header_id),
@@ -216,7 +210,7 @@ class View(BaseView):
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
     # mock response body
-    @expose('/<mock_id>/<response_id>/body', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/update/body', methods=[HTTPMethod.POST.value])
     def mock_response_update_body(self, mock_id, response_id):
         body = request.form.get("body")
         call(

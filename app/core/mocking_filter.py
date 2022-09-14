@@ -24,6 +24,8 @@ class MockingFilter(object):
         return mock.request.method == method
 
     def __match_path(self, mock: Mock, path: str):
+        if not mock.request.path:
+            return False
         pattern = PathComponents(mock.request.path)
         matcher = PathMatcher(pattern, path)
         result = matcher.match()

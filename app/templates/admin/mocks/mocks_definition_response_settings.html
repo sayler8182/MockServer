@@ -6,7 +6,7 @@
             Status
         </button>
         {% endif %}
-        <button id="panel_headers_parent" class="btn btn-primary collapsed" data-toggle="collapse" data-target="#panel_headers">
+        <button id="panel_headers_parent" class="btn btn-primary" data-toggle="collapse" data-target="#panel_headers">
             Headers
         </button>
         {% if response.type.is_mock %}
@@ -32,7 +32,7 @@
             <div class="dropdown-divider"></div>
         </div>
         {% endif %}
-        <div class="collapse response_option" id="panel_headers">
+        <div class="show response_option" id="panel_headers">
             <h5>Headers</h5>
             <div class="py-3">
                 {% include "admin/mocks/mocks_definition_response_headers.html" %}

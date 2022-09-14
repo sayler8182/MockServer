@@ -1,7 +1,8 @@
 from enum import Enum
 
 from app.models.models.delay_mode import DelayMode
-from app.utils.utils import new_id
+from app.models.models.request_header import RequestHeader
+from app.utils.utils import new_id, get_dict
 
 
 class MockResponseType(Enum):
@@ -51,7 +52,8 @@ class MockResponse(object):
                  delay_mode: DelayMode = None,
                  delay: int = None,
                  body: str = None,
-                 order: int = None):
+                 order: int = None,
+                 response_headers: [RequestHeader] = None):
         self.id = id
         self.mock_id = mock_id
         self.is_enabled = is_enabled
@@ -62,6 +64,7 @@ class MockResponse(object):
         self.delay = delay
         self.body = body
         self.order = order
+        self.response_headers = response_headers
         self.__init_default_id()
         self.__init_default_is_enabled()
         self.__init_default_type()
@@ -116,7 +119,8 @@ class MockResponse(object):
             'delay_mode': self.delay_mode.get_dict(),
             'delay': self.delay,
             'body': self.body,
-            'order': self.order
+            'order': self.order,
+            'response_headers': get_dict(self.response_headers)
         }
 
     @staticmethod
@@ -136,6 +140,8 @@ class MockResponse(object):
         delay = object.get('delay', None)
         body = object.get('body', None)
         order = object.get('order', None)
+        response_headers_list = object.get('response_headers', None)
+        response_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
         return MockResponse(id=id,
                             mock_id=mock_id,
                             is_enabled=is_enabled,
@@ -145,4 +151,5 @@ class MockResponse(object):
                             delay_mode=delay_mode,
                             delay=delay,
                             body=body,
-                            order=order)
+                            order=order,
+                            response_headers=response_headers)

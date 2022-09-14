@@ -3,10 +3,10 @@ import json
 from werkzeug.datastructures import FileStorage
 
 from app.adapters.mock_adapter import MockAdapter
-from app.adapters.settings_proxy_adapter import SettingsProxyAdapter
+from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.import_export.import_export_type import ImportExportType
 from app.models.models.mock import Mock
-from app.models.models.settings_proxy import SettingsProxy
+from app.models.models.proxy import Proxy
 from app.utils.utils import store_file_in_tmp, read_file
 
 
@@ -39,14 +39,14 @@ class ImporterManager(object):
     def import_proxies(data: dict):
         objects = ImporterManager.__list(data)
         for object in objects:
-            proxy = SettingsProxy.proxy_from_dict(object)
-            SettingsProxyAdapter.add_proxy(proxy)
+            proxy = Proxy.proxy_from_dict(object)
+            ProxyAdapter.add_proxy(proxy)
 
     @staticmethod
     def import_proxy(data: dict):
         object = ImporterManager.__object(data)
-        proxy = SettingsProxy.proxy_from_dict(object)
-        SettingsProxyAdapter.add_proxy(proxy)
+        proxy = Proxy.proxy_from_dict(object)
+        ProxyAdapter.add_proxy(proxy)
 
     # utils
 

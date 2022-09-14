@@ -1,11 +1,10 @@
-from flask import abort
-
 from app.core.mock.mocking_mock_manager import MockingMockManager
 from app.core.mocking_filter import MockingFilter
 from app.core.mocking_response_calculator import MockingResponseCalculator
 from app.core.proxy.mocking_proxy_manager import MockingProxyManager
 from app.models.models.http_method import HTTPMethod
 from app.models.models.mock_response import MockResponseType
+from app.utils.utils_api import response_error
 
 
 class MockingManager(object):
@@ -23,4 +22,4 @@ class MockingManager(object):
         if not mock or not mock_response or mock_response.type == MockResponseType.proxy:
             manager = MockingProxyManager(self.flask_app)
             return manager.response(request, mock, mock_response, path)
-        return abort(500, 'Unexpected mocking error')
+        return response_error(self.flak_app, 500, 'Unexpected mocking error')

@@ -1,5 +1,5 @@
-from app.adapters.settings_proxy_adapter import SettingsProxyAdapter
-from app.models.models.settings_proxy import SettingsProxy
+from app.adapters.proxy_adapter import ProxyAdapter
+from app.models.models.proxy import Proxy
 
 
 class SettingsProxyInitializer(object):
@@ -7,7 +7,7 @@ class SettingsProxyInitializer(object):
         self.flask_app = flask_app
 
     def init_initializer(self):
-        proxy = SettingsProxy(is_selected=True,
-                              is_enabled=True,
-                              name='Default')
-        SettingsProxyAdapter.add_proxy(proxy)
+        proxy = Proxy(is_selected=True,
+                      is_enabled=True,
+                      name='Default')
+        ProxyAdapter.add_proxy(proxy)

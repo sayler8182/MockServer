@@ -1,5 +1,6 @@
 from app.models.models.http_method import HTTPMethod
-from app.utils.utils import new_id
+from app.models.models.request_header import RequestHeader
+from app.utils.utils import new_id, get_dict
 
 
 class MockRequest(object):
@@ -8,12 +9,14 @@ class MockRequest(object):
                  mock_id: str = None,
                  method: HTTPMethod = None,
                  proxy: str = None,
-                 path: str = None):
+                 path: str = None,
+                 request_headers: [RequestHeader] = None):
         self.id = id
         self.mock_id = mock_id
         self.method = method
         self.proxy = proxy
         self.path = path
+        self.request_headers = request_headers
         self.__init_default_id()
         self.__init_default_method()
 
@@ -31,7 +34,8 @@ class MockRequest(object):
             'mock_id': self.mock_id,
             'method': self.method.get_dict(),
             'proxy': self.proxy,
-            'path': self.path
+            'path': self.path,
+            'request_headers': get_dict(self.request_headers),
         }
 
     @staticmethod
@@ -45,8 +49,11 @@ class MockRequest(object):
         method = HTTPMethod[method_string]
         proxy = object.get('proxy', None)
         path = object.get('path', None)
+        request_headers_list = object.get('request_headers', None)
+        request_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), request_headers_list))
         return MockRequest(id=id,
                            mock_id=mock_id,
                            method=method,
                            proxy=proxy,
-                           path=path)
+                           path=path,
+                           request_headers=request_headers)

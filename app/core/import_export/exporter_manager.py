@@ -1,5 +1,5 @@
 from app.adapters.mock_adapter import MockAdapter
-from app.adapters.settings_proxy_adapter import SettingsProxyAdapter
+from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.import_export.import_export_type import ImportExportType
 from app.utils.utils import get_dict
 from app.utils.utils_api import response_dumps_dict_from_tmp_file
@@ -26,7 +26,7 @@ class ExporterManager(object):
 
     @staticmethod
     def export_proxies():
-        proxies = SettingsProxyAdapter.get_proxies()
+        proxies = ProxyAdapter.get_proxies()
         object = ExporterManager.__object(type=ImportExportType.proxies,
                                           data=get_dict(proxies))
         file_name = ImportExportType.proxies.value
@@ -34,7 +34,7 @@ class ExporterManager(object):
 
     @staticmethod
     def export_proxy(proxy_id: str):
-        proxy = SettingsProxyAdapter.get_proxy(proxy_id)
+        proxy = ProxyAdapter.get_proxy(proxy_id)
         object = ExporterManager.__object(type=ImportExportType.proxy,
                                           data=proxy.get_dict())
         file_name = ImportExportType.proxy.name or 'proxy'

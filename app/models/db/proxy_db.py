@@ -1,7 +1,7 @@
 from app.config.database_config import db
 
 
-class SettingsProxyDb(db.Model):
+class ProxyDb(db.Model):
     id = db.Column(db.String, primary_key=True, nullable=False)
     is_selected = db.Column(db.Boolean, default=False, nullable=False)
     is_enabled = db.Column(db.Boolean, default=False, nullable=False)
@@ -13,7 +13,7 @@ class SettingsProxyDb(db.Model):
     delay = db.Column(db.Integer, default=0, nullable=False)
 
     def __repr__(self):
-        return 'SettingsProxyDb:' \
+        return 'ProxyDb:' \
                f' id: {self.id} ' \
                f' is_selected: {self.is_selected}' \
                f' is_enabled: {self.is_enabled}' \

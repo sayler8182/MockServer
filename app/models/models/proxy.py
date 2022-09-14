@@ -1,8 +1,9 @@
 from app.models.models.delay_mode import DelayMode
-from app.utils.utils import new_id
+from app.models.models.request_header import RequestHeader
+from app.utils.utils import new_id, get_dict
 
 
-class SettingsProxy(object):
+class Proxy(object):
     def __init__(self,
                  id: str = None,
                  is_selected: bool = None,
@@ -12,7 +13,9 @@ class SettingsProxy(object):
                  delay_mode: DelayMode = None,
                  delay_from: int = None,
                  delay_to: int = None,
-                 delay: int = None):
+                 delay: int = None,
+                 request_headers: [RequestHeader] = None,
+                 response_headers: [RequestHeader] = None):
         self.id = id
         self.is_selected = is_selected
         self.is_enabled = is_enabled
@@ -22,6 +25,8 @@ class SettingsProxy(object):
         self.delay_from = delay_from
         self.delay_to = delay_to
         self.delay = delay
+        self.request_headers = request_headers
+        self.response_headers = response_headers
         self.__init_default_id()
         self.__init_default_is_selected()
         self.__init_default_is_enabled()
@@ -68,7 +73,9 @@ class SettingsProxy(object):
             'delay_mode': self.delay_mode.get_dict(),
             'delay_from': self.delay_from,
             'delay_to': self.delay_to,
-            'delay': self.delay
+            'delay': self.delay,
+            'request_headers': get_dict(self.request_headers),
+            'response_headers': get_dict(self.response_headers)
         }
 
     @staticmethod
@@ -86,12 +93,18 @@ class SettingsProxy(object):
         delay_from = object.get('delay_from', None)
         delay_to = object.get('delay_to', None)
         delay = object.get('delay', None)
-        return SettingsProxy(id=id,
-                             is_selected=is_selected,
-                             is_enabled=is_enabled,
-                             name=name,
-                             path=path,
-                             delay_mode=delay_mode,
-                             delay_from=delay_from,
-                             delay_to=delay_to,
-                             delay=delay)
+        request_headers_list = object.get('request_headers', None)
+        request_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), request_headers_list))
+        response_headers_list = object.get('response_headers', None)
+        response_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
+        return Proxy(id=id,
+                     is_selected=is_selected,
+                     is_enabled=is_enabled,
+                     name=name,
+                     path=path,
+                     delay_mode=delay_mode,
+                     delay_from=delay_from,
+                     delay_to=delay_to,
+                     delay=delay,
+                     request_headers=request_headers,
+                     response_headers=response_headers)

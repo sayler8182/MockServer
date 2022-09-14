@@ -1,3 +1,4 @@
+from app.adapters.request_header_adapter import RequestHeaderAdapter
 from app.config.database_config import db
 from app.models.db.mock_db import MockDb
 from app.models.db.mock_request_db import MockRequestDb
@@ -8,7 +9,7 @@ from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock, MockMethod
 from app.models.models.mock_request import MockRequest
 from app.models.models.mock_response import MockResponse, MockResponseType
-from app.models.models.request_header import RequestHeaderType
+from app.models.models.request_header import RequestHeaderType, RequestHeader
 
 
 class MockAdapter(object):
@@ -273,11 +274,13 @@ class MockAdapter(object):
     @staticmethod
     def mock_request_from_entity(entity: MockRequestDb) -> MockRequest:
         if entity:
+            request_headers = RequestHeaderAdapter.get_request_headers_for_mock_request(entity.mock_id, entity.id, RequestHeaderType.mock_request)
             return MockRequest(mock_id=entity.mock_id,
                                id=entity.id,
                                method=HTTPMethod[entity.method],
                                proxy=entity.proxy,
-                               path=entity.path)
+                               path=entity.path,
+                               request_headers=request_headers)
         return None
 
     @staticmethod
@@ -298,6 +301,7 @@ class MockAdapter(object):
     @staticmethod
     def mock_response_from_entity(entity: MockResponseDb) -> MockResponse:
         if entity:
+            response_headers = RequestHeaderAdapter.get_request_headers_for_mock_response(entity.mock_id, entity.id, RequestHeaderType.mock_response)
             return MockResponse(mock_id=entity.mock_id,
                                 id=entity.id,
                                 is_enabled=entity.is_enabled,
@@ -307,5 +311,6 @@ class MockAdapter(object):
                                 delay_mode=DelayMode[entity.delay_mode],
                                 delay=entity.delay,
                                 body=entity.body,
-                                order=entity.order)
+                                order=entity.order,
+                                response_headers=response_headers)
         return None

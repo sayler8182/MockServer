@@ -1,3 +1,4 @@
+from app.router.routers.api.mocks_router import MocksRouter
 from app.router.routers.api.settings_router import SettingsRouter
 
 
@@ -11,6 +12,7 @@ class ApiRouter(object):
 
     def __create_routers(self):
         self.routers = [
+            MocksRouter(self.flask_app),
             SettingsRouter(self.flask_app)
         ]
 

@@ -1,6 +1,7 @@
 import requests
+import validators
 
-from app.adapters.settings_proxy_adapter import SettingsProxyAdapter
+from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.proxy.interceptors.proxy_request_interceptor import ProxyRequestInterceptor
 from app.core.proxy.interceptors.proxy_response_interceptor import ProxyResponseInterceptor
 from app.core.proxy.interceptors.request.proxy_request_remove_forwarded_interceptor import \
@@ -18,7 +19,7 @@ from app.core.proxy.models.proxy_request import ProxyRequest
 from app.core.proxy.models.proxy_response import ProxyResponse, ProxyResponseType
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
-from app.utils.utils_api import response_dumps
+from app.utils.utils_api import response_dumps, response_error
 
 
 class MockingProxyManager(object):
@@ -38,14 +39,22 @@ class MockingProxyManager(object):
 
     def response(self, request, mock: Mock, mock_response: MockResponse, path: str):
         request = self.__prepare_request(request, path)
+        if not request:
+            return response_error(self.flask_app, 500, 'Incorrect proxy request')
         request = self.request_interceptor.intercept(request, mock, mock_response)
         response = self.__prepare_response(request)
+        if not response:
+            return response_error(self.flask_app, 500, 'Incorrect proxy response')
         response = self.response_interceptor.intercept(response, mock, mock_response)
         return response_dumps(self.flask_app, response)
 
     def __prepare_request(self, request, path: str) -> ProxyRequest:
-        settings_proxy = SettingsProxyAdapter.get_selected_proxy()
-        url = settings_proxy.path + path
+        proxy = ProxyAdapter.get_proxy_selected()
+        proxy_path = proxy.path or ''
+        path = path or ''
+        url = proxy_path + path
+        if not validators.url(url):
+            return None
         return ProxyRequest(method=request.method,
                             url=url,
                             data=request.get_data(),

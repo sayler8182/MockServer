@@ -15,27 +15,27 @@ def toast(message: str, category: str = 'message'):
 
 def call(action=None, success=None, error=None) -> bool:
     try:
-        save_call(action)
-        save_call(success)
+        safe_call(action)
+        safe_call(success)
         return True
     except ValueError as exception:
         toast(str(exception), category='error')
-        save_call(error)
+        safe_call(error)
         return False
 
 
 def call_with_result(action=None, success=None, error=None):
     try:
         result = save_call_with_result(action)
-        save_call(success)
+        safe_call(success)
         return result
     except ValueError as exception:
         toast(str(exception), category='error')
-        save_call(error)
+        safe_call(error)
         return None
 
 
-def save_call(action):
+def safe_call(action):
     if action:
         action()
 
@@ -60,6 +60,8 @@ def to_int(value: any) -> int:
         return int(value)
     if isinstance(value, str):
         return int(value)
+    if isinstance(value, int):
+        return value
     return None
 
 
@@ -87,7 +89,9 @@ def last(array):
 
 
 def get_dict(array):
-    return list(map(lambda item: item.get_dict(), array))
+    if array:
+        return list(map(lambda item: item.get_dict(), array))
+    return None
 
 
 def chunked_response(response, size: int = 1024) -> Iterable[bytes]:

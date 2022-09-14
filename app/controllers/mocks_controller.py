@@ -89,12 +89,6 @@ def mock_update(mock_id: str, name: str):
     MockAdapter.set_mock(mock_id, name)
 
 
-def mock_method_update(mock_id: str, method: str):
-    mock_method = MockMethod[method]
-    validate_not_empty(mock_id, 'Mock should be provided')
-    MockAdapter.set_mock_method(mock_id, mock_method)
-
-
 # mock request
 def mock_request_update(mock_id: str, method: str, path: str):
     http_method = HTTPMethod[method]
@@ -104,14 +98,13 @@ def mock_request_update(mock_id: str, method: str, path: str):
     MockAdapter.set_mock_request(mock_id, http_method, path)
 
 
-# mock request headers
-def mock_request_headers(mock_id: str, request_id: str) -> [RequestHeader]:
-    validate_not_empty(mock_id, 'Mock should be provided')
-    return RequestHeaderAdapter.get_request_headers_for_mock_request(mock_id, request_id,
-                                                                     RequestHeaderType.mock_request)
-
-
 # mock response
+def mock_method_update(mock_id: str, method: str):
+    mock_method = MockMethod[method]
+    validate_not_empty(mock_id, 'Mock should be provided')
+    MockAdapter.set_mock_method(mock_id, mock_method)
+
+
 def mock_response(mock_id: str, response_id: str) -> MockResponse:
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(mock_id, 'Mock response should be provided')
@@ -182,11 +175,6 @@ def mock_response_update_status(mock_id: str, response_id: str, status: str):
 
 
 # mock response headers
-def mock_response_headers(mock_id: str, response_id: str) -> [RequestHeader]:
-    validate_not_empty(mock_id, 'Mock should be provided')
-    validate_not_empty(response_id, 'Mock response should be provided')
-    return RequestHeaderAdapter.get_request_headers_for_mock_response(mock_id, response_id,
-                                                                      RequestHeaderType.mock_response)
 
 
 def mock_response_headers_remove(mock_id: str, response_id: str, header_id: str):
@@ -201,12 +189,13 @@ def mock_response_headers_new(mock_id: str, response_id: str, name: str, value: 
     validate_not_empty(response_id, 'Mock response should be provided')
     validate_not_empty(name, 'Name should not be empty')
     validate_not_empty(value, 'Value should not be empty')
-    request = RequestHeader(type=RequestHeaderType.mock_response,
-                            mock_id=mock_id,
-                            response_id=response_id,
-                            name=name,
-                            value=value)
-    RequestHeaderAdapter.add_request_header(request)
+    header = RequestHeader(type=RequestHeaderType.mock_response,
+                           mock_id=mock_id,
+                           response_id=response_id,
+                           name=name,
+                           value=value)
+    RequestHeaderAdapter.add_request_header(header)
+    return header
 
 
 # mock response body

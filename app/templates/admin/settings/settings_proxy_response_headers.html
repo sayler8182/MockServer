@@ -1,4 +1,4 @@
-{% if proxy and proxy_response_headers %}
+{% if proxy and proxy.response_headers %}
 <div class="form-group form-inline">
     <table class="table table-sm table-striped">
         <thead>
@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for header in proxy_response_headers %}
+        {% for header in proxy.response_headers %}
         <tr>
             <th class="align-middle">{{ loop.index }}</th>
             <td class="align-middle">{{ header.name }}</td>

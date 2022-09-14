@@ -4,10 +4,13 @@ from app.utils.utils import new_id
 
 
 class RequestHeaderType(Enum):
-    settings_request = 'settings_request'
-    settings_response = 'settings_response'
+    proxy_request = 'proxy_request'
+    proxy_response = 'proxy_response'
     mock_request = 'mock_request'
     mock_response = 'mock_response'
+
+    def get_dict(self):
+        return self.value
 
 
 class RequestHeader(object):
@@ -45,3 +48,25 @@ class RequestHeader(object):
             'name': self.name,
             'value': self.value,
         }
+
+    @staticmethod
+    def request_header_from_dict(object: dict):
+        if object is None:
+            return None
+
+        id = object.get('id', None)
+        type = object.get('type', None)
+        proxy_id = object.get('proxy_id', None)
+        mock_id = object.get('mock_id', None)
+        request_id = object.get('request_id', None)
+        response_id = object.get('response_id', None)
+        name = object.get('name', None)
+        value = object.get('value', None)
+        return RequestHeader(id=id,
+                             type=type,
+                             proxy_id=proxy_id,
+                             mock_id=mock_id,
+                             request_id=request_id,
+                             response_id=response_id,
+                             name=name,
+                             value=value)

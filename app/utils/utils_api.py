@@ -4,7 +4,7 @@ from flask import send_from_directory
 
 from app.core.proxy.models.proxy_response import ProxyResponse
 from app.static.tmp import tmp_file, tmp_directory
-from app.utils.utils import chunked_response, new_id
+from app.utils.utils import chunked_response, new_id, get_dict
 
 default_mimetype = 'application/json'
 
@@ -30,7 +30,16 @@ def response_dumps_string(flask_app, status=200, object='', headers={}):
 
 
 def response_dumps_object(flask_app, status=200, object={}, headers={}):
-    dictionary = object.get_dict()
+    dictionary = object.get_dict() if object else None
+    return response_dumps_dict(
+        flask_app=flask_app,
+        status=status,
+        object=dictionary,
+        headers=headers)
+
+
+def response_dumps_list(flask_app, status=200, object=[], headers={}):
+    dictionary = get_dict(object) if object else None
     return response_dumps_dict(
         flask_app=flask_app,
         status=status,
@@ -45,6 +54,14 @@ def response_dumps_dict(flask_app, status=200, object={}, headers={}):
         status=status,
         mimetype=default_mimetype,
         headers=headers)
+
+
+def response_error(flask_app, status=500, error: str = ''):
+    data = json.dumps({'error': error})
+    return flask_app.response_class(
+        response=data,
+        status=status,
+        mimetype=default_mimetype)
 
 
 def response_dumps_dict_from_tmp_file(object: {}, download_name: str, file_extension: str = 'json'):

@@ -1,44 +1,8 @@
-from enum import Enum
-
 from app.models.models.delay_mode import DelayMode
+from app.models.models.mock_response_interceptor import MockResponseInterceptor
+from app.models.models.mock_response_type import MockResponseType
 from app.models.models.request_header import RequestHeader
 from app.utils.utils import new_id, get_dict
-
-
-class MockResponseType(Enum):
-    mock_json = 'mock_json'
-    proxy = 'proxy'
-
-    @property
-    def description(self) -> str:
-        return {
-            MockResponseType.mock_json: 'Mock json',
-            MockResponseType.proxy: 'Proxy'
-        }.get(self)
-
-    @property
-    def is_mock(self) -> bool:
-        return {
-            MockResponseType.mock_json: True,
-            MockResponseType.proxy: False
-        }.get(self)
-
-    @property
-    def is_proxy(self) -> bool:
-        return {
-            MockResponseType.mock_json: False,
-            MockResponseType.proxy: True
-        }.get(self)
-
-    @staticmethod
-    def supported_types():
-        return [
-            MockResponseType.mock_json,
-            MockResponseType.proxy
-        ]
-
-    def get_dict(self):
-        return self.value
 
 
 class MockResponse(object):
@@ -53,7 +17,8 @@ class MockResponse(object):
                  delay: int = None,
                  body: str = None,
                  order: int = None,
-                 response_headers: [RequestHeader] = None):
+                 response_headers: [RequestHeader] = None,
+                 response_interceptors: [MockResponseInterceptor] = None):
         self.id = id
         self.mock_id = mock_id
         self.is_enabled = is_enabled
@@ -65,6 +30,7 @@ class MockResponse(object):
         self.body = body
         self.order = order
         self.response_headers = response_headers
+        self.response_interceptors = response_interceptors
         self.__init_default_id()
         self.__init_default_is_enabled()
         self.__init_default_type()
@@ -72,6 +38,7 @@ class MockResponse(object):
         self.__init_default_delay_mode()
         self.__init_default_delay()
         self.__init_default_order()
+        self.__init_default_response_interceptors()
 
     @property
     def description(self) -> str:
@@ -108,6 +75,10 @@ class MockResponse(object):
         if self.order is None:
             self.order = -1
 
+    def __init_default_response_interceptors(self):
+        if self.response_interceptors is None:
+            self.response_interceptors = []
+
     def get_dict(self):
         return {
             'id': self.id,
@@ -120,7 +91,8 @@ class MockResponse(object):
             'delay': self.delay,
             'body': self.body,
             'order': self.order,
-            'response_headers': get_dict(self.response_headers)
+            'response_headers': get_dict(self.response_headers),
+            'response_interceptors': get_dict(self.response_interceptors)
         }
 
     @staticmethod
@@ -142,6 +114,9 @@ class MockResponse(object):
         order = object.get('order', None)
         response_headers_list = object.get('response_headers', None)
         response_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
+        response_interceptors_list = object.get('response_interceptors', None)
+        response_interceptors = list(map(lambda item: MockResponseInterceptor.mock_response_interceptor_from_dict(item),
+                                         response_interceptors_list))
         return MockResponse(id=id,
                             mock_id=mock_id,
                             is_enabled=is_enabled,
@@ -152,4 +127,5 @@ class MockResponse(object):
                             delay=delay,
                             body=body,
                             order=order,
-                            response_headers=response_headers)
+                            response_headers=response_headers,
+                            response_interceptors=response_interceptors)

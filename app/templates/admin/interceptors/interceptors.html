@@ -1,0 +1,18 @@
+{% extends 'admin/base/layout.html' %}
+{% block body %}
+<div>
+    <!-- header -->
+    {% include "admin/interceptors/interceptors_header.html" %}
+
+    <!-- definition -->
+    {% include "admin/interceptors/interceptors_definition.html" %}
+
+    <div class="dropdown-divider"></div>
+    <h2>{{ interceptor.type.description }} interceptor</h2>
+    {% include "admin/interceptors/interceptors_definition_configuration.html" %}
+</div>
+{% endblock %}
+{% block tail_js %}
+{{ super() }}
+{% include "admin/interceptors/interceptors.js.html" %}
+{% endblock %}

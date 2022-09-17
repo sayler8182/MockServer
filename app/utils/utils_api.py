@@ -4,15 +4,14 @@ from flask import send_from_directory
 
 from app.core.proxy.models.proxy_response import ProxyResponse
 from app.static.tmp import tmp_file, tmp_directory
-from app.utils.utils import chunked_response, new_id, get_dict
+from app.utils.utils import new_id, get_dict, chunked
 
 default_mimetype = 'application/json'
 
 
 # response_dumps
-
 def response_dumps(flask_app, response: ProxyResponse):
-    data = chunked_response(response.response)
+    data = chunked(response.body)
     return flask_app.response_class(
         response=data,
         status=response.status_code,

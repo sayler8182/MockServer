@@ -1,0 +1,26 @@
+{% if interceptor %}
+<div class="mt-3">
+    <!-- state enabled / disabled -->
+    <div class="form-group form-check form-switch">
+        <input id="interceptors_definition_form_is_enabled" data-mock-id="{{ mock_id }}"
+               data-response-id="{{ response_id }}" data-interceptor-id="{{ interceptor.id }}"
+               class="form-check-input" type="checkbox" {{ conditional_value(interceptor.is_enabled, 'checked') }}>
+        <label class="form-check-label" for="interceptors_definition_form_is_enabled">Enable</label>
+    </div>
+</div>
+
+<form class="d-flex flex-grow-1" method="post"
+      action="{{ url_for('interceptors.interceptor_update', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor.id) }}">
+    <div class="d-flex flex-grow-1">
+        <div class="input-group flex-grow-1">
+            <input id="interceptors_definition_form_name" name="interceptors_definition_form_name"
+                   class="form-control" placeholder="Name" value="{{ interceptor.name or '' }}">
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Save name">
+                <i class="fa fa-save"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}

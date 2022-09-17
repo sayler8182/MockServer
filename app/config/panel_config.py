@@ -19,3 +19,6 @@ class PanelConfig(object):
             mocks_view.View(name='Mocks', endpoint='mocks'))
         admin.add_view(
             settings_view.View(name='Settings', endpoint='settings'))
+        from app.views.interceptors import interceptors_view
+        admin.add_view(
+            interceptors_view.View(name='Settings', endpoint='interceptors'))

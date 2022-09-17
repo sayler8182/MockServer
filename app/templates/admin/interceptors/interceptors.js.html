@@ -1,0 +1,80 @@
+<script src="{{ url_for('static', filename='scripts/jquery.json-editor.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $("[data-toggle=tooltip").tooltip();
+
+        $('#interceptors_definition_form_is_enabled').change(function() {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            let interceptor_id = $(this).data('interceptor-id')
+            let endpoint = this.checked ? 'enable' : 'disable'
+            $.post(`/admin/interceptors/${mock_id}/${response_id}/${interceptor_id}/${endpoint}`, function(data) {
+                window.location = data
+            })
+        });
+
+        // configuration
+        function normalizeJSON(value, space) {
+            try {
+                let json = JSON.parse(value);
+                return JSON.stringify(json, null, space);
+            } catch (ex) {
+                return value;
+            }
+        }
+        $('#interceptors_definition_configuration_format').click(function() {
+            let element = document.getElementById("interceptors_definition_configuration_input");
+            let value = normalizeJSON(element.value, 2);
+            element.value = value;
+        });
+        $('#interceptors_definition_configuration_copy').click(function() {
+            let element = document.getElementById("interceptors_definition_configuration_input");
+            let value = normalizeJSON(element.value, 0);
+            copyToClipboard(value);
+        });
+        $('#interceptors_definition_configuration_save').click(function() {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            let interceptor_id = $(this).data('interceptor-id')
+            let element = document.getElementById("interceptors_definition_configuration_input");
+            let value = normalizeJSON(element.value, 0);
+            let data = { "configuration": value }
+            $.post(`/admin/interceptors/${mock_id}/${response_id}/${interceptor_id}/configuration`, data, function(data) {
+                window.location = data
+            })
+        });
+
+        // configuration editor
+        let configuration_input = $('#interceptors_definition_configuration_input')
+        let configuration_output = $('#interceptors_definition_configuration_output')
+        function getConfigurationJsonInput() {
+            try {
+                let value = configuration_input.val()
+                if (value.length > 0) {
+                    let json = JSON.parse(value);
+                    configuration_output.removeClass('border')
+                    return json
+                } else {
+                    configuration_output.removeClass('border')
+                }
+                return
+            } catch (ex) {
+                configuration_output.addClass('border')
+                return `${ex}`
+            }
+        }
+        let jsonEditorOptions = { "editable": false }
+        let jsonEditor = new JsonEditor(`#${configuration_output.attr('id')}`, getConfigurationJsonInput(), jsonEditorOptions);
+        configuration_input.on('change keyup paste', function() {
+            jsonEditor.load(getConfigurationJsonInput());
+        });
+
+        // autoformat example
+        let example = document.getElementById("interceptors_definition_configuration_example");
+        let value = normalizeJSON(example.textContent, 2);
+        example.textContent = value;
+
+        // autoformat configuration
+        $('#interceptors_definition_configuration_format').click()
+    });
+</script>

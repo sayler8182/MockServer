@@ -3,7 +3,7 @@ from app.core.mocking_filter import MockingFilter
 from app.core.mocking_response_calculator import MockingResponseCalculator
 from app.core.proxy.mocking_proxy_manager import MockingProxyManager
 from app.models.models.http_method import HTTPMethod
-from app.models.models.mock_response import MockResponseType
+from app.models.models.mock_response_type import MockResponseType
 from app.utils.utils_api import response_error
 
 

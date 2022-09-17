@@ -1,0 +1,12 @@
+<div class="d-flex">
+    <form method="get"
+          action="{{ url_for('interceptors.interceptor_back', mock_id=mock_id, response_id=response_id) }}">
+        <div class="form-group form-inline">
+            <button type="submit" class="btn btn-info mr-2" style="height:45px; width:45px;" data-toggle="tooltip"
+                    title="Back">
+                <i class="fa fa-arrow-left"></i>
+            </button>
+        </div>
+    </form>
+    <h1>Interceptor</h1>
+</div>

@@ -4,5 +4,6 @@ Flask-BabelEx
 Flask-Migrate
 Flask-SQLAlchemy
 FontAwesome
+jsonpath-ng
 requests
 validators

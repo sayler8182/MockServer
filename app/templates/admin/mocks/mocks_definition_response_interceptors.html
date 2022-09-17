@@ -1,2 +1,41 @@
-{% if response %}
+{% if response and response.response_interceptors %}
+<div class="form-group form-inline">
+    <table class="table table-sm table-striped">
+        <thead>
+        <tr>
+            <th style="width:48px;padding-left:12px">#</th>
+            <th>Name</th>
+            <th style="width:48px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for interceptor_item in response.response_interceptors %}
+        <tr>
+            <th class="align-middle p-0">
+                <div class="d-flex" style="height:44px">
+                        {% set style = conditional_value(interceptor_item.is_enabled, 'bg-success', 'bg-warning') %}
+                        <div style="width:4px;" class="h-100 {{ style }}"></div>
+                    <span class="align-self-center ml-2">{{ loop.index }}</span>
+                </div>
+            </th>
+            <td class="align-middle">{{ interceptor_item.description }}</td>
+            <td>
+                <div class="d-flex">
+                    <form method="post" action="{{ url_for('mocks.mock_response_interceptors_edit', mock_id=mock.id, response_id=response.id, interceptor_id=interceptor_item.id) }}">
+                        <button type="submit" class="btn btn-info mr-1" data-toggle="tooltip" title="Edit">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </form>
+                    <form method="post" action="{{ url_for('mocks.mock_response_interceptors_remove', mock_id=mock.id, response_id=response.id, interceptor_id=interceptor_item.id) }}">
+                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endif %}

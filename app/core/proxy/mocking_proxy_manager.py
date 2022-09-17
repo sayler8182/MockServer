@@ -2,6 +2,7 @@ import requests
 import validators
 
 from app.adapters.proxy_adapter import ProxyAdapter
+from app.core.interceptors.response_interceptor import ResponseInterceptor
 from app.core.proxy.interceptors.proxy_request_interceptor import ProxyRequestInterceptor
 from app.core.proxy.interceptors.proxy_response_interceptor import ProxyResponseInterceptor
 from app.core.proxy.interceptors.request.proxy_request_remove_forwarded_interceptor import \
@@ -36,6 +37,7 @@ class MockingProxyManager(object):
             ProxyResponseRemoveResponseIdInterceptor(),
             ProxyResponseStoreLogInterceptor()
         ])
+        self.interceptor = ResponseInterceptor()
 
     def response(self, request, mock: Mock, mock_response: MockResponse, path: str):
         request = self.__prepare_request(request, path)
@@ -46,6 +48,8 @@ class MockingProxyManager(object):
         if not response:
             return response_error(self.flask_app, 500, 'Incorrect proxy response')
         response = self.response_interceptor.intercept(response, mock, mock_response)
+        if mock and mock_response:
+            response = self.interceptor.intercept(response, mock, mock_response)
         return response_dumps(self.flask_app, response)
 
     def __prepare_request(self, request, path: str) -> ProxyRequest:

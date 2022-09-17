@@ -1,0 +1,25 @@
+{% if response %}
+{% if configuration.response_supported_interceptors %}
+<form method="post" action="{{ url_for('mocks.mock_response_interceptors_new', mock_id=mock.id, response_id=response.id) }}">
+    <div class="form-group form-inline">
+        <div class="input-group">
+            <select id="mocks_definition_response_form_input_response_interceptor_type" name="mocks_definition_response_form_input_response_interceptor_type"
+                    class="custom-select btn btn-primary">
+                {% for type in configuration.response_supported_interceptors %}
+                <option class="text-left" value="{{ type.value }}">
+                    {{ type.description }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Add interceptor">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% else %}
+<h6>No interceptors supported for this response type</h6>
+{% endif %}
+{% endif %}

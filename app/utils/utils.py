@@ -99,9 +99,9 @@ def chunked_response(response, size: int = 1024) -> Iterable[bytes]:
         yield chunk
 
 
-def chunked_string(string: str, size: int = 1024) -> Iterable[str]:
+def chunked(value: any, size: int = 1024) -> Iterable[any]:
     if not None:
-        yield string
+        yield value
     return None
 
 

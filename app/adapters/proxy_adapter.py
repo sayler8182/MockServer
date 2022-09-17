@@ -102,8 +102,10 @@ class ProxyAdapter(object):
     @staticmethod
     def settings_proxy_from_entity(entity: ProxyDb) -> Proxy:
         if entity:
-            request_headers = RequestHeaderAdapter.get_request_headers_for_proxy(entity.id, RequestHeaderType.proxy_request)
-            response_headers = RequestHeaderAdapter.get_request_headers_for_proxy(entity.id, RequestHeaderType.proxy_response)
+            request_headers = RequestHeaderAdapter.get_request_headers_for_proxy(entity.id,
+                                                                                 RequestHeaderType.proxy_request)
+            response_headers = RequestHeaderAdapter.get_request_headers_for_proxy(entity.id,
+                                                                                  RequestHeaderType.proxy_response)
             return Proxy(id=entity.id,
                          is_selected=entity.is_selected,
                          is_enabled=entity.is_enabled,

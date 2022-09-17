@@ -3,13 +3,17 @@ from app.config.database_config import db
 from app.models.db.mock_db import MockDb
 from app.models.db.mock_request_db import MockRequestDb
 from app.models.db.mock_response_db import MockResponseDb
+from app.models.db.mock_response_interceptor_db import MockResponseInterceptorDb
 from app.models.db.request_header_db import RequestHeaderDb
 from app.models.models.delay_mode import DelayMode
 from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock, MockMethod
 from app.models.models.mock_request import MockRequest
-from app.models.models.mock_response import MockResponse, MockResponseType
-from app.models.models.request_header import RequestHeaderType, RequestHeader
+from app.models.models.mock_response import MockResponse
+from app.models.models.mock_response_interceptor import MockResponseInterceptor
+from app.models.models.mock_response_interceptor_type import MockResponseInterceptorType
+from app.models.models.mock_response_type import MockResponseType
+from app.models.models.request_header import RequestHeaderType
 
 
 class MockAdapter(object):
@@ -46,9 +50,18 @@ class MockAdapter(object):
 
     @staticmethod
     def get_mock_responses_for_mock(mock_id: str) -> [MockResponse]:
-        query = MockResponseDb.query.filter_by(
-            mock_id=mock_id).order_by(MockResponseDb.order.asc()).all()
+        query = MockResponseDb.query.filter_by(mock_id=mock_id).order_by(MockResponseDb.order.asc()).all()
         return list(map(lambda item: MockAdapter.mock_response_from_entity(item), query))
+
+    @staticmethod
+    def get_mock_response_interceptor(mock_id: str, response_id: str, id: str) -> MockResponseInterceptor:
+        query = MockResponseInterceptorDb.query.filter_by(mock_id=mock_id, response_id=response_id, id=id).first()
+        return MockAdapter.mock_response_interceptor_from_entity(query)
+
+    @staticmethod
+    def get_response_interceptors_for_mock_response(mock_id: str, response_id: str) -> [MockResponseInterceptor]:
+        query = MockResponseInterceptorDb.query.filter_by(mock_id=mock_id, response_id=response_id).all()
+        return list(map(lambda item: MockAdapter.mock_response_interceptor_from_entity(item), query))
 
     @staticmethod
     def add_mock(mock: Mock, commit: bool = True):
@@ -81,12 +94,27 @@ class MockAdapter(object):
             db.session.commit()
 
     @staticmethod
+    def add_mock_response_interceptor(mock_response_interceptor: MockResponseInterceptor, commit: bool = True):
+        entity = MockAdapter.mock_response_interceptor_from_object(mock_response_interceptor)
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def add_mock_response_interceptors(mock_response_interceptors: [MockResponseInterceptor], commit: bool = True):
+        for mock_response_interceptor in mock_response_interceptors:
+            MockAdapter.add_mock_response_interceptor(mock_response_interceptor, False)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
     def remove_all(commit: bool = True):
         MockDb.query.delete()
         MockRequestDb.query.filter_by().delete()
         MockResponseDb.query.filter_by().delete()
         RequestHeaderDb.query.filter_by(type=RequestHeaderType.mock_request.value).delete()
         RequestHeaderDb.query.filter_by(type=RequestHeaderType.mock_response.value).delete()
+        MockResponseInterceptorDb.query.filter_by().delete()
         if commit:
             db.session.commit()
 
@@ -96,6 +124,7 @@ class MockAdapter(object):
         MockRequestDb.query.filter_by(mock_id=mock_id).delete()
         MockResponseDb.query.filter_by(mock_id=mock_id).delete()
         RequestHeaderDb.query.filter_by(mock_id=mock_id).delete()
+        MockResponseInterceptorDb.query.filter_by(mock_id=mock_id).delete()
         if commit:
             db.session.commit()
 
@@ -103,6 +132,13 @@ class MockAdapter(object):
     def remove_mock_response(mock_id: str, response_id: str, commit: bool = True):
         MockResponseDb.query.filter_by(mock_id=mock_id, id=response_id).delete()
         RequestHeaderDb.query.filter_by(mock_id=mock_id, response_id=response_id).delete()
+        MockResponseInterceptorDb.query.filter_by(mock_id=mock_id, response_id=response_id).delete()
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def remove_mock_response_interceptor(interceptor_id: str, commit: bool = True):
+        MockResponseInterceptorDb.query.filter_by(id=interceptor_id).delete()
         if commit:
             db.session.commit()
 
@@ -234,6 +270,44 @@ class MockAdapter(object):
         if commit:
             db.session.commit()
 
+    @staticmethod
+    def set_mock_response_interceptor(mock_id: str, response_id: str, interceptor_id: str, name: str,
+                                      commit: bool = True):
+        interceptor = MockAdapter.get_mock_response_interceptor(mock_id, response_id, interceptor_id)
+        entity = MockAdapter.mock_response_interceptor_from_object(interceptor)
+        entity.name = name
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_interceptor_configuration(mock_id: str, response_id: str, interceptor_id: str,
+                                                    configuration: str, commit: bool = True):
+        interceptor = MockAdapter.get_mock_response_interceptor(mock_id, response_id, interceptor_id)
+        entity = MockAdapter.mock_response_interceptor_from_object(interceptor)
+        entity.configuration = configuration
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_interceptor_enable(mock_id: str, response_id: str, interceptor_id: str, commit: bool = True):
+        interceptor = MockAdapter.get_mock_response_interceptor(mock_id, response_id, interceptor_id)
+        entity = MockAdapter.mock_response_interceptor_from_object(interceptor)
+        entity.is_enabled = True
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_interceptor_disable(mock_id: str, response_id: str, interceptor_id: str, commit: bool = True):
+        interceptor = MockAdapter.get_mock_response_interceptor(mock_id, response_id, interceptor_id)
+        entity = MockAdapter.mock_response_interceptor_from_object(interceptor)
+        entity.is_enabled = False
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
     # mappers
     @staticmethod
     def mock_from_object(object: Mock) -> MockDb:
@@ -274,7 +348,8 @@ class MockAdapter(object):
     @staticmethod
     def mock_request_from_entity(entity: MockRequestDb) -> MockRequest:
         if entity:
-            request_headers = RequestHeaderAdapter.get_request_headers_for_mock_request(entity.mock_id, entity.id, RequestHeaderType.mock_request)
+            request_headers = RequestHeaderAdapter.get_request_headers_for_mock_request(entity.mock_id, entity.id,
+                                                                                        RequestHeaderType.mock_request)
             return MockRequest(mock_id=entity.mock_id,
                                id=entity.id,
                                method=HTTPMethod[entity.method],
@@ -301,7 +376,9 @@ class MockAdapter(object):
     @staticmethod
     def mock_response_from_entity(entity: MockResponseDb) -> MockResponse:
         if entity:
-            response_headers = RequestHeaderAdapter.get_request_headers_for_mock_response(entity.mock_id, entity.id, RequestHeaderType.mock_response)
+            response_headers = RequestHeaderAdapter.get_request_headers_for_mock_response(entity.mock_id, entity.id,
+                                                                                          RequestHeaderType.mock_response)
+            response_interceptors = MockAdapter.get_response_interceptors_for_mock_response(entity.mock_id, entity.id)
             return MockResponse(mock_id=entity.mock_id,
                                 id=entity.id,
                                 is_enabled=entity.is_enabled,
@@ -312,5 +389,30 @@ class MockAdapter(object):
                                 delay=entity.delay,
                                 body=entity.body,
                                 order=entity.order,
-                                response_headers=response_headers)
+                                response_headers=response_headers,
+                                response_interceptors=response_interceptors)
+        return None
+
+    @staticmethod
+    def mock_response_interceptor_from_object(object: MockResponseInterceptor) -> MockResponseInterceptorDb:
+        if object:
+            return MockResponseInterceptorDb(mock_id=object.mock_id,
+                                             response_id=object.response_id,
+                                             type=object.type.value,
+                                             id=object.id,
+                                             is_enabled=object.is_enabled,
+                                             name=object.name,
+                                             configuration=object.configuration)
+        return None
+
+    @staticmethod
+    def mock_response_interceptor_from_entity(entity: MockResponseInterceptorDb) -> MockResponseInterceptor:
+        if entity:
+            return MockResponseInterceptor(mock_id=entity.mock_id,
+                                           response_id=entity.response_id,
+                                           type=MockResponseInterceptorType[entity.type],
+                                           id=entity.id,
+                                           is_enabled=entity.is_enabled,
+                                           name=entity.name,
+                                           configuration=entity.configuration)
         return None

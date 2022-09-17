@@ -16,7 +16,7 @@
             <td class="align-middle">{{ header.name }}</td>
             <td class="align-middle">{{ header.value }}</td>
             <td>
-                <form method="post" action="{{ url_for('mocks.mock_response_headers_remove', mock_id=mock.id, response_id=response.id,header_id=header.id) }}">
+                <form method="post" action="{{ url_for('mocks.mock_response_headers_remove', mock_id=mock.id, response_id=response.id, header_id=header.id) }}">
                     <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Remove">
                         <i class="fa fa-trash"></i>
                     </button>

@@ -16,7 +16,7 @@ class View(BaseView):
 
     @expose('/<mock_id>')
     def mock(self, mock_id):
-        configuration = mocks_controller.configuration()
+        configuration = mocks_controller.configuration(mock_id=mock_id)
         mocks = mocks_controller.mocks()
         mock = mocks_controller.mock(mock_id)
         response_next = mocks_controller.mock_response_next(mock_id)
@@ -25,7 +25,7 @@ class View(BaseView):
 
     @expose('/<mock_id>/<response_id>')
     def mock_response(self, mock_id, response_id):
-        configuration = mocks_controller.configuration()
+        configuration = mocks_controller.configuration(mock_id=mock_id, response_id=response_id)
         mocks = mocks_controller.mocks()
         mock = mocks_controller.mock(mock_id)
         response_next = mocks_controller.mock_response_next(mock_id)
@@ -217,3 +217,24 @@ class View(BaseView):
             lambda: mocks_controller.mock_response_update_body(mock_id, response_id, body),
             lambda: toast('Mock has been updated', category='success'))
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    # mock response interceptors
+    @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/remove', methods=[HTTPMethod.POST.value])
+    def mock_response_interceptors_remove(self, mock_id, response_id, interceptor_id):
+        call(
+            lambda: mocks_controller.mock_response_interceptors_remove(mock_id, response_id, interceptor_id),
+            lambda: toast('Interceptor has been removed', category='success')
+        )
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    @expose('/<mock_id>/<response_id>/interceptors/new', methods=[HTTPMethod.POST.value])
+    def mock_response_interceptors_new(self, mock_id, response_id):
+        type = request.form.get('mocks_definition_response_form_input_response_interceptor_type')
+        call(
+            lambda: mocks_controller.mock_response_interceptors_new(mock_id, response_id, None, type),
+            lambda: toast('Interceptor has been added', category='success'))
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/edit', methods=[HTTPMethod.POST.value])
+    def mock_response_interceptors_edit(self, mock_id, response_id, interceptor_id):
+        return redirect(url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id))

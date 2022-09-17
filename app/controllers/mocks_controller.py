@@ -9,7 +9,10 @@ from app.core.mocking_response_calculator import MockingResponseCalculator
 from app.core.mocking_response_order_calculator import MockingResponseOrderCalculator
 from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock, MockMethod
-from app.models.models.mock_response import MockResponse, MockResponseType
+from app.models.models.mock_response import MockResponse
+from app.models.models.mock_response_interceptor import MockResponseInterceptor
+from app.models.models.mock_response_interceptor_type import MockResponseInterceptorType
+from app.models.models.mock_response_type import MockResponseType
 from app.models.models.mocks_configuration import MocksConfiguration
 from app.models.models.request_header import RequestHeader, RequestHeaderType
 from app.models.models.status_code import StatusCode
@@ -20,13 +23,15 @@ order_calculator = MockingResponseOrderCalculator()
 
 
 # configuration
-def configuration() -> MocksConfiguration:
+def configuration(mock_id: str = None, response_id: str = None) -> MocksConfiguration:
+    response = MockAdapter.get_mock_response(mock_id, response_id)
     return MocksConfiguration(
         settings=SettingsAdapter.get_settings(),
         mock_supported_methods=MockMethod.supported_methods(),
         request_supported_methods=HTTPMethod.supported_methods(),
         response_supported_types=MockResponseType.supported_types(),
         response_supported_codes=StatusCode.supported_codes(),
+        response_supported_interceptors=MockResponseInterceptorType.supported_types_for_response(response)
     )
 
 
@@ -39,7 +44,7 @@ def mock(mock_id: str) -> Mock:
     return MockAdapter.get_mock(mock_id)
 
 
-def mock_response_next(mock_id: str) -> str:
+def mock_response_next(mock_id: str) -> MockResponse:
     mock = MockAdapter.get_mock(mock_id)
     calculator = MockingResponseCalculator()
     return calculator.calculate(request, mock)
@@ -175,8 +180,6 @@ def mock_response_update_status(mock_id: str, response_id: str, status: str):
 
 
 # mock response headers
-
-
 def mock_response_headers_remove(mock_id: str, response_id: str, header_id: str):
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(response_id, 'Mock response should be provided')
@@ -203,3 +206,24 @@ def mock_response_update_body(mock_id: str, response_id: str, body: str):
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(response_id, 'Mock response should be provided')
     MockAdapter.set_mock_response_body(mock_id, response_id, body)
+
+
+# mock response interceptors
+def mock_response_interceptors_remove(mock_id: str, response_id: str, interceptor_id: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    validate_not_empty(interceptor_id, 'Mock response interceptor should be provided')
+    MockAdapter.remove_mock_response_interceptor(interceptor_id)
+
+
+def mock_response_interceptors_new(mock_id: str, response_id: str, name: str, type: str):
+    type = MockResponseInterceptorType[type]
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    validate_not_empty(type, 'Type should not be empty')
+    interceptor = MockResponseInterceptor(mock_id=mock_id,
+                                          response_id=response_id,
+                                          type=type,
+                                          name=name)
+    MockAdapter.add_mock_response_interceptor(interceptor)
+    return interceptor

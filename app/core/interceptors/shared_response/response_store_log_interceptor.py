@@ -1,11 +1,11 @@
 from app.adapters.mock_response_log_adapter import MockResponseLogAdapter
-from app.core.proxy.models.proxy_response import ProxyResponse
+from app.models.models.proxy_response import ProxyResponse
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_log import MockResponseLog
 
 
-class ProxyResponseStoreLogInterceptor(object):
+class ResponseStoreLogInterceptor(object):
     def intercept(self, response: ProxyResponse, mock: Mock, mock_response: MockResponse) -> ProxyResponse:
         if mock and mock_response:
             log = MockResponseLog(mock_id=mock.id,

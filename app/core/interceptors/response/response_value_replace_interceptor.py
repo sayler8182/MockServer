@@ -7,17 +7,18 @@ from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_interceptor import MockResponseInterceptor
 
 
-class MockResponseValueReplaceInterceptor(object):
+class ResponseValueReplaceInterceptor(object):
     def intercept(self, response, mock: Mock, mock_response: MockResponse, interceptor: MockResponseInterceptor):
         if response and response.body:
             configuration = json.loads(interceptor.configuration)
-            key_path = configuration['key_path']
-            value = configuration['value']
+            key_path = configuration.get('key_path', None)
+            value = configuration.get('value', None)
             object = json.loads(response.body)
-            expression = jsonpath_ng.parse(key_path)
-            data = expression.update(object, value)
-            new_body = json.dumps(data, separators=(',', ':')).encode()
-            response.body = new_body
+            if object and key_path:
+                expression = jsonpath_ng.parse(key_path)
+                data = expression.update(object, value)
+                new_body = json.dumps(data, separators=(',', ':')).encode()
+                response.body = new_body
         return response
 
     @staticmethod

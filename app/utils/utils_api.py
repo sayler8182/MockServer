@@ -2,7 +2,7 @@ import json
 
 from flask import send_from_directory
 
-from app.core.proxy.models.proxy_response import ProxyResponse
+from app.models.models.proxy_response import ProxyResponse
 from app.static.tmp import tmp_file, tmp_directory
 from app.utils.utils import new_id, get_dict, chunked
 

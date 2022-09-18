@@ -33,13 +33,12 @@ class MockResponseInterceptorType(Enum):
         return self.value
 
     def is_available(self, type: MockResponseType):
+        common_items = [
+            MockResponseInterceptorType.custom,
+            MockResponseInterceptorType.value_replace
+        ]
         items = {
-            MockResponseType.mock_json: [
-                MockResponseInterceptorType.custom,
-            ],
-            MockResponseType.proxy: [
-                MockResponseInterceptorType.custom,
-                MockResponseInterceptorType.value_replace
-            ]
+            MockResponseType.mock_json: common_items + [],
+            MockResponseType.proxy: common_items + []
         }.get(type)
         return self in items

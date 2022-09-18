@@ -78,7 +78,7 @@
             let element = document.getElementById("mocks_definition_response_body_json_input");
             let value = normalizeJSON(element.value, 0);
             let data = { "body": value }
-            $.post(`/admin/mocks/${mock_id}/${response_id}/body`, data, function(data) {
+            $.post(`/admin/mocks/${mock_id}/${response_id}/update/body`, data, function(data) {
                 window.location = data
             })
         });

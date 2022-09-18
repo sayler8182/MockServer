@@ -2,7 +2,7 @@ from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 
 
-class MockResponseInterceptor(object):
+class SharedResponseInterceptor(object):
     def __init__(self, interceptors):
         self.interceptors = interceptors
 

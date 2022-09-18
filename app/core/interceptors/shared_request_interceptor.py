@@ -1,9 +1,9 @@
-from app.core.proxy.models.proxy_request import ProxyRequest
+from app.models.models.proxy_request import ProxyRequest
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 
 
-class ProxyRequestInterceptor(object):
+class SharedRequestInterceptor(object):
     def __init__(self, interceptors):
         self.interceptors = interceptors
 

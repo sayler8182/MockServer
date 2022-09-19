@@ -216,7 +216,7 @@ class View(BaseView):
         call(
             lambda: mocks_controller.mock_response_update_body(mock_id, response_id, body),
             lambda: toast('Mock has been updated', category='success'))
-        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+        return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
 
     # mock response interceptors
     @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/remove', methods=[HTTPMethod.POST.value])

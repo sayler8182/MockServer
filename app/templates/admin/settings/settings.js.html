@@ -25,8 +25,8 @@
         $('#settings_form_proxy_is_selected').change(function() {
             let proxy_id = $(this).data('proxy-id')
             if (this.checked) {
-                $.post(`/admin/settings/proxy/${proxy_id}/select`, function(data) {
-                    window.location = data
+                $.post(`/admin/settings/proxy/${proxy_id}/select`, function(response) {
+                    window.location = response
                 })
             } else {
                 this.checked = true
@@ -36,8 +36,8 @@
         $('#settings_form_proxy_is_enabled').change(function() {
             let proxy_id = $(this).data('proxy-id')
             let endpoint = this.checked ? 'enable' : 'disable'
-            $.post(`/admin/settings/proxy/${proxy_id}/${endpoint}`, function(data) {
-                window.location = data
+            $.post(`/admin/settings/proxy/${proxy_id}/${endpoint}`, function(response) {
+                window.location = response
             })
         });
     });

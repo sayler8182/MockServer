@@ -42,8 +42,7 @@ class View(BaseView):
             lambda: interceptors_controller.interceptor_enable(mock_id, response_id, interceptor_id),
             lambda: toast('Interceptor has been enabled', category='success')
         )
-        return redirect(url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
-                                interceptor_id=interceptor_id))
+        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id)
 
     @expose('/<mock_id>/<response_id>/<interceptor_id>/disable', methods=[HTTPMethod.POST.value])
     def interceptor_disable(self, mock_id, response_id, interceptor_id):
@@ -51,14 +50,13 @@ class View(BaseView):
             lambda: interceptors_controller.interceptor_disable(mock_id, response_id, interceptor_id),
             lambda: toast('Interceptor has been disabled', category='success')
         )
-        return redirect(url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
-                                interceptor_id=interceptor_id))
+        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id)
 
     @expose('/<mock_id>/<response_id>/<interceptor_id>/configuration', methods=[HTTPMethod.POST.value])
     def interceptor_update_configuration(self, mock_id, response_id, interceptor_id):
         configuration = request.form.get("configuration")
         call(
-            lambda: interceptors_controller.interceptor_update_configuration(mock_id, response_id, interceptor_id, configuration),
+            lambda: interceptors_controller.interceptor_update_configuration(mock_id, response_id, interceptor_id,
+                                                                             configuration),
             lambda: toast('Interceptor has been updated', category='success'))
-        return redirect(url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
-                                interceptor_id=interceptor_id))
+        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id)

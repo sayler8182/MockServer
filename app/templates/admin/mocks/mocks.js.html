@@ -27,8 +27,8 @@
             let mock_id = $(this).data('mock-id')
             let response_id = $(this).data('response-id')
             let endpoint = this.checked ? 'set' : 'unset'
-            $.post(`/admin/mocks/${mock_id}/${response_id}/${endpoint}`, function(data) {
-                window.location = data
+            $.post(`/admin/mocks/${mock_id}/${response_id}/${endpoint}`, function(response) {
+                window.location = response
             })
         });
 
@@ -78,8 +78,8 @@
             let element = document.getElementById("mocks_definition_response_body_json_input");
             let value = normalizeJSON(element.value, 0);
             let data = { "body": value }
-            $.post(`/admin/mocks/${mock_id}/${response_id}/update/body`, data, function(data) {
-                window.location = data
+            $.post(`/admin/mocks/${mock_id}/${response_id}/update/body`, data, function(response) {
+                window.location = response
             })
         });
 

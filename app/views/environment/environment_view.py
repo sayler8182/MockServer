@@ -26,14 +26,20 @@ class View(BaseView):
     def environment_new(self):
         name = request.form.get('environment_form_input_name')
         value = request.form.get('environment_form_input_value')
-        environment_controller.environment_new(name, value)
+        call(
+            lambda: environment_controller.environment_new(name, value),
+            lambda: toast('Environment has been added', category='success')
+        )
         return redirect(url_for('environment.index'))
 
     @expose('/<item_id>/update', methods=[HTTPMethod.POST.value])
     def environment_update(self, item_id):
         name = request.form.get('environment_form_input_name')
         value = request.form.get('environment_form_input_value')
-        environment_controller.environment_update(item_id, name, value)
+        call(
+            lambda: environment_controller.environment_update(item_id, name, value),
+            lambda: toast('Environment has been updated', category='success')
+        )
         return redirect(url_for('environment.index'))
 
     @expose('/import', methods=[HTTPMethod.POST.value])

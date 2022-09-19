@@ -38,16 +38,18 @@ def response_dumps_object(flask_app, status=200, object={}, headers={}):
 
 
 def response_dumps_list(flask_app, status=200, object=[], headers={}):
-    dictionary = get_dict(object) if object else None
-    return response_dumps_dict(
-        flask_app=flask_app,
+    dictionary = get_dict(object) if object else []
+    data = json.dumps(dictionary)
+    return flask_app.response_class(
+        response=data,
         status=status,
-        object=dictionary,
+        mimetype=default_mimetype,
         headers=headers)
 
 
 def response_dumps_dict(flask_app, status=200, object={}, headers={}):
-    data = json.dumps(object) if object else None
+    dictionary = object or {}
+    data = json.dumps(dictionary)
     return flask_app.response_class(
         response=data,
         status=status,

@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, url_for, redirect
 
 
 class AppRouter(object):
@@ -6,6 +6,10 @@ class AppRouter(object):
         self.flask_app = flask_app
 
     def init_router(self):
+        @self.flask_app.route("/")
+        def index():
+            return redirect(url_for('admin.index'))
+
         @self.flask_app.route("/favicon.ico")
         def favicon():
             return render_template('404.html'), 404

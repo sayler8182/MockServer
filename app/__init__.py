@@ -1,5 +1,6 @@
 from flask import Flask
-import os
+
+from app.utils.env import Env
 
 
 def create_app() -> Flask:
@@ -33,7 +34,7 @@ def create_app() -> Flask:
     from app.database.database_initializer import DatabaseInitializer
     database_initializer = DatabaseInitializer(None)
 
-    if os.getenv('FLASK_DATABASE_INITIALIZE'):
+    if Env.MOCK_SERVER_FLASK_DATABASE_INITIALIZED:
         database_initializer.init_app()
 
     return flask_app

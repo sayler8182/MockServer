@@ -1,0 +1,955 @@
+{
+	"info": {
+		"_postman_id": "d42e7328-4d5e-4754-8a39-e96c8e856575",
+		"name": "MockServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8198514"
+	},
+	"item": [
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "api/settings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/select",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/select",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/remove",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/3aa62dc029a8456c9e0c5b3957252054",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"3aa62dc029a8456c9e0c5b3957252054"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/enable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/disable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test proxy\",\n    \"path\": \"https://aga.salesbook-ent.com\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/request/headers/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"name\",\n    \"value\": \"value\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/request/headers/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"request",
+								"headers",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/request/headers/<header_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test proxy\",\n    \"path\": \"https://aga.salesbook-ent.com\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/request/headers/afb80682600544fb9916f05e90af6251",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"request",
+								"headers",
+								"afb80682600544fb9916f05e90af6251"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/response/headers/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"name\",\n    \"value\": \"value\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/response/headers/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"response",
+								"headers",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/response/headers/<header_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test proxy\",\n    \"path\": \"https://aga.salesbook-ent.com\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/629e2e515da845078d27dcc29128dcd7/response/headers/c19f472d99fc4c9ca9f30ba291e19923",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"629e2e515da845078d27dcc29128dcd7",
+								"response",
+								"headers",
+								"c19f472d99fc4c9ca9f30ba291e19923"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mocks",
+			"item": [
+				{
+					"name": "api/mocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/75888b16baa549bf842de1b10f8e4abe",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"75888b16baa549bf842de1b10f8e4abe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/75888b16baa549bf842de1b10f8e4abe/c776ca0bf6bb463ba37fd00059f4820d",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"75888b16baa549bf842de1b10f8e4abe",
+								"c776ca0bf6bb463ba37fd00059f4820d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/eecf92ff0bf347eda25257a8e410e267",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"eecf92ff0bf347eda25257a8e410e267"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/enable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/disable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Some name\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/request/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"method\": \"PUT\",\n    \"path\": \"/some/path\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/request/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"request",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/method/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"method\": \"sequential\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/method/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"method",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"method\": \"sequential\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/c5460f0f935b45d1bbeabbb427377894",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"c5460f0f935b45d1bbeabbb427377894"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/enable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/disable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/set",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/set",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"set"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/unset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/unset",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"unset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Response name\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"mock_json\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/update/type",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"update",
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/status",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": 201\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/update/status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"update",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/headers/<header_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/headers/92d804514a9343458c96d62846ca4dbc",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"headers",
+								"92d804514a9343458c96d62846ca4dbc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/headers/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"name\",\n    \"value\": \"value\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/headers/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"headers",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/body",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"{}\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/update/body",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d45062c905844caca9f1248962623d63",
+								"840384db59a141fe8676ada5b1a4a16d",
+								"update",
+								"body"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Process",
+			"item": [
+				{
+					"name": "api/process",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/process",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/process/start",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"ios_record\",\n    \"file_path\": \"{{HOME}}/Documents/MockServer/docs/example/simulator_recording.sh\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/process/start",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"process",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/process/stop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"ios_record\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/process/stop",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"process",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/process/call",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"ios_record\",\n    \"file_path\": \"{{HOME}}/Documents/MockServer/docs/example/simulator_recording_compress.sh\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/process/call",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"process",
+								"call"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "terminate",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/terminate",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"terminate"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "PORT",
+			"value": "5012",
+			"type": "string"
+		},
+		{
+			"key": "BASE_URL",
+			"value": "http://127.0.0.1:{{PORT}}",
+			"type": "string"
+		},
+		{
+			"key": "HOME",
+			"value": "/Users/konrad",
+			"type": "string"
+		}
+	]
+}

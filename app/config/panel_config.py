@@ -1,6 +1,8 @@
 from flask_admin import Admin
 
 from app.views import home_view
+from app.views.environment import environment_view
+from app.views.interceptors import interceptors_view
 from app.views.mocks import mocks_view
 from app.views.settings import settings_view
 
@@ -18,7 +20,10 @@ class PanelConfig(object):
         admin.add_view(
             mocks_view.View(name='Mocks', endpoint='mocks'))
         admin.add_view(
-            settings_view.View(name='Settings', endpoint='settings'))
-        from app.views.interceptors import interceptors_view
+            environment_view.View(name='Environment', endpoint='environment'))
         admin.add_view(
-            interceptors_view.View(name='Settings', endpoint='interceptors'))
+            settings_view.View(name='Settings', endpoint='settings'))
+
+        # hidden
+        admin.add_view(
+            interceptors_view.View(name='Interceptors', endpoint='interceptors'))

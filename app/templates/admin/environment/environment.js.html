@@ -1,0 +1,30 @@
+<script>
+    $(document).ready(function () {
+        $("[data-toggle=tooltip").tooltip();
+
+        $('#environment_form_file_import_picker').click(function() {
+            openFileDialog(importAccept, function(event) {
+                if (this.files.length > 0) {
+                    var formData = new FormData();
+                    formData.append("environment_form_file_import", this.files[0], "file");
+                    $.ajax({
+                        url: `/admin/environment/import`,
+                        type: `post`,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            window.location = response
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#environment_form_end_edit').click(function() {
+            $.get(`/admin/environment/end_edit`, function (response) {
+                window.location = response
+            })
+        })
+    });
+</script>

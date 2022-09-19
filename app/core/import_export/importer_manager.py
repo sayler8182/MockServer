@@ -2,9 +2,11 @@ import json
 
 from werkzeug.datastructures import FileStorage
 
+from app.adapters.environment_adapter import EnvironmentAdapter
 from app.adapters.mock_adapter import MockAdapter
 from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.import_export.import_export_type import ImportExportType
+from app.models.models.environment import Environment
 from app.models.models.mock import Mock
 from app.models.models.proxy import Proxy
 from app.utils.utils import store_file_in_tmp, read_file
@@ -18,6 +20,7 @@ class ImporterManager(object):
         {
             ImportExportType.mocks: ImporterManager.import_mocks,
             ImportExportType.mock: ImporterManager.import_mock,
+            ImportExportType.environment: ImporterManager.import_environment,
             ImportExportType.proxies: ImporterManager.import_proxies,
             ImportExportType.proxy: ImporterManager.import_proxy
         }[type](data)
@@ -34,6 +37,13 @@ class ImporterManager(object):
         object = ImporterManager.__object(data)
         mock = Mock.mock_from_dict(object)
         MockAdapter.add_mock(mock)
+
+    @staticmethod
+    def import_environment(data: dict):
+        object = ImporterManager.__object(data)
+        environment = Environment.environment_from_dict(object)
+        for item in environment.items:
+            EnvironmentAdapter.add_environment(item)
 
     @staticmethod
     def import_proxies(data: dict):

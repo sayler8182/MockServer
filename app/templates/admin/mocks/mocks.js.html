@@ -3,11 +3,10 @@
     $(document).ready(function () {
         $("[data-toggle=tooltip").tooltip();
 
-        $('#mocks_form_file_import_picker').click(function() {
-            openFileDialog(importAccept, function(event) {
+        $('#mocks_form_file_import_picker').click(function () {
+            openFileDialog(importAccept, function (event) {
                 if (this.files.length > 0) {
                     var formData = new FormData();
-                    console.log(this.files[0])
                     formData.append("mocks_form_file_import", this.files[0], "file");
                     $.ajax({
                         url: `/admin/mocks/import`,
@@ -15,7 +14,7 @@
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success: function(response) {
+                        success: function (response) {
                             window.location = response
                         }
                     });
@@ -23,11 +22,11 @@
             });
         });
 
-        $('#mocks_definition_response_form_name_force').change(function() {
+        $('#mocks_definition_response_form_name_force').change(function () {
             let mock_id = $(this).data('mock-id')
             let response_id = $(this).data('response-id')
             let endpoint = this.checked ? 'set' : 'unset'
-            $.post(`/admin/mocks/${mock_id}/${response_id}/${endpoint}`, function(response) {
+            $.post(`/admin/mocks/${mock_id}/${response_id}/${endpoint}`, function (response) {
                 window.location = response
             })
         });
@@ -39,15 +38,15 @@
             object.addClass(style)
         }
         function updatePanelParentStyle(object) {
-           let parent = $(`#${$(object).attr('id')}_parent`)
-           if (parent.hasClass('collapsed')) {
-               setPanelParentStyle(parent, 'btn-primary')
-           } else {
-               setPanelParentStyle(parent, 'btn-success')
-           }
+            let parent = $(`#${$(object).attr('id')}_parent`)
+            if (parent.hasClass('collapsed')) {
+                setPanelParentStyle(parent, 'btn-primary')
+            } else {
+                setPanelParentStyle(parent, 'btn-success')
+            }
         }
         $('.response_option').each(function () {
-           updatePanelParentStyle(this)
+            updatePanelParentStyle(this)
         })
         $('.response_option').on('shown.bs.collapse hidden.bs.collapse', function () {
             updatePanelParentStyle(this)
@@ -62,23 +61,23 @@
                 return value;
             }
         }
-        $('#mocks_definition_response_body_json_format').click(function() {
+        $('#mocks_definition_response_body_json_format').click(function () {
             let element = document.getElementById("mocks_definition_response_body_json_input");
             let value = normalizeJSON(element.value, 2);
             element.value = value;
         });
-        $('#mocks_definition_response_body_json_copy').click(function() {
+        $('#mocks_definition_response_body_json_copy').click(function () {
             let element = document.getElementById("mocks_definition_response_body_json_input");
             let value = normalizeJSON(element.value, 0);
             copyToClipboard(value);
         });
-        $('#mocks_definition_response_body_json_save').click(function() {
+        $('#mocks_definition_response_body_json_save').click(function () {
             let mock_id = $(this).data('mock-id')
             let response_id = $(this).data('response-id')
             let element = document.getElementById("mocks_definition_response_body_json_input");
             let value = normalizeJSON(element.value, 0);
             let data = { "body": value }
-            $.post(`/admin/mocks/${mock_id}/${response_id}/update/body`, data, function(response) {
+            $.post(`/admin/mocks/${mock_id}/${response_id}/update/body`, data, function (response) {
                 window.location = response
             })
         });
@@ -104,7 +103,7 @@
         }
         let jsonEditorOptions = { "editable": false }
         let jsonEditor = new JsonEditor(`#${response_body_json_output.attr('id')}`, getBodyJsonInput(), jsonEditorOptions);
-        response_body_json_input.on('change keyup paste', function() {
+        response_body_json_input.on('change keyup paste', function () {
             jsonEditor.load(getBodyJsonInput());
         });
 

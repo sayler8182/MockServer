@@ -15,8 +15,3 @@
 - [] template tags
 - [] env variables
 - [] faker for mocking response
-
-## api
-- [] mocks
-- [] settings
-- [] running scripts

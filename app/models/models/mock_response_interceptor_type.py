@@ -5,12 +5,14 @@ from app.models.models.mock_response_type import MockResponseType
 
 class MockResponseInterceptorType(Enum):
     custom = 'custom'
+    templating = 'templating'
     value_replace = 'value_replace'
 
     @property
     def description(self) -> str:
         return {
             MockResponseInterceptorType.custom: 'Custom',
+            MockResponseInterceptorType.templating: 'Templating',
             MockResponseInterceptorType.value_replace: 'Replace value'
         }.get(self)
 
@@ -18,6 +20,7 @@ class MockResponseInterceptorType(Enum):
     def supported_types():
         return [
             MockResponseInterceptorType.custom,
+            MockResponseInterceptorType.templating,
             MockResponseInterceptorType.value_replace
         ]
 
@@ -35,6 +38,7 @@ class MockResponseInterceptorType(Enum):
     def is_available(self, type: MockResponseType):
         common_items = [
             MockResponseInterceptorType.custom,
+            MockResponseInterceptorType.templating,
             MockResponseInterceptorType.value_replace
         ]
         items = {

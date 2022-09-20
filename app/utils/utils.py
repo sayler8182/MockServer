@@ -118,3 +118,11 @@ def read_file(file_path: str) -> str:
     content = file.read()
     file.close()
     return content
+
+
+def to_list(object: any) -> [any]:
+    if object is None:
+        return []
+    if isinstance(object, list):
+        return object
+    return [object]

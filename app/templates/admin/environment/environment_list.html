@@ -1,4 +1,4 @@
-{% if environment and environment.items %}
+{% if environment and environment.dynamic %}
 <div class="form-group form-inline">
     <table class="table table-sm table-striped">
         <thead>
@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for item in environment.items %}
+        {% for item in environment.dynamic %}
         <tr>
             <th class="align-middle">{{ loop.index }}</th>
             <td class="align-middle">{{ item.name }}</td>

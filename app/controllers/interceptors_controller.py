@@ -14,6 +14,10 @@ def interceptor_configuration_example(type: MockResponseInterceptorType) -> str:
     return ResponseInterceptor.example(type)
 
 
+def interceptor_is_configurable(type: MockResponseInterceptorType) -> bool:
+    return ResponseInterceptor.is_configurable(type)
+
+
 def interceptor_update(mock_id: str, response_id: str, interceptor_id: str, name: str):
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(response_id, 'Mock response should be provided')

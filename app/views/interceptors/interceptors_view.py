@@ -22,8 +22,10 @@ class View(BaseView):
     def interceptor(self, mock_id, response_id, interceptor_id):
         interceptor = interceptors_controller.interceptor(mock_id, response_id, interceptor_id)
         interceptor_configuration_example = interceptors_controller.interceptor_configuration_example(interceptor.type)
+        interceptor_is_configurable = interceptors_controller.interceptor_is_configurable(interceptor.type)
         return self.render('admin/interceptors/interceptors.html', mock_id=mock_id, response_id=response_id,
-                           interceptor=interceptor, interceptor_configuration_example=interceptor_configuration_example)
+                           interceptor=interceptor, interceptor_configuration_example=interceptor_configuration_example,
+                           interceptor_is_configurable=interceptor_is_configurable)
 
     # interceptor
     @expose('/<mock_id>/<response_id>/<interceptor_id>/update', methods=[HTTPMethod.POST.value])
@@ -42,7 +44,8 @@ class View(BaseView):
             lambda: interceptors_controller.interceptor_enable(mock_id, response_id, interceptor_id),
             lambda: toast('Interceptor has been enabled', category='success')
         )
-        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id)
+        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
+                       interceptor_id=interceptor_id)
 
     @expose('/<mock_id>/<response_id>/<interceptor_id>/disable', methods=[HTTPMethod.POST.value])
     def interceptor_disable(self, mock_id, response_id, interceptor_id):
@@ -50,7 +53,8 @@ class View(BaseView):
             lambda: interceptors_controller.interceptor_disable(mock_id, response_id, interceptor_id),
             lambda: toast('Interceptor has been disabled', category='success')
         )
-        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id)
+        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
+                       interceptor_id=interceptor_id)
 
     @expose('/<mock_id>/<response_id>/<interceptor_id>/configuration', methods=[HTTPMethod.POST.value])
     def interceptor_update_configuration(self, mock_id, response_id, interceptor_id):
@@ -59,4 +63,5 @@ class View(BaseView):
             lambda: interceptors_controller.interceptor_update_configuration(mock_id, response_id, interceptor_id,
                                                                              configuration),
             lambda: toast('Interceptor has been updated', category='success'))
-        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id)
+        return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
+                       interceptor_id=interceptor_id)

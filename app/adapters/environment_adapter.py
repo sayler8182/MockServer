@@ -8,7 +8,7 @@ class EnvironmentAdapter(object):
     @staticmethod
     def get_environment():
         return Environment(
-            items=EnvironmentAdapter.get_environment_items()
+            dynamic=EnvironmentAdapter.get_environment_items()
         )
 
     @staticmethod

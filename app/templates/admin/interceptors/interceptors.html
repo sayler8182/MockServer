@@ -7,9 +7,11 @@
     <!-- definition -->
     {% include "admin/interceptors/interceptors_definition.html" %}
 
-    <div class="dropdown-divider"></div>
-    <h2>{{ interceptor.type.description }} interceptor</h2>
-    {% include "admin/interceptors/interceptors_definition_configuration.html" %}
+    {% if interceptor_is_configurable %}
+        <div class="dropdown-divider"></div>
+        <h2>{{ interceptor.type.description }} configuration</h2>
+        {% include "admin/interceptors/interceptors_definition_configuration.html" %}
+    {% endif %}
 </div>
 {% endblock %}
 {% block tail_js %}

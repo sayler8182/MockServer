@@ -1,15 +1,22 @@
 from app.models.models.environment_item import EnvironmentItem
+from app.models.models.environment_static_key import EnvironmentStaticKey
 from app.utils.utils import get_dict
 
 
 class Environment(object):
     def __init__(self,
-                 items: [EnvironmentItem] = None):
-        self.items = items
+                 dynamic: [EnvironmentItem] = None):
+        self.static = Environment.static_items()
+        self.dynamic = dynamic
+
+    @staticmethod
+    def static_items() -> [EnvironmentItem]:
+        return list(map(lambda item: EnvironmentItem(name=item.description), EnvironmentStaticKey.available_keys()))
 
     def get_dict(self):
         return {
-            'items': get_dict(self.items)
+            'static': get_dict(self.static),
+            'dynamic': get_dict(self.dynamic)
         }
 
     @staticmethod
@@ -17,6 +24,8 @@ class Environment(object):
         if object is None:
             return None
 
-        items_list = object.get('items', None)
-        items = list(map(lambda item: EnvironmentItem.environment_item_from_dict(item), items_list))
-        return Environment(items=items)
+        static_list = object.get('static', None)
+        dynamic_list = object.get('dynamic', None)
+        static = list(map(lambda item: EnvironmentItem.environment_item_from_dict(item), static_list))
+        dynamic = list(map(lambda item: EnvironmentItem.environment_item_from_dict(item), dynamic_list))
+        return Environment(dynamic=dynamic)

@@ -82,6 +82,7 @@ class MockAdapter(object):
     @staticmethod
     def add_mock_response(mock_response: MockResponse, commit: bool = True):
         entity = MockAdapter.mock_response_from_object(mock_response)
+        MockAdapter.add_mock_response_interceptors(mock_response.response_interceptors, commit=False)
         db.session.merge(entity)
         if commit:
             db.session.commit()

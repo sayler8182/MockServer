@@ -5,6 +5,7 @@ class ProxyDb(db.Model):
     id = db.Column(db.String, primary_key=True, nullable=False)
     is_selected = db.Column(db.Boolean, default=False, nullable=False)
     is_enabled = db.Column(db.Boolean, default=False, nullable=False)
+    is_templating_enabled = db.Column(db.Boolean, default=True, nullable=False)
     name = db.Column(db.String, nullable=True)
     path = db.Column(db.String, nullable=True)
     delay_mode = db.Column(db.String, nullable=False)
@@ -17,6 +18,7 @@ class ProxyDb(db.Model):
                f' id: {self.id} ' \
                f' is_selected: {self.is_selected}' \
                f' is_enabled: {self.is_enabled}' \
+               f' is_templating_enabled: {self.is_templating_enabled}' \
                f' name: {self.name}' \
                f' path: {self.path}' \
                f' delay_mode: {self.delay_mode}' \

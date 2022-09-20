@@ -22,11 +22,16 @@ class EnvironmentAdapter(object):
         return EnvironmentAdapter.environment_item_from_entity(query)
 
     @staticmethod
-    def add_environment(item: EnvironmentItem, commit: bool = True):
+    def add_or_set_environment(item: EnvironmentItem, commit: bool = True):
+        EnvironmentItemDb.query.filter_by(name=item.name).delete()
         entity = EnvironmentAdapter.environment_item_from_object(item)
         db.session.merge(entity)
         if commit:
             db.session.commit()
+
+    @staticmethod
+    def add_environment(item: EnvironmentItem, commit: bool = True):
+        EnvironmentAdapter.add_or_set_environment(item, commit)
 
     @staticmethod
     def remove_all(commit: bool = True):
@@ -42,13 +47,10 @@ class EnvironmentAdapter(object):
 
     @staticmethod
     def set_environment(item_id: str, name: str, value: str, commit: bool = True):
-        item = EnvironmentAdapter.get_environment_item(item_id)
-        entity = EnvironmentAdapter.environment_item_from_object(item)
-        entity.name = name
-        entity.value = value
-        db.session.merge(entity)
-        if commit:
-            db.session.commit()
+        item = EnvironmentItem(id=item_id,
+                               name=name,
+                               value=value)
+        EnvironmentAdapter.add_or_set_environment(item, commit)
 
     # mappers
     @staticmethod

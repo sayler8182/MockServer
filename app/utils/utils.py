@@ -126,3 +126,9 @@ def to_list(object: any) -> [any]:
     if isinstance(object, list):
         return object
     return [object]
+
+
+def to_binary(object: any) -> [bytes]:
+    if isinstance(object, str):
+        return object.encode()
+    return object

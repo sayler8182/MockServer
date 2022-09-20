@@ -1,11 +1,11 @@
+from app.adapters.proxy_adapter import ProxyAdapter
 from app.adapters.request_header_adapter import RequestHeaderAdapter
 from app.adapters.settings_adapter import SettingsAdapter
-from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.import_export.exporter_manager import ExporterManager
 from app.core.import_export.importer_manager import ImporterManager
+from app.models.models.proxy import Proxy
 from app.models.models.request_header import RequestHeader, RequestHeaderType
 from app.models.models.settings import Settings
-from app.models.models.proxy import Proxy
 from app.utils.form_validator import validate_not_empty
 from app.utils.utils import to_bool
 
@@ -64,6 +64,16 @@ def proxy_enable(proxy_id: str):
 def proxy_disable(proxy_id: str):
     validate_not_empty(proxy_id, 'Incorrect proxy provided')
     ProxyAdapter.set_proxy_disable(proxy_id)
+
+
+def proxy_templating_enable(proxy_id: str):
+    validate_not_empty(proxy_id, 'Incorrect proxy provided')
+    ProxyAdapter.set_proxy_templating_enable(proxy_id)
+
+
+def proxy_templating_disable(proxy_id: str):
+    validate_not_empty(proxy_id, 'Incorrect proxy provided')
+    ProxyAdapter.set_proxy_templating_disable(proxy_id)
 
 
 def proxy_update(proxy_id: str, name: str, path: str):

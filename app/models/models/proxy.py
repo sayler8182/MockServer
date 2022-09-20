@@ -8,6 +8,7 @@ class Proxy(object):
                  id: str = None,
                  is_selected: bool = None,
                  is_enabled: bool = None,
+                 is_templating_enabled: bool = None,
                  name: str = None,
                  path: str = None,
                  delay_mode: DelayMode = None,
@@ -19,6 +20,7 @@ class Proxy(object):
         self.id = id
         self.is_selected = is_selected
         self.is_enabled = is_enabled
+        self.is_templating_enabled = is_templating_enabled
         self.name = name
         self.path = path
         self.delay_mode = delay_mode
@@ -47,6 +49,10 @@ class Proxy(object):
         if self.is_enabled is None:
             self.is_enabled = False
 
+    def __init_default_is_templating_enabled(self):
+        if self.is_templating_enabled is None:
+            self.is_templating_enabled = False
+
     def __init_default_delay_mode(self):
         if self.delay_mode is None:
             self.delay_mode = DelayMode.static
@@ -68,6 +74,7 @@ class Proxy(object):
             'id': self.id,
             'is_selected': self.is_selected,
             'is_enabled': self.is_enabled,
+            'is_templating_enabled': self.is_templating_enabled,
             'name': self.name,
             'path': self.path,
             'delay_mode': self.delay_mode.get_dict(),
@@ -86,6 +93,7 @@ class Proxy(object):
         id = object.get('id', None)
         is_selected = object.get('is_selected', None)
         is_enabled = object.get('is_enabled', None)
+        is_templating_enabled = object.get('is_templating_enabled', None)
         name = object.get('name', None)
         path = object.get('path', None)
         delay_mode_string = object.get('delay_mode', None)
@@ -93,13 +101,15 @@ class Proxy(object):
         delay_from = object.get('delay_from', None)
         delay_to = object.get('delay_to', None)
         delay = object.get('delay', None)
-        request_headers_list = object.get('request_headers', None)
+        request_headers_list = object.get('request_headers', None) or []
         request_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), request_headers_list))
-        response_headers_list = object.get('response_headers', None)
-        response_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
+        response_headers_list = object.get('response_headers', None) or []
+        response_headers = list(
+            map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
         return Proxy(id=id,
                      is_selected=is_selected,
                      is_enabled=is_enabled,
+                     is_templating_enabled=is_templating_enabled,
                      name=name,
                      path=path,
                      delay_mode=delay_mode,

@@ -76,6 +76,22 @@ class View(BaseView):
         )
         return url_for('settings.proxy', proxy_id=proxy_id)
 
+    @expose('proxy/<proxy_id>/templating/enable', methods=[HTTPMethod.POST.value])
+    def proxy_templating_enable(self, proxy_id):
+        call(
+            lambda: settings_controller.proxy_templating_enable(proxy_id),
+            lambda: toast('Proxy templating has been enabled', category='success')
+        )
+        return url_for('settings.proxy', proxy_id=proxy_id)
+
+    @expose('proxy/<proxy_id>/templating/disable', methods=[HTTPMethod.POST.value])
+    def proxy_templating_disable(self, proxy_id):
+        call(
+            lambda: settings_controller.proxy_templating_disable(proxy_id),
+            lambda: toast('Proxy templating has been disabled', category='success')
+        )
+        return url_for('settings.proxy', proxy_id=proxy_id)
+
     @expose('proxy/<proxy_id>', methods=[HTTPMethod.POST.value])
     def proxy_update(self, proxy_id):
         name = request.form.get('settings_form_input_proxy_name')

@@ -40,5 +40,13 @@
                 window.location = response
             })
         });
+
+        $('#settings_form_proxy_templating_is_enabled').change(function () {
+            let proxy_id = $(this).data('proxy-id')
+            let endpoint = this.checked ? 'enable' : 'disable'
+            $.post(`/admin/settings/proxy/${proxy_id}/templating/${endpoint}`, function (response) {
+                window.location = response
+            })
+        });
     });
 </script>

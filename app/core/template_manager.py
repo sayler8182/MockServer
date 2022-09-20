@@ -22,7 +22,7 @@ class TemplateManager(object):
 
     def __apply(self, string: str, environment: dict) -> [str]:
         result = string
-        keys = re.findall(r'{{(.*?)}}', string)
+        keys = re.findall(r'{{(.*?)}}', f'{string}')
         for key in keys:
             value = self.__get_value(key, environment)
             if value:

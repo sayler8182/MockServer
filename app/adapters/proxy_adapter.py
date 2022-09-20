@@ -66,6 +66,24 @@ class ProxyAdapter(object):
             db.session.commit()
 
     @staticmethod
+    def set_proxy_templating_enable(proxy_id: str, commit: bool = True):
+        proxy = ProxyAdapter.get_proxy(proxy_id=proxy_id)
+        entity = ProxyAdapter.settings_proxy_from_object(proxy)
+        entity.is_templating_enabled = True
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_proxy_templating_disable(proxy_id: str, commit: bool = True):
+        proxy = ProxyAdapter.get_proxy(proxy_id=proxy_id)
+        entity = ProxyAdapter.settings_proxy_from_object(proxy)
+        entity.is_templating_enabled = False
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
     def set_proxy_name_and_path(proxy_id: str, name: str, path: str, commit: bool = True):
         proxy = ProxyAdapter.get_proxy(proxy_id=proxy_id)
         entity = ProxyAdapter.settings_proxy_from_object(proxy)
@@ -91,6 +109,7 @@ class ProxyAdapter(object):
             return ProxyDb(id=object.id,
                            is_selected=object.is_selected,
                            is_enabled=object.is_enabled,
+                           is_templating_enabled=object.is_templating_enabled,
                            name=object.name,
                            path=object.path,
                            delay_mode=object.delay_mode.value,
@@ -109,6 +128,7 @@ class ProxyAdapter(object):
             return Proxy(id=entity.id,
                          is_selected=entity.is_selected,
                          is_enabled=entity.is_enabled,
+                         is_templating_enabled=entity.is_templating_enabled,
                          name=entity.name,
                          path=entity.path,
                          delay_mode=DelayMode[entity.delay_mode],

@@ -1,3 +1,4 @@
+from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.mocking_mock_manager import MockingMockManager
 from app.core.mocking_filter import MockingFilter
 from app.core.mocking_response_calculator import MockingResponseCalculator
@@ -20,6 +21,9 @@ class MockingManager(object):
             manager = MockingMockManager(self.flask_app)
             return manager.response(request, mock, mock_response, path)
         if not mock or not mock_response or mock_response.type == MockResponseType.proxy:
-            manager = MockingProxyManager(self.flask_app)
-            return manager.response(request, mock, mock_response, path)
-        return response_error(self.flak_app, 500, 'Unexpected mocking error')
+            proxy = ProxyAdapter.get_proxy_selected()
+            if proxy.is_enabled:
+                manager = MockingProxyManager(self.flask_app)
+                return manager.response(request, mock, mock_response, path)
+            return response_error(self.flask_app, 404, 'Proxy is disabled')
+        return response_error(self.flask_app, 500, 'Unexpected mocking error')

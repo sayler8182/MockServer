@@ -5,9 +5,15 @@ from app.utils.utils import get_dict
 
 class Environment(object):
     def __init__(self,
+                 static: [EnvironmentItem] = None,
                  dynamic: [EnvironmentItem] = None):
-        self.static = Environment.static_items()
+        self.static = static
         self.dynamic = dynamic
+        self.__init_default_static()
+
+    def __init_default_static(self):
+        if self.static is None:
+            self.static = Environment.static_items()
 
     @staticmethod
     def static_items() -> [EnvironmentItem]:
@@ -24,8 +30,9 @@ class Environment(object):
         if object is None:
             return None
 
-        static_list = object.get('static', None)
-        dynamic_list = object.get('dynamic', None)
+        static_list = object.get('static', None) or []
         static = list(map(lambda item: EnvironmentItem.environment_item_from_dict(item), static_list))
+        dynamic_list = object.get('dynamic', None) or []
         dynamic = list(map(lambda item: EnvironmentItem.environment_item_from_dict(item), dynamic_list))
-        return Environment(dynamic=dynamic)
+        return Environment(static=static,
+                           dynamic=dynamic)

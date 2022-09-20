@@ -5,6 +5,7 @@ from app.core.interceptors.shared_response.response_remove_response_id_intercept
 from app.core.interceptors.shared_response.response_settings_headers_interceptor import \
     ResponseSettingsHeadersInterceptor
 from app.core.interceptors.shared_response.response_store_log_interceptor import ResponseStoreLogInterceptor
+from app.core.interceptors.shared_response.response_templating_interceptor import ResponseTemplatingInterceptor
 from app.core.interceptors.shared_response_interceptor import SharedResponseInterceptor
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
@@ -18,6 +19,7 @@ class MockingMockManager(object):
         self.shared_response_interceptor = SharedResponseInterceptor([
             ResponseSettingsHeadersInterceptor(),
             ResponseHeadersInterceptor(),
+            ResponseTemplatingInterceptor(),
             ResponseRemoveResponseIdInterceptor(),
             ResponseStoreLogInterceptor()
         ])

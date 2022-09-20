@@ -8,10 +8,10 @@
 - [] mock raw file
 - [] mock history
 
-## middleware
-- [] modify proxy response based on python script -> eg replace date
-
 ## templates
-- [] template tags
-- [] env variables
 - [] faker for mocking response
+
+## API
+- [] proxy.is_templating_enabled - API
+- [] response_interceptors - API
+- [] environment - API

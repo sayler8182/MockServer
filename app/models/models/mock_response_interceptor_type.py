@@ -6,6 +6,7 @@ from app.models.models.mock_response_type import MockResponseType
 class MockResponseInterceptorType(Enum):
     custom = 'custom'
     templating = 'templating'
+    update_environment = 'update_environment'
     value_replace = 'value_replace'
 
     @property
@@ -13,6 +14,7 @@ class MockResponseInterceptorType(Enum):
         return {
             MockResponseInterceptorType.custom: 'Custom',
             MockResponseInterceptorType.templating: 'Templating',
+            MockResponseInterceptorType.update_environment: 'Update environment',
             MockResponseInterceptorType.value_replace: 'Replace value'
         }.get(self)
 
@@ -21,6 +23,7 @@ class MockResponseInterceptorType(Enum):
         return [
             MockResponseInterceptorType.custom,
             MockResponseInterceptorType.templating,
+            MockResponseInterceptorType.update_environment,
             MockResponseInterceptorType.value_replace
         ]
 
@@ -39,6 +42,7 @@ class MockResponseInterceptorType(Enum):
         common_items = [
             MockResponseInterceptorType.custom,
             MockResponseInterceptorType.templating,
+            MockResponseInterceptorType.update_environment,
             MockResponseInterceptorType.value_replace
         ]
         items = {

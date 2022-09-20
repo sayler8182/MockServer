@@ -112,9 +112,9 @@ class MockResponse(object):
         delay = object.get('delay', None)
         body = object.get('body', None)
         order = object.get('order', None)
-        response_headers_list = object.get('response_headers', None)
+        response_headers_list = object.get('response_headers', None) or []
         response_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
-        response_interceptors_list = object.get('response_interceptors', None)
+        response_interceptors_list = object.get('response_interceptors', None) or []
         response_interceptors = list(map(lambda item: MockResponseInterceptor.mock_response_interceptor_from_dict(item),
                                          response_interceptors_list))
         return MockResponse(id=id,

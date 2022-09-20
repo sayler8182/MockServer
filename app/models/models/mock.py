@@ -109,7 +109,7 @@ class Mock(object):
         response_id = object.get('response_id', None)
         request_dict = object.get('request', None)
         request = MockRequest.mock_request_from_dict(request_dict)
-        responses_list = object.get('responses', None)
+        responses_list = object.get('responses', None) or []
         responses = list(map(lambda item: MockResponse.mock_response_from_dict(item), responses_list))
         return Mock(id=id,
                     scenario_id=scenario_id,

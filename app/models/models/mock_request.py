@@ -49,7 +49,7 @@ class MockRequest(object):
         method = HTTPMethod[method_string]
         proxy = object.get('proxy', None)
         path = object.get('path', None)
-        request_headers_list = object.get('request_headers', None)
+        request_headers_list = object.get('request_headers', None) or []
         request_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), request_headers_list))
         return MockRequest(id=id,
                            mock_id=mock_id,

@@ -2,6 +2,7 @@ import json
 
 from app.core.interceptors.response.response_custom_interceptor import ResponseCustomInterceptor
 from app.core.interceptors.response.response_templating_interceptor import ResponseTemplatingInterceptor
+from app.core.interceptors.response.response_update_environment_interceptor import ResponseUpdateEnvironmentInterceptor
 from app.core.interceptors.response.response_value_replace_interceptor import ResponseValueReplaceInterceptor
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
@@ -21,6 +22,7 @@ class ResponseInterceptor(object):
         return {
             MockResponseInterceptorType.custom: ResponseCustomInterceptor(),
             MockResponseInterceptorType.templating: ResponseTemplatingInterceptor(),
+            MockResponseInterceptorType.update_environment: ResponseUpdateEnvironmentInterceptor(),
             MockResponseInterceptorType.value_replace: ResponseValueReplaceInterceptor()
         }.get(interceptor.type)
 
@@ -29,6 +31,7 @@ class ResponseInterceptor(object):
         result = {
             MockResponseInterceptorType.custom: ResponseCustomInterceptor.is_configurable(),
             MockResponseInterceptorType.templating: ResponseTemplatingInterceptor.is_configurable(),
+            MockResponseInterceptorType.update_environment: ResponseUpdateEnvironmentInterceptor.is_configurable(),
             MockResponseInterceptorType.value_replace: ResponseValueReplaceInterceptor.is_configurable()
         }.get(type)
         return result
@@ -38,6 +41,7 @@ class ResponseInterceptor(object):
         object = {
             MockResponseInterceptorType.custom: ResponseCustomInterceptor.example(),
             MockResponseInterceptorType.templating: ResponseTemplatingInterceptor.example(),
+            MockResponseInterceptorType.update_environment: ResponseUpdateEnvironmentInterceptor.example(),
             MockResponseInterceptorType.value_replace: ResponseValueReplaceInterceptor.example()
         }.get(type)
         return json.dumps(object)

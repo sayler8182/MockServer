@@ -9,16 +9,18 @@ class MockRequest(object):
                  mock_id: str = None,
                  method: HTTPMethod = None,
                  proxy: str = None,
-                 path: str = None,
-                 request_headers: [RequestHeader] = None):
+                 path: str = None):
         self.id = id
         self.mock_id = mock_id
         self.method = method
         self.proxy = proxy
         self.path = path
-        self.request_headers = request_headers
         self.__init_default_id()
         self.__init_default_method()
+
+    @property
+    def hash(self):
+        return f"{self.method.name}-{self.proxy}-{self.path}"
 
     def __init_default_id(self):
         if self.id is None:
@@ -34,8 +36,7 @@ class MockRequest(object):
             'mock_id': self.mock_id,
             'method': self.method.get_dict(),
             'proxy': self.proxy,
-            'path': self.path,
-            'request_headers': get_dict(self.request_headers),
+            'path': self.path
         }
 
     @staticmethod
@@ -49,11 +50,8 @@ class MockRequest(object):
         method = HTTPMethod[method_string]
         proxy = object.get('proxy', None)
         path = object.get('path', None)
-        request_headers_list = object.get('request_headers', None) or []
-        request_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), request_headers_list))
         return MockRequest(id=id,
                            mock_id=mock_id,
                            method=method,
                            proxy=proxy,
-                           path=path,
-                           request_headers=request_headers)
+                           path=path)

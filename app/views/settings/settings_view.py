@@ -15,9 +15,10 @@ class View(BaseView):
 
     @expose('/proxy/<proxy_id>')
     def proxy(self, proxy_id):
+        configuration = settings_controller.configuration()
         proxies = settings_controller.proxies()
         proxy = settings_controller.proxy(proxy_id)
-        return self.render('admin/settings/settings.html', proxies=proxies, proxy=proxy)
+        return self.render('admin/settings/settings.html', configuration=configuration, proxies=proxies, proxy=proxy)
 
     @expose('proxy/new', methods=[HTTPMethod.POST.value])
     def proxy_new(self):
@@ -92,12 +93,40 @@ class View(BaseView):
         )
         return url_for('settings.proxy', proxy_id=proxy_id)
 
-    @expose('proxy/<proxy_id>', methods=[HTTPMethod.POST.value])
+    @expose('proxy/<proxy_id>/update', methods=[HTTPMethod.POST.value])
     def proxy_update(self, proxy_id):
         name = request.form.get('settings_form_input_proxy_name')
         path = request.form.get('settings_form_input_proxy_path')
         call(
             lambda: settings_controller.proxy_update(proxy_id, name, path),
+            lambda: toast('Proxy has been updated', category='success')
+        )
+        return redirect(url_for('settings.proxy', proxy_id=proxy_id))
+
+    @expose('proxy/<proxy_id>/update/delay/mode', methods=[HTTPMethod.POST.value])
+    def proxy_update_delay_mode(self, proxy_id):
+        delay_mode = request.form.get('settings_form_proxy_delay_mode')
+        call(
+            lambda: settings_controller.proxy_update_delay_mode(proxy_id, delay_mode),
+            lambda: toast('Proxy has been updated', category='success')
+        )
+        return redirect(url_for('settings.proxy', proxy_id=proxy_id))
+
+    @expose('proxy/<proxy_id>/update/delay/static', methods=[HTTPMethod.POST.value])
+    def proxy_update_delay_static(self, proxy_id):
+        delay = request.form.get('settings_form_input_proxy_delay_static')
+        call(
+            lambda: settings_controller.proxy_update_delay_static(proxy_id, delay),
+            lambda: toast('Proxy has been updated', category='success')
+        )
+        return redirect(url_for('settings.proxy', proxy_id=proxy_id))
+
+    @expose('proxy/<proxy_id>/update/delay/random', methods=[HTTPMethod.POST.value])
+    def proxy_update_delay_random(self, proxy_id):
+        delay_from = request.form.get('settings_form_input_proxy_delay_random_from')
+        delay_to = request.form.get('settings_form_input_proxy_delay_random_to')
+        call(
+            lambda: settings_controller.proxy_update_delay_random(proxy_id, delay_from, delay_to),
             lambda: toast('Proxy has been updated', category='success')
         )
         return redirect(url_for('settings.proxy', proxy_id=proxy_id))

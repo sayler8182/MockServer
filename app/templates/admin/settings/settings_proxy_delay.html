@@ -1,0 +1,59 @@
+{% if proxy %}
+<form method="post" action="{{ url_for('settings.proxy_update_delay_mode', proxy_id=proxy.id) }}">
+    <div class="form-group form-inline">
+        <div class="input-group">
+            <label for="settings_form_proxy_delay_mode" class="mr-2">Delay mode</label>
+            <select id="settings_form_proxy_delay_mode" name="settings_form_proxy_delay_mode"
+                    class="custom-select btn btn-primary" onchange="this.form.submit()">
+                {% for delay_mode in configuration.supported_delay_modes %}
+                <option class="text-left" value="{{ delay_mode.value }}" {{
+                        conditional_value(proxy.delay_mode== delay_mode,
+                'selected') }}>
+                {{ delay_mode.description }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>
+{% if proxy.delay_mode.value == 'static' %}
+<form method="post" action="{{ url_for('settings.proxy_update_delay_static', proxy_id=proxy.id) }}">
+    <div class="form-group form-inline d-flex">
+        <div class="input-group flex-grow-1">
+            <input name="settings_form_input_proxy_delay_static" type="text" class="form-control" placeholder="0"
+                   value="{{ proxy.delay or 0 }}">
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Save">
+                <i class="fa fa-save"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% if proxy.delay_mode.value == 'random' %}
+<form method="post" action="{{ url_for('settings.proxy_update_delay_random', proxy_id=proxy.id) }}">
+    <div class="form-group form-inline d-flex">
+        <div class="input-group flex-grow-1">
+            <label for="settings_form_input_proxy_delay_random_from" class="mr-2">From</label>
+            <input id="settings_form_input_proxy_delay_random_from" name="settings_form_input_proxy_delay_random_from"
+                   type="text" class="form-control" placeholder="0"
+                   value="{{ proxy.delay_from or 0 }}">
+        </div>
+        <div class="input-group flex-grow-1 ml-4">
+            <label for="settings_form_input_proxy_delay_random_to" class="mr-2">To</label>
+            <input id="settings_form_input_proxy_delay_random_to" name="settings_form_input_proxy_delay_random_to"
+                   type="text" class="form-control" placeholder="0"
+                   value="{{ proxy.delay_to or 0 }}">
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Save">
+                <i class="fa fa-save"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% if proxy.delay_mode.value == 'predefined' %}
+{% endif %}
+{% endif %}

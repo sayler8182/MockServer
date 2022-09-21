@@ -17,7 +17,8 @@
 
         <!-- state templating_enabled / templating_disabled -->
         <div class="form-group form-check form-switch">
-            <input id="settings_form_proxy_templating_is_enabled" data-proxy-id="{{ proxy.id }}" class="form-check-input"
+            <input id="settings_form_proxy_templating_is_enabled" data-proxy-id="{{ proxy.id }}"
+                   class="form-check-input"
                    type="checkbox" {{ conditional_value(proxy.is_templating_enabled, 'checked') }}>
             <label class="form-check-label" for="settings_form_proxy_templating_is_enabled">Templating enabled</label>
         </div>
@@ -39,7 +40,9 @@
                        value="{{ proxy.path or '' }}">
             </div>
             <div class="ml-2">
-                <button type="submit" class="btn btn-success">Save</button>
+                <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Save">
+                    <i class="fa fa-save"></i>
+                </button>
             </div>
         </div>
     </div>

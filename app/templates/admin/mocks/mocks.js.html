@@ -22,6 +22,24 @@
             });
         });
 
+        $('#mocks_definition_response_form_force').change(function () {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            let endpoint = this.checked ? 'set' : 'unset'
+            $.post(`/admin/mocks/${mock_id}/${response_id}/${endpoint}`, function (response) {
+                window.location = response
+            })
+        });
+
+        $('#mocks_definition_response_form_single_use').change(function () {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            let endpoint = this.checked ? 'single_use' : 'not_single_use'
+            $.post(`/admin/mocks/${mock_id}/${response_id}/${endpoint}`, function (response) {
+                window.location = response
+            })
+        });
+
         $('#mocks_definition_response_form_name_force').change(function () {
             let mock_id = $(this).data('mock-id')
             let response_id = $(this).data('response-id')

@@ -55,7 +55,7 @@ class Proxy(object):
 
     def __init_default_delay_mode(self):
         if self.delay_mode is None:
-            self.delay_mode = DelayMode.static
+            self.delay_mode = DelayMode.none
 
     def __init_default_delay_from(self):
         if self.delay_from is None:

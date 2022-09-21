@@ -1,10 +1,10 @@
 from app.adapters.request_header_adapter import RequestHeaderAdapter
 from app.config.database_config import db
-from app.models.db.request_header_db import RequestHeaderDb
 from app.models.db.proxy_db import ProxyDb
+from app.models.db.request_header_db import RequestHeaderDb
 from app.models.models.delay_mode import DelayMode
-from app.models.models.request_header import RequestHeaderType
 from app.models.models.proxy import Proxy
+from app.models.models.request_header import RequestHeaderType
 
 
 class ProxyAdapter(object):
@@ -89,6 +89,34 @@ class ProxyAdapter(object):
         entity = ProxyAdapter.settings_proxy_from_object(proxy)
         entity.name = name
         entity.path = path
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_proxy_delay_mode(proxy_id: str, delay_mode: DelayMode, commit: bool = True):
+        proxy = ProxyAdapter.get_proxy(proxy_id=proxy_id)
+        entity = ProxyAdapter.settings_proxy_from_object(proxy)
+        entity.delay_mode = delay_mode.value
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_proxy_delay_static(proxy_id: str, delay: int, commit: bool = True):
+        proxy = ProxyAdapter.get_proxy(proxy_id=proxy_id)
+        entity = ProxyAdapter.settings_proxy_from_object(proxy)
+        entity.delay = delay
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_proxy_delay_random(proxy_id: str, delay_from: int, delay_to: int, commit: bool = True):
+        proxy = ProxyAdapter.get_proxy(proxy_id=proxy_id)
+        entity = ProxyAdapter.settings_proxy_from_object(proxy)
+        entity.delay_from = delay_from
+        entity.delay_to = delay_to
         db.session.merge(entity)
         if commit:
             db.session.commit()

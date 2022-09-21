@@ -3,11 +3,22 @@ from app.adapters.request_header_adapter import RequestHeaderAdapter
 from app.adapters.settings_adapter import SettingsAdapter
 from app.core.import_export.exporter_manager import ExporterManager
 from app.core.import_export.importer_manager import ImporterManager
+from app.models.models.delay import Delay
+from app.models.models.delay_mode import DelayMode
 from app.models.models.proxy import Proxy
 from app.models.models.request_header import RequestHeader, RequestHeaderType
 from app.models.models.settings import Settings
+from app.models.models.settings_configuration import SettingsConfiguration
 from app.utils.form_validator import validate_not_empty
-from app.utils.utils import to_bool
+from app.utils.utils import to_bool, to_int
+
+
+# configuration
+def configuration() -> SettingsConfiguration:
+    return SettingsConfiguration(
+        supported_delay_modes=DelayMode.supported_modes(),
+        supported_delays=Delay.supported_delays()
+    )
 
 
 # settings
@@ -79,6 +90,25 @@ def proxy_templating_disable(proxy_id: str):
 def proxy_update(proxy_id: str, name: str, path: str):
     validate_not_empty(proxy_id, 'Incorrect proxy provided')
     ProxyAdapter.set_proxy_name_and_path(proxy_id, name, path)
+
+
+def proxy_update_delay_mode(proxy_id: str, delay_mode: str):
+    delay_mode = DelayMode[delay_mode]
+    validate_not_empty(proxy_id, 'Incorrect proxy provided')
+    ProxyAdapter.set_proxy_delay_mode(proxy_id, delay_mode)
+
+
+def proxy_update_delay_static(proxy_id: str, delay: str):
+    delay = to_int(delay)
+    validate_not_empty(proxy_id, 'Incorrect proxy provided')
+    ProxyAdapter.set_proxy_delay_static(proxy_id, delay)
+
+
+def proxy_update_delay_random(proxy_id: str, delay_from: str, delay_to: str):
+    delay_from = to_int(delay_from)
+    delay_to = to_int(delay_to)
+    validate_not_empty(proxy_id, 'Incorrect proxy provided')
+    ProxyAdapter.set_proxy_delay_random(proxy_id, delay_from, delay_to)
 
 
 # request headers

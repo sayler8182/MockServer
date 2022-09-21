@@ -10,6 +10,7 @@ class MockResponse(object):
                  id: str = None,
                  mock_id: str = None,
                  is_enabled: bool = None,
+                 is_single_use: bool = None,
                  type: MockResponseType = None,
                  name: str = None,
                  status: int = None,
@@ -22,6 +23,7 @@ class MockResponse(object):
         self.id = id
         self.mock_id = mock_id
         self.is_enabled = is_enabled
+        self.is_single_use = is_single_use
         self.type = type
         self.name = name
         self.status = status
@@ -33,6 +35,7 @@ class MockResponse(object):
         self.response_interceptors = response_interceptors
         self.__init_default_id()
         self.__init_default_is_enabled()
+        self.__init_default_is_single_use()
         self.__init_default_type()
         self.__init_default_status()
         self.__init_default_delay_mode()
@@ -55,6 +58,10 @@ class MockResponse(object):
         if self.is_enabled is None:
             self.is_enabled = True
 
+    def __init_default_is_single_use(self):
+        if self.is_single_use is None:
+            self.is_single_use = False
+
     def __init_default_type(self):
         if self.type is None:
             self.type = MockResponseType.mock_json
@@ -65,7 +72,7 @@ class MockResponse(object):
 
     def __init_default_delay_mode(self):
         if self.delay_mode is None:
-            self.delay_mode = DelayMode.static
+            self.delay_mode = DelayMode.none
 
     def __init_default_delay(self):
         if self.delay is None:
@@ -84,6 +91,7 @@ class MockResponse(object):
             'id': self.id,
             'mock_id': self.mock_id,
             'is_enabled': self.is_enabled,
+            'is_single_use': self.is_single_use,
             'type': self.type.get_dict(),
             'name': self.name,
             'status': self.status,
@@ -103,6 +111,7 @@ class MockResponse(object):
         id = object.get('id', None)
         mock_id = object.get('mock_id', None)
         is_enabled = object.get('is_enabled', None)
+        is_single_use = object.get('is_single_use', None)
         type_string = object.get('type', None)
         type = MockResponseType[type_string]
         name = object.get('name', None)
@@ -120,6 +129,7 @@ class MockResponse(object):
         return MockResponse(id=id,
                             mock_id=mock_id,
                             is_enabled=is_enabled,
+                            is_single_use=is_single_use,
                             type=type,
                             name=name,
                             status=status,

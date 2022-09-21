@@ -5,6 +5,7 @@ class MockResponseDb(db.Model):
     id = db.Column(db.String, primary_key=True, nullable=False)
     mock_id = db.Column(db.String, nullable=False)
     is_enabled = db.Column(db.Boolean, default=True, nullable=False)
+    is_single_use = db.Column(db.Boolean, nullable=True)
     type = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=True)
     status = db.Column(db.Integer, nullable=True)
@@ -18,6 +19,7 @@ class MockResponseDb(db.Model):
                f' id: {self.id}' \
                f' mock_id: {self.mock_id}' \
                f' is_enabled: {self.is_enabled}' \
+               f' is_single_use: {self.is_single_use}' \
                f' type: {self.type}' \
                f' name: {self.name}' \
                f' status: {self.status}' \

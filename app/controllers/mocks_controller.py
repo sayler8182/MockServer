@@ -24,9 +24,11 @@ order_calculator = MockingResponseOrderCalculator()
 
 # configuration
 def configuration(mock_id: str = None, response_id: str = None) -> MocksConfiguration:
+    mocks_conflict = MockAdapter.get_mocks_conflict()
     response = MockAdapter.get_mock_response(mock_id, response_id)
     return MocksConfiguration(
         settings=SettingsAdapter.get_settings(),
+        mocks_conflict=mocks_conflict,
         mock_supported_methods=MockMethod.supported_methods(),
         request_supported_methods=HTTPMethod.supported_methods(),
         response_supported_types=MockResponseType.supported_types(),
@@ -131,6 +133,20 @@ def mock_response_remove(mock_id: str, response_id: str):
     order_calculator.adjust_order_for_mock(mock_id)
 
 
+def mock_response_order_up(mock_id: str, response_id: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_order_up(mock_id, response_id)
+    order_calculator.adjust_order_for_mock_keep_response(mock_id, response_id)
+
+
+def mock_response_order_down(mock_id: str, response_id: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_order_down(mock_id, response_id)
+    order_calculator.adjust_order_for_mock_keep_response(mock_id, response_id)
+
+
 def mock_response_enable(mock_id: str, response_id: str):
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(response_id, 'Mock response should be provided')
@@ -153,6 +169,18 @@ def mock_response_unset(mock_id: str, response_id: str):
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(response_id, 'Mock response should be provided')
     MockAdapter.set_mock_response_unset(mock_id)
+
+
+def mock_response_single_use(mock_id: str, response_id: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_single_use(mock_id, response_id)
+
+
+def mock_response_not_single_use(mock_id: str, response_id: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_not_single_use(mock_id, response_id)
 
 
 def mock_response_update(mock_id: str, response_id: str, name: str):

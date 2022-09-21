@@ -18,6 +18,11 @@
                     {{ mock_item.description }}
                 </button>
             </form>
+            {% if mock_item.id in configuration.mocks_conflict %}
+            <button type="submit" class="btn btn-warning" data-toggle="tooltip" title="Conflict with other mock">
+                <i class="fa fa-exclamation"></i>
+            </button>
+            {% endif %}
             <form method="post" action="{{ url_for('mocks.mock_remove', mock_id=mock_item.id) }}">
                 <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Remove">
                     <i class="fa fa-trash"></i>

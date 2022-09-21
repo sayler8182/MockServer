@@ -23,6 +23,22 @@ class MockAdapter(object):
         return list(map(lambda item: MockAdapter.mock_from_entity(item), query))
 
     @staticmethod
+    def get_mocks_conflict() -> [str]:
+        mocks = MockAdapter.get_mocks()
+        mocks = list(filter(lambda item: item.is_enabled, mocks))
+        items = {}
+        for mock in mocks:
+            hash = mock.request.hash
+            value = items.get(hash, [])
+            items[hash] = value + [mock.id]
+        print(items)
+        values = list(filter(lambda item: len(item) > 1, items.values()))
+        result = []
+        for value in values:
+            result = result + value
+        return result
+
+    @staticmethod
     def get_mock(id: str) -> Mock:
         query = MockDb.query.filter_by(id=id).first()
         return MockAdapter.mock_from_entity(query)
@@ -191,6 +207,26 @@ class MockAdapter(object):
             db.session.commit()
 
     @staticmethod
+    def set_mock_response_order_up(mock_id: str, response_id: str, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.order = entity.order - 1
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_order_down(mock_id: str, response_id: str, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        print(entity.order)
+        entity.order = entity.order + 1
+        print(entity.order)
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
     def set_mock_response_enable(mock_id: str, response_id: str, commit: bool = True):
         response = MockAdapter.get_mock_response(mock_id, response_id)
         entity = MockAdapter.mock_response_from_object(response)
@@ -222,6 +258,24 @@ class MockAdapter(object):
         mock = MockAdapter.get_mock(mock_id)
         entity = MockAdapter.mock_from_object(mock)
         entity.response_id = None
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_single_use(mock_id: str, response_id: str, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.is_single_use = True
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_not_single_use(mock_id: str, response_id: str, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.is_single_use = False
         db.session.merge(entity)
         if commit:
             db.session.commit()
@@ -355,8 +409,7 @@ class MockAdapter(object):
                                id=entity.id,
                                method=HTTPMethod[entity.method],
                                proxy=entity.proxy,
-                               path=entity.path,
-                               request_headers=request_headers)
+                               path=entity.path)
         return None
 
     @staticmethod
@@ -365,6 +418,7 @@ class MockAdapter(object):
             return MockResponseDb(mock_id=object.mock_id,
                                   id=object.id,
                                   is_enabled=object.is_enabled,
+                                  is_single_use=object.is_single_use,
                                   type=object.type.value,
                                   name=object.name,
                                   status=object.status,
@@ -383,6 +437,7 @@ class MockAdapter(object):
             return MockResponse(mock_id=entity.mock_id,
                                 id=entity.id,
                                 is_enabled=entity.is_enabled,
+                                is_single_use=entity.is_single_use,
                                 type=MockResponseType[entity.type],
                                 name=entity.name,
                                 status=entity.status,

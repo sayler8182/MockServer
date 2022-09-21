@@ -13,6 +13,7 @@ from app.core.interceptors.shared_response.response_remove_response_id_intercept
     ResponseRemoveResponseIdInterceptor
 from app.core.interceptors.shared_response.response_settings_headers_interceptor import \
     ResponseSettingsHeadersInterceptor
+from app.core.interceptors.shared_response.response_single_use_interceptor import ResponseSingleUseInterceptor
 from app.core.interceptors.shared_response.response_store_log_interceptor import ResponseStoreLogInterceptor
 from app.core.interceptors.shared_response_interceptor import SharedResponseInterceptor
 from app.models.models.mock import Mock
@@ -30,6 +31,7 @@ class MockingProxyManager(object):
             RequestRemoveForwardedInterceptor()
         ])
         self.shared_response_interceptor = SharedResponseInterceptor([
+            ResponseSingleUseInterceptor(),
             ResponseRemoveHeadersDuplicatesInterceptor(),
             ResponseSettingsHeadersInterceptor(),
             ResponseHeadersInterceptor(),

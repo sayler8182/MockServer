@@ -130,6 +130,16 @@ class View(BaseView):
         mocks_controller.mock_response_remove(mock_id, response_id)
         return redirect(url_for('mocks.mock', mock_id=mock_id))
 
+    @expose('<mock_id>/<response_id>/order/up', methods=[HTTPMethod.POST.value])
+    def mock_response_order_up(self, mock_id, response_id):
+        mocks_controller.mock_response_order_up(mock_id, response_id)
+        return redirect(url_for('mocks.mock', mock_id=mock_id))
+
+    @expose('<mock_id>/<response_id>/order/down', methods=[HTTPMethod.POST.value])
+    def mock_response_order_down(self, mock_id, response_id):
+        mocks_controller.mock_response_order_down(mock_id, response_id)
+        return redirect(url_for('mocks.mock', mock_id=mock_id))
+
     @expose('/<mock_id>/<response_id>/enable', methods=[HTTPMethod.POST.value])
     def mock_response_enable(self, mock_id, response_id):
         call(
@@ -161,6 +171,22 @@ class View(BaseView):
             lambda: toast('Mock has been unset', category='success')
         )
         return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
+
+    @expose('/<mock_id>/<response_id>/single_use', methods=[HTTPMethod.POST.value])
+    def mock_response_single_use(self, mock_id, response_id):
+        call(
+            lambda: mocks_controller.mock_response_single_use(mock_id, response_id),
+            lambda: toast('Mock has been enabled', category='success')
+        )
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    @expose('/<mock_id>/<response_id>/not_single_use', methods=[HTTPMethod.POST.value])
+    def mock_response_not_single_use(self, mock_id, response_id):
+        call(
+            lambda: mocks_controller.mock_response_not_single_use(mock_id, response_id),
+            lambda: toast('Mock has been disabled', category='success')
+        )
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
     @expose('/<mock_id>/<response_id>/update', methods=[HTTPMethod.POST.value])
     def mock_response_update(self, mock_id, response_id):
@@ -237,4 +263,5 @@ class View(BaseView):
 
     @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/edit', methods=[HTTPMethod.POST.value])
     def mock_response_interceptors_edit(self, mock_id, response_id, interceptor_id):
-        return redirect(url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id, interceptor_id=interceptor_id))
+        return redirect(url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
+                                interceptor_id=interceptor_id))

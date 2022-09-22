@@ -1,3 +1,5 @@
+from app.models.models.delay import Delay
+from app.models.models.delay_mode import DelayMode
 from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import MockMethod
 from app.models.models.mock_response_interceptor_type import MockResponseInterceptorType
@@ -14,6 +16,8 @@ class MocksConfiguration(object):
                  mock_supported_methods: [MockMethod],
                  request_supported_methods: [HTTPMethod],
                  response_supported_types: [MockResponseType],
+                 response_supported_delay_modes: [DelayMode],
+                 response_supported_delays: [Delay],
                  response_supported_codes: [StatusCode],
                  response_supported_interceptors: [MockResponseInterceptorType]):
         self.settings = settings
@@ -21,6 +25,8 @@ class MocksConfiguration(object):
         self.mock_supported_methods = mock_supported_methods
         self.request_supported_methods = request_supported_methods
         self.response_supported_types = response_supported_types
+        self.response_supported_delay_modes = response_supported_delay_modes
+        self.response_supported_delays = response_supported_delays
         self.response_supported_codes = response_supported_codes
         self.response_supported_interceptors = response_supported_interceptors
 
@@ -31,6 +37,8 @@ class MocksConfiguration(object):
             'mock_supported_methods': get_dict(self.mock_supported_methods),
             'request_supported_methods': get_dict(self.request_supported_methods),
             'response_supported_types': get_dict(self.response_supported_types),
+            'response_supported_delay_modes': get_dict(self.response_supported_delay_modes),
+            'response_supported_delays': get_dict(self.response_supported_delays),
             'response_supported_codes': get_dict(self.response_supported_codes),
             'response_supported_interceptors': get_dict(self.response_supported_interceptors),
         }

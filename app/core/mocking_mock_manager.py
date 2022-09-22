@@ -1,4 +1,5 @@
 from app.core.interceptors.response_interceptor import ResponseInterceptor
+from app.core.interceptors.shared_response.response_delay_interceptor import ResponseDelayInterceptor
 from app.core.interceptors.shared_response.response_headers_interceptor import ResponseHeadersInterceptor
 from app.core.interceptors.shared_response.response_remove_response_id_interceptor import \
     ResponseRemoveResponseIdInterceptor
@@ -19,6 +20,7 @@ class MockingMockManager(object):
         self.flask_app = flask_app
         self.shared_response_interceptor = SharedResponseInterceptor([
             ResponseSingleUseInterceptor(),
+            ResponseDelayInterceptor(),
             ResponseSettingsHeadersInterceptor(),
             ResponseHeadersInterceptor(),
             ResponseTemplatingInterceptor(),

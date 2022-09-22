@@ -26,7 +26,7 @@ def call(action=None, success=None, error=None) -> bool:
 
 def call_with_result(action=None, success=None, error=None):
     try:
-        result = save_call_with_result(action)
+        result = safe_call_with_result(action)
         safe_call(success)
         return result
     except ValueError as exception:
@@ -40,7 +40,7 @@ def safe_call(action):
         action()
 
 
-def save_call_with_result(action):
+def safe_call_with_result(action):
     if action:
         return action()
     return None

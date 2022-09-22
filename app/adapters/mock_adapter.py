@@ -308,6 +308,35 @@ class MockAdapter(object):
             db.session.commit()
 
     @staticmethod
+    def set_mock_response_delay_mode(mock_id: str, response_id: str, delay_mode: DelayMode, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.delay_mode = delay_mode.value
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_delay_static(mock_id: str, response_id: str, delay: int, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.delay = delay
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_delay_random(mock_id: str, response_id: str, delay_from: int, delay_to: int,
+                                       commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.delay_from = delay_from
+        entity.delay_to = delay_to
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
     def set_mock_response_status(mock_id: str, response_id: str, status: int, commit: bool = True):
         response = MockAdapter.get_mock_response(mock_id, response_id)
         entity = MockAdapter.mock_response_from_object(response)
@@ -403,8 +432,6 @@ class MockAdapter(object):
     @staticmethod
     def mock_request_from_entity(entity: MockRequestDb) -> MockRequest:
         if entity:
-            request_headers = RequestHeaderAdapter.get_request_headers_for_mock_request(entity.mock_id, entity.id,
-                                                                                        RequestHeaderType.mock_request)
             return MockRequest(mock_id=entity.mock_id,
                                id=entity.id,
                                method=HTTPMethod[entity.method],
@@ -423,6 +450,8 @@ class MockAdapter(object):
                                   name=object.name,
                                   status=object.status,
                                   delay_mode=object.delay_mode.value,
+                                  delay_from=object.delay_from,
+                                  delay_to=object.delay_to,
                                   delay=object.delay,
                                   body=object.body,
                                   order=object.order)
@@ -442,6 +471,8 @@ class MockAdapter(object):
                                 name=entity.name,
                                 status=entity.status,
                                 delay_mode=DelayMode[entity.delay_mode],
+                                delay_from=entity.delay_from,
+                                delay_to=entity.delay_to,
                                 delay=entity.delay,
                                 body=entity.body,
                                 order=entity.order,

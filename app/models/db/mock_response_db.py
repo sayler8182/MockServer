@@ -10,6 +10,8 @@ class MockResponseDb(db.Model):
     name = db.Column(db.String, nullable=True)
     status = db.Column(db.Integer, nullable=True)
     delay_mode = db.Column(db.String, nullable=False)
+    delay_from = db.Column(db.Integer, default=0, nullable=False)
+    delay_to = db.Column(db.Integer, default=0, nullable=False)
     delay = db.Column(db.Integer, default=200, nullable=False)
     body = db.Column(db.String, nullable=True)
     order = db.Column(db.Integer, nullable=False)
@@ -24,6 +26,8 @@ class MockResponseDb(db.Model):
                f' name: {self.name}' \
                f' status: {self.status}' \
                f' delay_mode: {self.delay_mode}' \
+               f' delay_from: {self.delay_from}' \
+               f' delay_to: {self.delay_to}' \
                f' delay: {self.delay}' \
                f' body: {self.body}' \
                f' order: {self.order}'

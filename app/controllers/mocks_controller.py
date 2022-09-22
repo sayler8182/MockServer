@@ -7,6 +7,8 @@ from app.core.import_export.exporter_manager import ExporterManager
 from app.core.import_export.importer_manager import ImporterManager
 from app.core.mocking_response_calculator import MockingResponseCalculator
 from app.core.mocking_response_order_calculator import MockingResponseOrderCalculator
+from app.models.models.delay import Delay
+from app.models.models.delay_mode import DelayMode
 from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock, MockMethod
 from app.models.models.mock_response import MockResponse
@@ -32,6 +34,8 @@ def configuration(mock_id: str = None, response_id: str = None) -> MocksConfigur
         mock_supported_methods=MockMethod.supported_methods(),
         request_supported_methods=HTTPMethod.supported_methods(),
         response_supported_types=MockResponseType.supported_types(),
+        response_supported_delay_modes=DelayMode.supported_modes(),
+        response_supported_delays=Delay.supported_delays(),
         response_supported_codes=StatusCode.supported_codes(),
         response_supported_interceptors=MockResponseInterceptorType.supported_types_for_response(response)
     )
@@ -196,6 +200,29 @@ def mock_response_update_type(mock_id: str, response_id: str, type: str):
     validate_not_empty(response_id, 'Mock response should be provided')
     validate_not_empty(type, 'Type should be provided')
     MockAdapter.set_mock_response_type(mock_id, response_id, type)
+
+
+# mock response delay
+def mock_response_update_delay_mode(mock_id: str, response_id: str, delay_mode: str):
+    delay_mode = DelayMode[delay_mode]
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_delay_mode(mock_id, response_id, delay_mode)
+
+
+def mock_response_update_delay_static(mock_id: str, response_id: str, delay: str):
+    delay = to_int(delay)
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_delay_static(mock_id, response_id, delay)
+
+
+def mock_response_update_delay_random(mock_id: str, response_id: str, delay_from: str, delay_to: str):
+    delay_from = to_int(delay_from)
+    delay_to = to_int(delay_to)
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_delay_random(mock_id, response_id, delay_from, delay_to)
 
 
 # mock response status

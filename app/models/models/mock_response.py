@@ -15,6 +15,8 @@ class MockResponse(object):
                  name: str = None,
                  status: int = None,
                  delay_mode: DelayMode = None,
+                 delay_from: int = None,
+                 delay_to: int = None,
                  delay: int = None,
                  body: str = None,
                  order: int = None,
@@ -28,6 +30,8 @@ class MockResponse(object):
         self.name = name
         self.status = status
         self.delay_mode = delay_mode
+        self.delay_from = delay_from
+        self.delay_to = delay_to
         self.delay = delay
         self.body = body
         self.order = order
@@ -39,6 +43,8 @@ class MockResponse(object):
         self.__init_default_type()
         self.__init_default_status()
         self.__init_default_delay_mode()
+        self.__init_default_delay_from()
+        self.__init_default_delay_to()
         self.__init_default_delay()
         self.__init_default_order()
         self.__init_default_response_interceptors()
@@ -74,6 +80,14 @@ class MockResponse(object):
         if self.delay_mode is None:
             self.delay_mode = DelayMode.none
 
+    def __init_default_delay_from(self):
+        if self.delay_from is None:
+            self.delay_from = 0
+
+    def __init_default_delay_to(self):
+        if self.delay_to is None:
+            self.delay_to = 0
+
     def __init_default_delay(self):
         if self.delay is None:
             self.delay = 0
@@ -96,6 +110,8 @@ class MockResponse(object):
             'name': self.name,
             'status': self.status,
             'delay_mode': self.delay_mode.get_dict(),
+            'delay_from': self.delay_from,
+            'delay_to': self.delay_to,
             'delay': self.delay,
             'body': self.body,
             'order': self.order,
@@ -118,6 +134,8 @@ class MockResponse(object):
         status = object.get('status', None)
         delay_mode_string = object.get('delay_mode', None)
         delay_mode = DelayMode[delay_mode_string]
+        delay_from = object.get('delay_from', None)
+        delay_to = object.get('delay_to', None)
         delay = object.get('delay', None)
         body = object.get('body', None)
         order = object.get('order', None)
@@ -134,6 +152,8 @@ class MockResponse(object):
                             name=name,
                             status=status,
                             delay_mode=delay_mode,
+                            delay_from=delay_from,
+                            delay_to=delay_to,
                             delay=delay,
                             body=body,
                             order=order,

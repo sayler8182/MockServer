@@ -207,6 +207,35 @@ class View(BaseView):
         )
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
+    # mock response delay
+    @expose('/<mock_id>/<response_id>/update/delay/mode', methods=[HTTPMethod.POST.value])
+    def mock_response_update_delay_mode(self, mock_id, response_id):
+        delay_mode = request.form.get('mocks_definition_response_form_delay_mode')
+        call(
+            lambda: mocks_controller.mock_response_update_delay_mode(mock_id, response_id, delay_mode),
+            lambda: toast('Mock has been updated', category='success')
+        )
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    @expose('/<mock_id>/<response_id>/update/delay/static', methods=[HTTPMethod.POST.value])
+    def mock_response_update_delay_static(self, mock_id, response_id):
+        delay = request.form.get('mocks_definition_response_form_input_delay_static')
+        call(
+            lambda: mocks_controller.mock_response_update_delay_static(mock_id, response_id, delay),
+            lambda: toast('Mock has been updated', category='success')
+        )
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    @expose('/<mock_id>/<response_id>/update/delay/random', methods=[HTTPMethod.POST.value])
+    def mock_response_update_delay_random(self, mock_id, response_id):
+        delay_from = request.form.get('mocks_definition_response_form_input_delay_random_from')
+        delay_to = request.form.get('mocks_definition_response_form_input_delay_random_to')
+        call(
+            lambda: mocks_controller.mock_response_update_delay_random(mock_id, response_id, delay_from, delay_to),
+            lambda: toast('Mock has been updated', category='success')
+        )
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
     # mock response status
     @expose('/<mock_id>/<response_id>/update/status', methods=[HTTPMethod.POST.value])
     def mock_response_update_status(self, mock_id, response_id):

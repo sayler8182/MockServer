@@ -148,9 +148,9 @@ class MocksRouter(object):
             return response_dumps_object(self.flask_app, 200, header)
 
         # mock response body
-        @self.flask_app.route('/api/mocks/<mock_id>/<response_id>/update/body', methods=[HTTPMethod.POST.value])
-        def post_mock_response_update_body(mock_id: str, response_id: str):
+        @self.flask_app.route('/api/mocks/<mock_id>/<response_id>/update/body/json', methods=[HTTPMethod.POST.value])
+        def post_mock_response_update_body_json(mock_id: str, response_id: str):
             content = request.get_json(force=True)
             body = content.get('body', None)
-            header = mocks_controller.mock_response_update_body(mock_id, response_id, body)
+            header = mocks_controller.mock_response_update_body_json(mock_id, response_id, body)
             return response_dumps_object(self.flask_app, 200, header)

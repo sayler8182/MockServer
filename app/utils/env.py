@@ -14,5 +14,9 @@ class EnvObject(object):
     def MOCK_SERVER_FLASK_DATABASE_INITIALIZED(self):
         return os.getenv('MOCK_SERVER_FLASK_DATABASE_INITIALIZED')
 
+    @property
+    def MOCK_SERVER_RESOURCES(self):
+        return os.getenv('MOCK_SERVER_RESOURCES') or '/app/static/'
+
 
 Env = EnvObject()

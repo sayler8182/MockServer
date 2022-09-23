@@ -31,7 +31,6 @@ class MockAdapter(object):
             hash = mock.request.hash
             value = items.get(hash, [])
             items[hash] = value + [mock.id]
-        print(items)
         values = list(filter(lambda item: len(item) > 1, items.values()))
         result = []
         for value in values:
@@ -219,9 +218,7 @@ class MockAdapter(object):
     def set_mock_response_order_down(mock_id: str, response_id: str, commit: bool = True):
         response = MockAdapter.get_mock_response(mock_id, response_id)
         entity = MockAdapter.mock_response_from_object(response)
-        print(entity.order)
         entity.order = entity.order + 1
-        print(entity.order)
         db.session.merge(entity)
         if commit:
             db.session.commit()
@@ -346,10 +343,19 @@ class MockAdapter(object):
             db.session.commit()
 
     @staticmethod
-    def set_mock_response_body(mock_id: str, response_id: str, body: str, commit: bool = True):
+    def set_mock_response_body_json(mock_id: str, response_id: str, body: str, commit: bool = True):
         response = MockAdapter.get_mock_response(mock_id, response_id)
         entity = MockAdapter.mock_response_from_object(response)
         entity.body = body
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_response_body_path(mock_id: str, response_id: str, body_path: str, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.body_path = body_path
         db.session.merge(entity)
         if commit:
             db.session.commit()
@@ -454,6 +460,7 @@ class MockAdapter(object):
                                   delay_to=object.delay_to,
                                   delay=object.delay,
                                   body=object.body,
+                                  body_path=object.body_path,
                                   order=object.order)
         return None
 
@@ -475,6 +482,7 @@ class MockAdapter(object):
                                 delay_to=entity.delay_to,
                                 delay=entity.delay,
                                 body=entity.body,
+                                body_path=entity.body_path,
                                 order=entity.order,
                                 response_headers=response_headers,
                                 response_interceptors=response_interceptors)

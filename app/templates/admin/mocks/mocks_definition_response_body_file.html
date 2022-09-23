@@ -1,0 +1,33 @@
+{% if response %}
+<div class="form-group form-inline d-flex">
+    <form class="d-flex flex-grow-1" method="post"
+          action="{{ url_for('mocks.mock_response_update_body_path', mock_id=mock.id, response_id=response.id) }}">
+        <div class="d-flex flex-grow-1">
+            <div class="input-group flex-grow-1">
+                <input id="mocks_definition_response_form_body_path" name="mocks_definition_response_form_body_path"
+                       class="form-control" placeholder="Path to file"
+                       value="{{ response.body_path or '' }}">
+            </div>
+            <div class="ml-1">
+                <button id="mocks_definition_response_form_file_body_path_open"
+                        data-mock-id="{{ mock.id }}" data-response-id="{{ response.id }}"
+                        type="button" class="btn btn-primary" data-toggle="tooltip" title="Show in directory">
+                    <i class="fa fa-folder-open"></i>
+                </button>
+            </div>
+            <div class="ml-1">
+                <button id="mocks_definition_response_form_file_body_path_import_picker" type="button"
+                        data-mock-id="{{ mock.id }}" data-response-id="{{ response.id }}"
+                        class="btn btn-info" data-toggle="tooltip" title="Upload">
+                    <i class="fa fa-upload"></i>
+                </button>
+            </div>
+            <div class="ml-1">
+                <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Save">
+                    <i class="fa fa-save"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endif %}

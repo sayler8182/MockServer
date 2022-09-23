@@ -13,7 +13,7 @@ class AppConfig(object):
     LANGUAGES = {
         'en': 'English'
     }
-    MAX_CONTENT_LENGTH = 1024 * 1024
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     SECRET_KEY = '472e826304a5ad7c3b905c9c97de909b543c49102a2069e3b6773f97b251eca2'
     SQLALCHEMY_DATABASE_URI = f'sqlite:////{database_path}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

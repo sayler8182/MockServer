@@ -19,6 +19,7 @@ class MockResponse(object):
                  delay_to: int = None,
                  delay: int = None,
                  body: str = None,
+                 body_path: str = None,
                  order: int = None,
                  response_headers: [RequestHeader] = None,
                  response_interceptors: [MockResponseInterceptor] = None):
@@ -34,6 +35,7 @@ class MockResponse(object):
         self.delay_to = delay_to
         self.delay = delay
         self.body = body
+        self.body_path = body_path
         self.order = order
         self.response_headers = response_headers
         self.response_interceptors = response_interceptors
@@ -114,6 +116,7 @@ class MockResponse(object):
             'delay_to': self.delay_to,
             'delay': self.delay,
             'body': self.body,
+            'body_path': self.body_path,
             'order': self.order,
             'response_headers': get_dict(self.response_headers),
             'response_interceptors': get_dict(self.response_interceptors)
@@ -138,6 +141,7 @@ class MockResponse(object):
         delay_to = object.get('delay_to', None)
         delay = object.get('delay', None)
         body = object.get('body', None)
+        body_path = object.get('body_path', None)
         order = object.get('order', None)
         response_headers_list = object.get('response_headers', None) or []
         response_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
@@ -156,6 +160,7 @@ class MockResponse(object):
                             delay_to=delay_to,
                             delay=delay,
                             body=body,
+                            body_path=body_path,
                             order=order,
                             response_headers=response_headers,
                             response_interceptors=response_interceptors)

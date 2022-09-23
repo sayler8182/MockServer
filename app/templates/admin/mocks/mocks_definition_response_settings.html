@@ -9,8 +9,12 @@
         <button id="panel_headers_parent" class="btn btn-primary" data-toggle="collapse" data-target="#panel_headers">
             Headers
         </button>
-        {% if response.type.is_mock %}
+        {% if response.type.value in ['mock_json'] %}
         <button id="panel_body_parent" class="btn btn-primary" data-toggle="collapse" data-target="#panel_body">Body
+        </button>
+        {% endif %}
+        {% if response.type.value in ['mock_file'] %}
+        <button id="panel_file_parent" class="btn btn-primary" data-toggle="collapse" data-target="#panel_file">Body
         </button>
         {% endif %}
         <button id="panel_rules_parent" class="btn btn-primary collapsed" hidden data-toggle="collapse"
@@ -39,11 +43,20 @@
             </div>
             <div class="dropdown-divider"></div>
         </div>
-        {% if response.type.is_mock %}
+        {% if response.type.value in ['mock_json'] %}
         <div class="show response_option" id="panel_body">
             <h5>JSON body</h5>
             <div class="py-3">
                 {% include "admin/mocks/mocks_definition_response_body_json.html" %}
+            </div>
+            <div class="dropdown-divider"></div>
+        </div>
+        {% endif %}
+        {% if response.type.value in ['mock_file'] %}
+        <div class="show response_option" id="panel_file">
+            <h5>File body</h5>
+            <div class="py-3">
+                {% include "admin/mocks/mocks_definition_response_body_file.html" %}
             </div>
             <div class="dropdown-divider"></div>
         </div>

@@ -17,3 +17,5 @@ migrations
 app.db
 app/static/tmp/files/*
 !app/static/tmp/files/.gitkeep
+app/static/upload/files/*
+!app/static/upload/files/.gitkeep

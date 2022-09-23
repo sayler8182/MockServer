@@ -265,12 +265,38 @@ class View(BaseView):
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
     # mock response body
-    @expose('/<mock_id>/<response_id>/update/body', methods=[HTTPMethod.POST.value])
-    def mock_response_update_body(self, mock_id, response_id):
+    @expose('/<mock_id>/<response_id>/update/body/json', methods=[HTTPMethod.POST.value])
+    def mock_response_update_body_json(self, mock_id, response_id):
         body = request.form.get("body")
         call(
-            lambda: mocks_controller.mock_response_update_body(mock_id, response_id, body),
+            lambda: mocks_controller.mock_response_update_body_json(mock_id, response_id, body),
             lambda: toast('Mock has been updated', category='success'))
+        return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
+
+    @expose('/<mock_id>/<response_id>/update/body/path', methods=[HTTPMethod.POST.value])
+    def mock_response_update_body_path(self, mock_id, response_id):
+        body_path = request.form.get("mocks_definition_response_form_body_path")
+        call(
+            lambda: mocks_controller.mock_response_update_body_path(mock_id, response_id, body_path),
+            lambda: toast('Mock has been updated', category='success'))
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    @expose('/<mock_id>/<response_id>/update/body/path/open', methods=[HTTPMethod.POST.value])
+    def mock_response_update_body_path_open(self, mock_id, response_id):
+        body_path = request.form.get("mocks_definition_response_form_body_path")
+        call(
+            lambda: mocks_controller.mock_response_update_body_path_open(mock_id, response_id, body_path),
+            lambda: toast('File have been imported', category='success')
+        )
+        return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
+
+    @expose('/<mock_id>/<response_id>/update/body/path/import', methods=[HTTPMethod.POST.value])
+    def mock_response_update_body_path_import(self, mock_id, response_id):
+        file = request.files.get('mocks_definition_response_form_file_body_path_import')
+        call(
+            lambda: mocks_controller.mock_response_update_body_path_import(mock_id, response_id, file),
+            lambda: toast('File have been imported', category='success')
+        )
         return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
 
     # mock response interceptors

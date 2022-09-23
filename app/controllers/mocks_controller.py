@@ -19,7 +19,7 @@ from app.models.models.mocks_configuration import MocksConfiguration
 from app.models.models.request_header import RequestHeader, RequestHeaderType
 from app.models.models.status_code import StatusCode
 from app.utils.form_validator import validate_not_empty
-from app.utils.utils import to_int
+from app.utils.utils import to_int, open_directory
 
 order_calculator = MockingResponseOrderCalculator()
 
@@ -256,11 +256,30 @@ def mock_response_headers_new(mock_id: str, response_id: str, name: str, value: 
     return header
 
 
-# mock response body
-def mock_response_update_body(mock_id: str, response_id: str, body: str):
+# mock response body json
+def mock_response_update_body_json(mock_id: str, response_id: str, body: str):
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(response_id, 'Mock response should be provided')
-    MockAdapter.set_mock_response_body(mock_id, response_id, body)
+    MockAdapter.set_mock_response_body_json(mock_id, response_id, body)
+
+
+def mock_response_update_body_path(mock_id: str, response_id: str, body_path: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_body_path(mock_id, response_id, body_path)
+
+
+def mock_response_update_body_path_open(mock_id: str, response_id: str, body_path: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    open_directory(body_path)
+
+
+def mock_response_update_body_path_import(mock_id: str, response_id: str, file):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    path = ImporterManager.upload_file(file)
+    MockAdapter.set_mock_response_body_path(mock_id, response_id, path)
 
 
 # mock response interceptors

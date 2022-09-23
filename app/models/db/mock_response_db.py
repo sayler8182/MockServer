@@ -14,6 +14,7 @@ class MockResponseDb(db.Model):
     delay_to = db.Column(db.Integer, default=0, nullable=False)
     delay = db.Column(db.Integer, default=200, nullable=False)
     body = db.Column(db.String, nullable=True)
+    body_path = db.Column(db.String, nullable=True)
     order = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
@@ -30,4 +31,5 @@ class MockResponseDb(db.Model):
                f' delay_to: {self.delay_to}' \
                f' delay: {self.delay}' \
                f' body: {self.body}' \
+               f' body_path: {self.body_path}' \
                f' order: {self.order}'

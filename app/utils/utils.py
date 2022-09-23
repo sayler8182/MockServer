@@ -1,10 +1,13 @@
+import subprocess
 import uuid
+from os.path import exists
 from typing import Iterable
 
 from flask import flash
 from werkzeug.datastructures import FileStorage
 
 from app.static.tmp import tmp_file
+from app.static.upload import upload_file
 
 
 def toast(message: str, category: str = 'message'):
@@ -110,6 +113,25 @@ def store_file_in_tmp(file: FileStorage) -> str:
     file_path = tmp_file(file_name)
     file.save(file_path)
     return file_path
+
+
+def store_file_in_upload(file: FileStorage) -> str:
+    file_id = new_id()
+    file_extension = last(file.filename.split('.'))
+    file_name = f'{file_id}.{file_extension}'
+    file_path = upload_file(file_name)
+    file.save(file_path)
+    return file_path
+
+
+def open_directory(file_path: str) -> bool:
+    if exists(file_path):
+        directory = file_path[:file_path.rfind('/')]
+        command = f'open "{directory}"'
+        print(command)
+        subprocess.call(command, shell=True)
+        return True
+    return False
 
 
 def read_file(file_path: str) -> str:

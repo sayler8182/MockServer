@@ -47,6 +47,7 @@ class MockResponseInterceptorType(Enum):
         ]
         items = {
             MockResponseType.mock_json: common_items + [],
+            MockResponseType.mock_file: [],
             MockResponseType.proxy: common_items + []
         }.get(type)
         return self in items

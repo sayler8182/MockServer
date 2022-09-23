@@ -9,10 +9,14 @@ from app.core.import_export.import_export_type import ImportExportType
 from app.models.models.environment import Environment
 from app.models.models.mock import Mock
 from app.models.models.proxy import Proxy
-from app.utils.utils import store_file_in_tmp, read_file
+from app.utils.utils import store_file_in_tmp, read_file, store_file_in_upload
 
 
 class ImporterManager(object):
+    @staticmethod
+    def upload_file(file: FileStorage) -> str:
+        return store_file_in_upload(file)
+
     @staticmethod
     def import_file(file: FileStorage):
         data = ImporterManager.__data(file)
@@ -59,7 +63,6 @@ class ImporterManager(object):
         ProxyAdapter.add_proxy(proxy)
 
     # utils
-
     @staticmethod
     def __data(file: FileStorage) -> dict:
         file_path = store_file_in_tmp(file)

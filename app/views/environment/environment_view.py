@@ -7,6 +7,9 @@ from app.utils.utils import call, toast, call_with_result
 
 
 class View(BaseView):
+    def is_visible(self):
+        return True
+
     @expose('/')
     def index(self):
         environment = environment_controller.environment()

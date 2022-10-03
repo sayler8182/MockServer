@@ -40,7 +40,8 @@ class MockingMockManager(object):
         body = mock_response.body
         response = response_dumps_string(self.flask_app, status=status_code, object=body)
         headers = dict(map(lambda item: (item.name, item.value), mock_response.response_headers))
-        return ProxyResponse(response=response,
+        return ProxyResponse(request=None,
+                             response=response,
                              type=ProxyResponseType.json,
                              status_code=status_code,
                              headers=headers,

@@ -65,7 +65,7 @@ class MockingResponseCalculator(object):
 
     def __responses_history(self, mock: Mock, responses: [MockResponse]) -> [MockResponse]:
         responses_history = []
-        logs = MockResponseLogAdapter.get_logs(mock_id=mock.id)
+        logs = MockResponseLogAdapter.get_logs_for_mock(mock_id=mock.id)
         for log in logs:
             response = first(list(filter(lambda item: item.id == log.response_id, responses)))
             if response:

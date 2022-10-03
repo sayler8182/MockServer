@@ -1,0 +1,18 @@
+{% if log %}
+<div class="alert alert-info alert-dismissible" role="alert">
+    <pre>{{ log.description }}</pre>
+    {% if mock_id %}
+    <form method="get" action="{{ url_for('logs.logs', mock_id=mock_id) }}">
+        <button type="submit" class="close">
+            <span>&times;</span>
+        </button>
+    </form>
+    {% else %}
+    <form method="get" action="{{ url_for('logs.index') }}">
+        <button type="submit" class="close">
+            <span>&times;</span>
+        </button>
+    </form>
+    {% endif %}
+</div>
+{% endif %}

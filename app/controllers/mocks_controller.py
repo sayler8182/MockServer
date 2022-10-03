@@ -1,6 +1,7 @@
 from flask import request
 
 from app.adapters.mock_adapter import MockAdapter
+from app.adapters.mock_response_log_adapter import MockResponseLogAdapter
 from app.adapters.request_header_adapter import RequestHeaderAdapter
 from app.adapters.settings_adapter import SettingsAdapter
 from app.core.import_export.exporter_manager import ExporterManager
@@ -48,6 +49,11 @@ def mocks() -> [Mock]:
 
 def mock(mock_id: str) -> Mock:
     return MockAdapter.get_mock(mock_id)
+
+
+def mock_logs_count(mock_id: str) -> int:
+    logs = MockResponseLogAdapter.get_logs_for_mock(mock_id)
+    return len(logs)
 
 
 def mock_response_next(mock_id: str) -> MockResponse:

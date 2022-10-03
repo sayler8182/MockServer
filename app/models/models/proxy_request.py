@@ -1,6 +1,9 @@
+from app.models.models.http_method import HTTPMethod
+
+
 class ProxyRequest(object):
     def __init__(self,
-                 method: str,
+                 method: HTTPMethod,
                  url: str,
                  data: str,
                  headers: dict,
@@ -13,7 +16,7 @@ class ProxyRequest(object):
 
     def get_dict(self):
         return {
-            'method': self.method,
+            'method': self.method.get_dict(),
             'url': self.url,
             'data': self.data,
             'headers': self.headers,

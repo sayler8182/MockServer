@@ -91,9 +91,11 @@ def last(array):
     return None
 
 
-def get_dict(array):
-    if array:
-        return list(map(lambda item: item.get_dict(), array))
+def get_dict(object):
+    if isinstance(object, list):
+        return list(map(lambda item: item.get_dict(), object))
+    elif object is not None:
+        return object.get_dict()
     return None
 
 
@@ -154,3 +156,16 @@ def to_binary(object: any) -> [bytes]:
     if isinstance(object, str):
         return object.encode()
     return object
+
+
+def clean_nones(value):
+    if isinstance(value, list):
+        return [clean_nones(x) for x in value if x is not None]
+    elif isinstance(value, dict):
+        return {
+            key: clean_nones(val)
+            for key, val in value.items()
+            if val is not None
+        }
+    else:
+        return value

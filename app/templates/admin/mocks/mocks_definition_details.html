@@ -18,6 +18,14 @@
             <i class="fa fa-download"></i>
         </button>
     </form>
+    <form method="get" action="{{ url_for('logs.logs', mock_id=mock.id) }}">
+        <button type="submit" class="position-relative btn btn-primary ml-1" data-toggle="tooltip" title="Logs">
+            <i class="fa fa-history"></i>
+            {% if mock_logs_count %}
+            <span class="position-absolute top-0 start-100 badge rounded-pill bg-secondary">{{ mock_logs_count }}</span>
+            {% endif %}
+        </button>
+    </form>
 </div>
 
 <div class="form-group form-inline mt-2 d-flex">

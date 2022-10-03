@@ -14,11 +14,11 @@ class View(BaseView):
     def index(self):
         return self.render('admin/interceptors/interceptors.html')
 
-    @expose('/<mock_id>/<response_id>/back')
+    @expose('/<mock_id>/<response_id>/interceptors/back')
     def interceptor_back(self, mock_id, response_id):
         return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
 
-    @expose('/<mock_id>/<response_id>/<interceptor_id>')
+    @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>')
     def interceptor(self, mock_id, response_id, interceptor_id):
         interceptor = interceptors_controller.interceptor(mock_id, response_id, interceptor_id)
         interceptor_configuration_example = interceptors_controller.interceptor_configuration_example(interceptor.type)
@@ -27,8 +27,8 @@ class View(BaseView):
                            interceptor=interceptor, interceptor_configuration_example=interceptor_configuration_example,
                            interceptor_is_configurable=interceptor_is_configurable)
 
-    # interceptor
-    @expose('/<mock_id>/<response_id>/<interceptor_id>/update', methods=[HTTPMethod.POST.value])
+    # interceptors
+    @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/update', methods=[HTTPMethod.POST.value])
     def interceptor_update(self, mock_id, response_id, interceptor_id):
         name = request.form.get('interceptors_definition_form_name')
         call(
@@ -38,7 +38,7 @@ class View(BaseView):
         return redirect(url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
                                 interceptor_id=interceptor_id))
 
-    @expose('/<mock_id>/<response_id>/<interceptor_id>/enable', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/enable', methods=[HTTPMethod.POST.value])
     def interceptor_enable(self, mock_id, response_id, interceptor_id):
         call(
             lambda: interceptors_controller.interceptor_enable(mock_id, response_id, interceptor_id),
@@ -47,7 +47,7 @@ class View(BaseView):
         return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
                        interceptor_id=interceptor_id)
 
-    @expose('/<mock_id>/<response_id>/<interceptor_id>/disable', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/disable', methods=[HTTPMethod.POST.value])
     def interceptor_disable(self, mock_id, response_id, interceptor_id):
         call(
             lambda: interceptors_controller.interceptor_disable(mock_id, response_id, interceptor_id),
@@ -56,7 +56,7 @@ class View(BaseView):
         return url_for('interceptors.interceptor', mock_id=mock_id, response_id=response_id,
                        interceptor_id=interceptor_id)
 
-    @expose('/<mock_id>/<response_id>/<interceptor_id>/configuration', methods=[HTTPMethod.POST.value])
+    @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/configuration', methods=[HTTPMethod.POST.value])
     def interceptor_update_configuration(self, mock_id, response_id, interceptor_id):
         configuration = request.form.get("configuration")
         call(

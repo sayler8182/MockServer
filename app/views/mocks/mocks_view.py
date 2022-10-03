@@ -7,6 +7,8 @@ from app.utils.utils import call, toast, call_with_result
 
 
 class View(BaseView):
+    def is_visible(self):
+        return True
 
     @expose('/')
     def index(self):
@@ -19,8 +21,10 @@ class View(BaseView):
         configuration = mocks_controller.configuration(mock_id=mock_id)
         mocks = mocks_controller.mocks()
         mock = mocks_controller.mock(mock_id)
+        mock_logs_count = mocks_controller.mock_logs_count(mock_id)
         response_next = mocks_controller.mock_response_next(mock_id)
         return self.render('admin/mocks/mocks.html', configuration=configuration, mocks=mocks, mock=mock,
+                           mock_logs_count=mock_logs_count,
                            response_next=response_next)
 
     @expose('/<mock_id>/<response_id>')
@@ -28,9 +32,11 @@ class View(BaseView):
         configuration = mocks_controller.configuration(mock_id=mock_id, response_id=response_id)
         mocks = mocks_controller.mocks()
         mock = mocks_controller.mock(mock_id)
+        mock_logs_count = mocks_controller.mock_logs_count(mock_id)
         response_next = mocks_controller.mock_response_next(mock_id)
         response = mocks_controller.mock_response(mock_id, response_id)
         return self.render('admin/mocks/mocks.html', configuration=configuration, mocks=mocks, mock=mock,
+                           mock_logs_count=mock_logs_count,
                            response_next=response_next, response=response)
 
     # mock

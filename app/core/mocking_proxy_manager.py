@@ -17,6 +17,7 @@ from app.core.interceptors.shared_response.response_settings_headers_interceptor
 from app.core.interceptors.shared_response.response_single_use_interceptor import ResponseSingleUseInterceptor
 from app.core.interceptors.shared_response.response_store_log_interceptor import ResponseStoreLogInterceptor
 from app.core.interceptors.shared_response_interceptor import SharedResponseInterceptor
+from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 from app.models.models.proxy_request import ProxyRequest
@@ -62,20 +63,21 @@ class MockingProxyManager(object):
         url = proxy_path + path
         if not validators.url(url):
             return None
-        return ProxyRequest(method=request.method,
+        return ProxyRequest(method=HTTPMethod[request.method],
                             url=url,
                             data=request.get_data(),
                             headers=dict(request.headers),
                             json=request.get_json(silent=True))
 
     def __prepare_response(self, request: ProxyRequest) -> ProxyResponse:
-        response = requests.request(method=request.method,
+        response = requests.request(method=request.method.get_dict(),
                                     url=request.url,
                                     data=request.data,
                                     headers=request.headers,
                                     json=request.json)
-        return ProxyResponse(response=response,
-                             type=ProxyResponseType.json,
+        return ProxyResponse(request=request,
+                             response=response,
+                             type=ProxyResponseType.proxy,
                              status_code=response.status_code,
                              headers=dict(response.headers),
                              body=response.content)

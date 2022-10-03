@@ -1,0 +1,49 @@
+{% if logs %}
+<div class="form-group form-inline">
+    <table class="table table-sm table-striped">
+        <thead>
+        <tr>
+            <th style="width:48px;padding-left:12px">#</th>
+            <th></th>
+            <th style="width:48px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log_item in logs %}
+        <tr>
+            <th class="align-middle p-0">
+                <div class="d-flex" style="height:44px">
+                        {% set style = conditional_value(log_item.response_id, 'bg-success', 'bg-warning') %}
+                        <div style="width:4px;" class="h-100 {{ style }}"></div>
+                    <span class="align-self-center ml-2">{{ loop.index }}</span>
+                </div>
+            </th>
+            <td class="align-middle">
+                {{ log_item.view_name | safe }}
+                <br/>
+                {{ log_item.view_description | safe }}
+            </td>
+            <td>
+                <div class="d-flex">
+                    <form method="post" action="{{ url_for('logs.log_details', log_id=log_item.id) }}">
+                        <input type="hidden" id="logs_form_details_mock_id" name="logs_form_details_mock_id"
+                               value="{{ mock_id }}"/>
+                        <button type="submit" class="btn btn-info mr-1" data-toggle="tooltip" title="Details">
+                            <i class="fa fa-info"></i>
+                        </button>
+                    </form>
+                    <form method="post" action="{{ url_for('logs.log_remove', log_id=log_item.id) }}">
+                        <input type="hidden" id="logs_form_remove_mock_id" name="logs_form_remove_mock_id"
+                               value="{{ mock_id }}"/>
+                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}

@@ -28,6 +28,7 @@ class ResponseValueReplaceInterceptor(object):
                     new_body = json.dumps(data, separators=(',', ':'))
                     body = new_body.encode()
             response.body = body
+            response.headers['Content-Length'] = len(response.body)
         return response
 
     @staticmethod

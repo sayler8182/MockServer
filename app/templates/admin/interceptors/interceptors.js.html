@@ -8,7 +8,7 @@
             let response_id = $(this).data('response-id')
             let interceptor_id = $(this).data('interceptor-id')
             let endpoint = this.checked ? 'enable' : 'disable'
-            $.post(`/admin/interceptors/${mock_id}/${response_id}/${interceptor_id}/${endpoint}`, function(response) {
+            $.post(`/admin/interceptors/${mock_id}/${response_id}/interceptors/${interceptor_id}/${endpoint}`, function(response) {
                 window.location = response
             })
         });
@@ -39,7 +39,7 @@
             let element = document.getElementById("interceptors_definition_configuration_input");
             let value = normalizeJSON(element.value, 0);
             let params = { "configuration": value }
-            $.post(`/admin/interceptors/${mock_id}/${response_id}/${interceptor_id}/configuration`, params, function(response) {
+            $.post(`/admin/interceptors/${mock_id}/${response_id}/interceptors/${interceptor_id}/configuration`, params, function(response) {
                 window.location = response
             })
         });

@@ -13,6 +13,7 @@
     <h1>Logs</h1>
 </div>
 
+{% if logs %}
 <div>
     <div class="d-flex pb-2">
         <form method="post" action="{{ url_for('logs.logs_remove_all') }}">
@@ -24,3 +25,4 @@
         </form>
     </div>
 </div>
+{% endif %}

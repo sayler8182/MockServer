@@ -13,8 +13,8 @@
         {% for item in environment.dynamic %}
         <tr>
             <th class="align-middle">{{ loop.index }}</th>
-            <td class="align-middle">{{ item.name }}</td>
-            <td class="align-middle">{{ item.value }}</td>
+            <td class="align-middle">{{ item.name or '' }}</td>
+            <td class="align-middle">{{ item.value or '' }}</td>
             <td>
                 <div class="d-flex">
                     <form method="get" action="{{ url_for('environment.environment', item_id=item.id) }}">

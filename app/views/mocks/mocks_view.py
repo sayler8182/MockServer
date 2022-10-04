@@ -184,7 +184,7 @@ class View(BaseView):
             lambda: mocks_controller.mock_response_single_use(mock_id, response_id),
             lambda: toast('Mock has been enabled', category='success')
         )
-        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+        return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
 
     @expose('/<mock_id>/<response_id>/not_single_use', methods=[HTTPMethod.POST.value])
     def mock_response_not_single_use(self, mock_id, response_id):
@@ -192,7 +192,7 @@ class View(BaseView):
             lambda: mocks_controller.mock_response_not_single_use(mock_id, response_id),
             lambda: toast('Mock has been disabled', category='success')
         )
-        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+        return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
 
     @expose('/<mock_id>/<response_id>/update', methods=[HTTPMethod.POST.value])
     def mock_response_update(self, mock_id, response_id):

@@ -65,6 +65,7 @@ class MockingProxyManager(object):
             return None
         return ProxyRequest(method=HTTPMethod[request.method],
                             url=url,
+                            params=request.args,
                             data=request.get_data(),
                             headers=dict(request.headers),
                             json=request.get_json(silent=True))
@@ -72,6 +73,7 @@ class MockingProxyManager(object):
     def __prepare_response(self, request: ProxyRequest) -> ProxyResponse:
         response = requests.request(method=request.method.get_dict(),
                                     url=request.url,
+                                    params=request.params,
                                     data=request.data,
                                     headers=request.headers,
                                     json=request.json)

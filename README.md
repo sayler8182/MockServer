@@ -3,8 +3,11 @@
 - [] random mock rotation
 - [] mock connection errors
 - [] conditional mocks
-- [] mock history
 - [] faker for mocking response
+- [] auto import files
+- [] import zip
+- [] exception when proccess script doesn't exist
+- [] write docs
 
 ## API
 - [] proxy.is_templating_enabled - API

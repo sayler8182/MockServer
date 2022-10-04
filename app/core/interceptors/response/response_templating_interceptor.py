@@ -16,6 +16,7 @@ class ResponseTemplatingInterceptor(object):
                 template_manager = TemplateManager()
                 body = template_manager.apply_templating(body)
                 response.body = body.encode()
+                response.headers['Content-Length'] = len(response.body)
         return response
 
     @staticmethod

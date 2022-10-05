@@ -8,8 +8,15 @@ class MainRouter(object):
         self.flask_app = flask_app
 
     def init_router(self):
-        @self.flask_app.route("/terminate", methods=[HTTPMethod.DELETE.value])
+        @self.flask_app.route("/api/terminate", methods=[HTTPMethod.DELETE.value])
         def terminate():
+            """Terminate server
+                This method allows to remotely terminate MockServer.
+                ---
+                responses:
+                  200:
+                    description: Server terminates the connection
+                """
             port = Env.MOCK_SERVER_FLASK_PORT
             kill_process_on_port(port)
             return ''

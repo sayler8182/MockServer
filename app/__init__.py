@@ -10,6 +10,11 @@ def create_app() -> Flask:
     from app.config.app_config import AppConfig
     flask_app.config.from_object(AppConfig)
 
+    # init swagger
+    from app.config.swagger_config import SwaggerConfig
+    swagger_config = SwaggerConfig(flask_app)
+    swagger_config.init_app()
+
     # init database
     from app.config.database_config import DatabaseConfig
     database_config = DatabaseConfig(flask_app)

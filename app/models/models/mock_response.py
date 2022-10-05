@@ -55,6 +55,7 @@ class MockResponse(object):
     def description(self) -> str:
         return {
             MockResponseType.mock_json: f'Mock - [{self.status}] {self.name or ""}',
+            MockResponseType.mock_file: f'Mock - [{self.status}] {self.name or ""}',
             MockResponseType.proxy: f'Proxy - {self.name or ""}',
         }.get(self.type)
 

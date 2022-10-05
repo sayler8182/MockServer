@@ -1,4 +1,5 @@
 Faker
+flasgger
 Flask
 Flask-Admin
 Flask-BabelEx

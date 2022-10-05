@@ -13,11 +13,39 @@ class MocksRouter(object):
         # mocks
         @self.flask_app.route('/api/mocks', methods=[HTTPMethod.GET.value])
         def get_mocks():
+            """Lists mocks
+            ---
+            definitions:
+              Mock:
+                type: object
+                properties:
+                  name:
+                    type: string
+            responses:
+              200:
+                type: array
+                schema:
+                    $ref: '#/definitions/Mock'
+            """
             mocks = mocks_controller.mocks()
             return response_dumps_list(self.flask_app, 200, mocks)
 
         @self.flask_app.route('/api/mocks/<mock_id>', methods=[HTTPMethod.GET.value])
         def get_mock(mock_id: str):
+            """Get mock by id
+            ---
+            parameters:
+            - name: mock_id
+              in: path
+              required: true
+              schema:
+                type: string
+            responses:
+              200:
+                type: object
+                schema:
+                    $ref: '#/definitions/Mock'
+            """
             mock = mocks_controller.mock(mock_id)
             if mock is None:
                 return response_error(self.flask_app, 404, 'Can\'t find mock')

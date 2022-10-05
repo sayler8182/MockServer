@@ -18,5 +18,9 @@ class EnvObject(object):
     def MOCK_SERVER_RESOURCES(self):
         return os.getenv('MOCK_SERVER_RESOURCES') or '/app/static/'
 
+    @property
+    def MOCK_SERVER_AUTO_IMPORT(self):
+        return os.getenv('MOCK_SERVER_AUTO_IMPORT')
+
 
 Env = EnvObject()

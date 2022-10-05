@@ -22,9 +22,11 @@ def start(key: str, file_path: str) -> Process:
     validate_not_empty(key, 'Key should be provided')
     validate_not_empty(file_path, 'Path should be provided')
     process = process_runner.start(key, file_path)
-    return Process(key=key,
-                   pid=process.pid,
-                   file_path=file_path)
+    if process:
+        return Process(key=key,
+                       pid=process.pid,
+                       file_path=file_path)
+    return None
 
 
 def stop(key: str) -> bool:
@@ -36,8 +38,10 @@ def call(key: str, file_path: str) -> Process:
     validate_not_empty(key, 'Key should be provided')
     validate_not_empty(file_path, 'Path should be provided')
     process = process_runner.call(key, file_path)
-    return Process(key=key,
-                   pid=process.pid,
-                   file_path=file_path,
-                   result=process.stdout.read().decode(),
-                   error=process.stderr.read().decode())
+    if process:
+        return Process(key=key,
+                       pid=process.pid,
+                       file_path=file_path,
+                       result=process.stdout.read().decode(),
+                       error=process.stderr.read().decode())
+    return None

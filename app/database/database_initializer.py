@@ -1,6 +1,6 @@
 from app.adapters.database_adapter import DatabaseAdapter
+from app.database.initializers.import_initializer import ImportInitializer
 from app.database.initializers.settings_proxy_initializer import SettingsProxyInitializer
-from app.database.initializers.tests_environment_initializer import TestEnvironmentInitializer
 
 
 class DatabaseInitializer:
@@ -17,8 +17,8 @@ class DatabaseInitializer:
 
     def __create_initializers(self):
         self.initializers = [
+            ImportInitializer(self.flask_app),
             SettingsProxyInitializer(self.flask_app),
-            TestEnvironmentInitializer(self.flask_app)
         ]
 
     def __init_initializers(self):

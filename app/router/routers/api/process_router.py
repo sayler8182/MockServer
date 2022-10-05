@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, abort
 
 from app.controllers import process_controller
 from app.models.models.http_method import HTTPMethod
@@ -21,13 +21,17 @@ class ProcessRouter(object):
             key = content.get('key', None)
             file_path = content.get('file_path', None)
             process = process_controller.start(key, file_path)
+            if not process:
+                return abort(404)
             return response_dumps_object(self.flask_app, 200, process)
 
         @self.flask_app.route('/api/process/stop', methods=[HTTPMethod.DELETE.value])
         def process_stop():
             content = request.get_json(force=True)
             key = content.get('key', None)
-            process_controller.stop(key)
+            process = process_controller.stop(key)
+            if not process:
+                return abort(404)
             return response_dumps_object(self.flask_app)
 
         @self.flask_app.route('/api/process/call', methods=[HTTPMethod.POST.value])
@@ -36,4 +40,6 @@ class ProcessRouter(object):
             key = content.get('key', None)
             file_path = content.get('file_path', None)
             process = process_controller.call(key, file_path)
+            if not process:
+                return abort(404)
             return response_dumps_object(self.flask_app, 200, process)

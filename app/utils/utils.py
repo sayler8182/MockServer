@@ -2,11 +2,12 @@ import subprocess
 import uuid
 from os.path import exists
 from typing import Iterable
+from zipfile import ZipFile
 
 from flask import flash
 from werkzeug.datastructures import FileStorage
 
-from app.static.tmp import tmp_file
+from app.static.tmp import tmp_file, tmp_directory
 from app.static.upload import upload_file
 
 
@@ -111,7 +112,9 @@ def chunked(value: any, size: int = 1024) -> Iterable[any]:
 
 
 def store_file_in_tmp(file: FileStorage) -> str:
-    file_name = new_id()
+    file_id = new_id()
+    file_extension = last(file.filename.split('.'))
+    file_name = f'{file_id}.{file_extension}'
     file_path = tmp_file(file_name)
     file.save(file_path)
     return file_path
@@ -124,6 +127,14 @@ def store_file_in_upload(file: FileStorage) -> str:
     file_path = upload_file(file_name)
     file.save(file_path)
     return file_path
+
+
+def unzip_file_in_tmp(file_path: str) -> str:
+    directory_name = new_id()
+    directory_path = tmp_directory(directory_name)
+    with ZipFile(file_path, 'r') as file_zip:
+        file_zip.extractall(path=directory_path)
+    return directory_path
 
 
 def open_directory(file_path: str) -> bool:

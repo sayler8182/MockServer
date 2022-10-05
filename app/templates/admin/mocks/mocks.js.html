@@ -7,7 +7,8 @@
             openFileDialog(importAccept, function (event) {
                 if (this.files.length > 0) {
                     var formData = new FormData();
-                    formData.append("mocks_form_file_import", this.files[0], "file");
+                    let extension = this.files[0].name.split('.').pop();
+                    formData.append("mocks_form_file_import", this.files[0], `file.${extension}`);
                     $.ajax({
                         url: `/admin/mocks/import`,
                         type: `post`,
@@ -135,7 +136,6 @@
             openFileDialog(importMockAccept, function (event) {
                 if (this.files.length > 0) {
                     var formData = new FormData();
-                    console.log(this.files[0])
                     let extension = this.files[0].name.split('.').pop();
                     formData.append("mocks_definition_response_form_file_body_path_import", this.files[0], `file.${extension}`);
                     $.ajax({

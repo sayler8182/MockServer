@@ -7,7 +7,9 @@ class SettingsProxyInitializer(object):
         self.flask_app = flask_app
 
     def init_initializer(self):
-        proxy = Proxy(is_selected=True,
-                      is_enabled=True,
-                      name='Default')
-        ProxyAdapter.add_proxy(proxy)
+        proxies = ProxyAdapter.get_proxies()
+        if not proxies:
+            proxy = Proxy(is_selected=True,
+                          is_enabled=True,
+                          name='Default')
+            ProxyAdapter.add_proxy(proxy)

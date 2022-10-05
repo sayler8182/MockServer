@@ -3,7 +3,7 @@ import json
 from flask import send_from_directory
 
 from app.models.models.proxy_response import ProxyResponse
-from app.static.tmp import tmp_file, tmp_directory
+from app.static.tmp import tmp_file, tmp_root_directory
 from app.utils.utils import new_id, get_dict, chunked
 
 default_mimetype = 'application/json'
@@ -73,7 +73,7 @@ def response_dumps_dict_from_tmp_file(object: {}, download_name: str, file_exten
         data = json.dumps(object, indent=4)
         file.write(data)
         file.seek(0)
-    return send_from_directory(directory=tmp_directory,
+    return send_from_directory(directory=tmp_root_directory,
                                path=file_name,
                                as_attachment=True,
                                download_name=download_name,

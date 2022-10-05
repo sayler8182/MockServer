@@ -6,7 +6,8 @@
             openFileDialog(importAccept, function(event) {
                 if (this.files.length > 0) {
                     var formData = new FormData();
-                    formData.append("environment_form_file_import", this.files[0], "file");
+                    let extension = this.files[0].name.split('.').pop();
+                    formData.append("environment_form_file_import", this.files[0], `file.${extension}`);
                     $.ajax({
                         url: `/admin/environment/import`,
                         type: `post`,

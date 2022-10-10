@@ -20,6 +20,8 @@ def response_dumps(flask_app, response: ProxyResponse):
 
 
 def response_dumps_string(flask_app, status=200, object='', headers={}):
+    if object is None:
+        return response_error(flask_app, 404, 'Can\'t find object')
     dictionary = json.loads(object) if object else None
     return response_dumps_dict(
         flask_app=flask_app,
@@ -29,6 +31,8 @@ def response_dumps_string(flask_app, status=200, object='', headers={}):
 
 
 def response_dumps_object(flask_app, status=200, object={}, headers={}):
+    if object is None:
+        return response_error(flask_app, 404, 'Can\'t find object')
     dictionary = object.get_dict() if object else None
     return response_dumps_dict(
         flask_app=flask_app,

@@ -22,26 +22,10 @@ You can find full documentation [here](./docs/docs.md).
 - running external scripts
 - ... and many more - see the [documentation](./docs/docs.md)
 
-# TODO
-
-## Panel
+## Feature requests
 - random mock rotation
 - mock connection errors
 - conditional mocks
 - faker for mocking response
-- write docs
-
-## API
-- proxy.is_templating_enabled - API
-- response_interceptors - API
-- environment - API
-- proxy delay - API
-- mock response delay - API
-- is_single_use - API
-- mock response order - API
-- mocks conflict - API
-- mock raw file - API
-- logs - API
-
-## Long time features
-- Open api converter
+- python template editor - define python methods in one place
+- integration with firebase https://github.com/firebase/quickstart-python

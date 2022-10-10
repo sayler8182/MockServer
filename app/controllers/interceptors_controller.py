@@ -10,11 +10,13 @@ def interceptor(mock_id: str, response_id: str, interceptor_id: str) -> MockResp
     return MockAdapter.get_mock_response_interceptor(mock_id, response_id, interceptor_id)
 
 
-def interceptor_configuration_example(type: MockResponseInterceptorType) -> str:
+def interceptor_configuration_example(type: str) -> str:
+    type = MockResponseInterceptorType[type]
     return ResponseInterceptor.example(type)
 
 
-def interceptor_is_configurable(type: MockResponseInterceptorType) -> bool:
+def interceptor_is_configurable(type: str) -> bool:
+    type = MockResponseInterceptorType[type]
     return ResponseInterceptor.is_configurable(type)
 
 

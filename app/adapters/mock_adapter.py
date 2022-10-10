@@ -23,6 +23,11 @@ class MockAdapter(object):
         return list(map(lambda item: MockAdapter.mock_from_entity(item), query))
 
     @staticmethod
+    def get_mocks_for_ids(ids: [str]) -> [Mock]:
+        query = MockDb.query.filter(MockDb.id.in_(ids)).all()
+        return list(map(lambda item: MockAdapter.mock_from_entity(item), query))
+
+    @staticmethod
     def get_mocks_conflict() -> [str]:
         mocks = MockAdapter.get_mocks()
         mocks = list(filter(lambda item: item.is_enabled, mocks))
@@ -209,16 +214,17 @@ class MockAdapter(object):
     def set_mock_response_order_up(mock_id: str, response_id: str, commit: bool = True):
         response = MockAdapter.get_mock_response(mock_id, response_id)
         entity = MockAdapter.mock_response_from_object(response)
-        entity.order = entity.order - 1
+        entity.order = max([0, entity.order - 1])
         db.session.merge(entity)
         if commit:
             db.session.commit()
 
     @staticmethod
     def set_mock_response_order_down(mock_id: str, response_id: str, commit: bool = True):
+        responses = MockAdapter.get_mock_responses_for_mock(mock_id)
         response = MockAdapter.get_mock_response(mock_id, response_id)
         entity = MockAdapter.mock_response_from_object(response)
-        entity.order = entity.order + 1
+        entity.order = min(entity.order + 1, len(responses) - 1)
         db.session.merge(entity)
         if commit:
             db.session.commit()
@@ -403,7 +409,6 @@ class MockAdapter(object):
     def mock_from_object(object: Mock) -> MockDb:
         if object:
             return MockDb(id=object.id,
-                          scenario_id=object.scenario_id,
                           name=object.name,
                           is_enabled=object.is_enabled,
                           method=object.method.value,
@@ -416,7 +421,6 @@ class MockAdapter(object):
             request = MockAdapter.get_mock_request_for_mock(entity.id)
             responses = MockAdapter.get_mock_responses_for_mock(entity.id)
             return Mock(id=entity.id,
-                        scenario_id=entity.scenario_id,
                         is_enabled=entity.is_enabled,
                         name=entity.name,
                         method=MockMethod[entity.method],

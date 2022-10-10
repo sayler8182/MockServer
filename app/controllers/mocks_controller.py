@@ -47,6 +47,11 @@ def mocks() -> [Mock]:
     return MockAdapter.get_mocks()
 
 
+def mocks_conflicts() -> [Mock]:
+    mocks_conflict = MockAdapter.get_mocks_conflict()
+    return MockAdapter.get_mocks_for_ids(mocks_conflict)
+
+
 def mock(mock_id: str) -> Mock:
     return MockAdapter.get_mock(mock_id)
 
@@ -262,7 +267,7 @@ def mock_response_headers_new(mock_id: str, response_id: str, name: str, value: 
     return header
 
 
-# mock response body json
+# mock response body
 def mock_response_update_body_json(mock_id: str, response_id: str, body: str):
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(response_id, 'Mock response should be provided')

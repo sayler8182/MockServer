@@ -1,6 +1,6 @@
 from enum import Enum
 
-from flask import url_for, redirect, request, flash
+from flask import url_for, redirect, request
 from flask_admin import BaseView, expose
 
 from app.controllers import logs_controller
@@ -19,7 +19,7 @@ class View(BaseView):
 
     @expose('/')
     @expose('/<log_id>')
-    def index(self, log_id = None):
+    def index(self, log_id: str = None):
         logs = logs_controller.logs()
         log = logs_controller.log(log_id)
         return self.render('admin/logs/logs.html', logs=logs, log=log)

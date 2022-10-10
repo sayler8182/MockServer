@@ -32,7 +32,6 @@ class MockMethod(Enum):
 class Mock(object):
     def __init__(self,
                  id: str = None,
-                 scenario_id: str = None,
                  name: str = None,
                  is_enabled: bool = None,
                  method: MockMethod = None,
@@ -40,7 +39,6 @@ class Mock(object):
                  request: MockRequest = None,
                  responses: [MockResponse] = None):
         self.id = id
-        self.scenario_id = scenario_id
         self.name = name
         self.is_enabled = is_enabled
         self.method = method
@@ -86,7 +84,6 @@ class Mock(object):
     def get_dict(self):
         return {
             'id': self.id,
-            'scenario_id': self.scenario_id,
             'name': self.name,
             'is_enabled': self.is_enabled,
             'method': self.method.value,
@@ -101,7 +98,6 @@ class Mock(object):
             return None
 
         id = object.get('id', None)
-        scenario_id = object.get('scenario_id', None)
         name = object.get('name', None)
         is_enabled = object.get('is_enabled', None)
         method_string = object.get('method', None)
@@ -112,7 +108,6 @@ class Mock(object):
         responses_list = object.get('responses', None) or []
         responses = list(map(lambda item: MockResponse.mock_response_from_dict(item), responses_list))
         return Mock(id=id,
-                    scenario_id=scenario_id,
                     name=name,
                     is_enabled=is_enabled,
                     method=method,

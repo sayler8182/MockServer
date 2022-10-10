@@ -13,6 +13,7 @@ class MainRouter(object):
             """Terminate server
                 This method allows to remotely terminate MockServer.
                 ---
+                tags: [main]
                 responses:
                   200:
                     description: Server terminates the connection

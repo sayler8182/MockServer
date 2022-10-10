@@ -12,12 +12,51 @@ class ProcessRouter(object):
     def init_router(self):
         @self.flask_app.route('/api/process', methods=[HTTPMethod.GET.value])
         def process():
+            """Get processes
+            ---
+            tags: [process]
+            responses:
+              200:
+                schema:
+                  required: true
+                  type: array
+                  items:
+                    $ref: '#/definitions/Process'
+            """
             processes = process_controller.processes()
             return response_dumps_list(self.flask_app, 200, processes)
 
         @self.flask_app.route('/api/process/start', methods=[HTTPMethod.POST.value])
         def process_start():
-            content = request.get_json(force=True)
+            """Start process
+            ---
+            tags: [process]
+            parameters:
+            - name: body
+              in: body
+              required: true
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    required: true
+                  file_path:
+                    type: string
+                    required: true
+            responses:
+              200:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/Process'
+              404:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/Error'
+            """
+            content = request.get_json(force=False)
             key = content.get('key', None)
             file_path = content.get('file_path', None)
             process = process_controller.start(key, file_path)
@@ -27,7 +66,32 @@ class ProcessRouter(object):
 
         @self.flask_app.route('/api/process/stop', methods=[HTTPMethod.DELETE.value])
         def process_stop():
-            content = request.get_json(force=True)
+            """Stop process
+            ---
+            tags: [process]
+            parameters:
+            - name: body
+              in: body
+              required: true
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    required: true
+            responses:
+              200:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/Process'
+              404:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/Error'
+            """
+            content = request.get_json(force=False)
             key = content.get('key', None)
             process = process_controller.stop(key)
             if not process:
@@ -36,7 +100,35 @@ class ProcessRouter(object):
 
         @self.flask_app.route('/api/process/call', methods=[HTTPMethod.POST.value])
         def process_call():
-            content = request.get_json(force=True)
+            """Call process
+            ---
+            tags: [process]
+            parameters:
+            - name: body
+              in: body
+              required: true
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    required: true
+                  file_path:
+                    type: string
+                    required: true
+            responses:
+              200:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/Process'
+              404:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/Error'
+            """
+            content = request.get_json(force=False)
             key = content.get('key', None)
             file_path = content.get('file_path', None)
             process = process_controller.call(key, file_path)

@@ -10,7 +10,7 @@ class SwaggerConfig(object):
         self.flask_app = flask_app
 
         self.author = "Konrad Piękoś"
-        self.host = Env.MOCK_SERVER_FLASK_HOST,
+        self.host = Env.MOCK_SERVER_FLASK_HOST
         self.port = Env.MOCK_SERVER_FLASK_PORT
 
     def init_app(self):

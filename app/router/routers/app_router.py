@@ -1,5 +1,7 @@
 from flask import render_template, url_for, redirect
 
+from app.utils.utils_api import response_error
+
 
 class AppRouter(object):
     def __init__(self, flask_app):
@@ -18,7 +20,6 @@ class AppRouter(object):
         def page_not_found(e):
             return render_template('404.html'), 404
 
-        # @self.flask_app.errorhandler(Exception)
-        # def server_error(e):
-        #     response = {"message": str(e)}
-        #     return response_dumps(self.flask_app, response, status=500)
+        @self.flask_app.errorhandler(Exception)
+        def server_error(e):
+            return response_error(self.flask_app, 500, str(e))

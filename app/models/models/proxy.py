@@ -32,6 +32,7 @@ class Proxy(object):
         self.__init_default_id()
         self.__init_default_is_selected()
         self.__init_default_is_enabled()
+        self.__init_default_is_templating_enabled()
         self.__init_default_delay_mode()
         self.__init_default_delay_from()
         self.__init_default_delay_to()
@@ -51,7 +52,7 @@ class Proxy(object):
 
     def __init_default_is_templating_enabled(self):
         if self.is_templating_enabled is None:
-            self.is_templating_enabled = False
+            self.is_templating_enabled = True
 
     def __init_default_delay_mode(self):
         if self.delay_mode is None:

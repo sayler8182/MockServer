@@ -21,8 +21,8 @@ class View(BaseView):
     @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>')
     def interceptor(self, mock_id, response_id, interceptor_id):
         interceptor = interceptors_controller.interceptor(mock_id, response_id, interceptor_id)
-        interceptor_configuration_example = interceptors_controller.interceptor_configuration_example(interceptor.type)
-        interceptor_is_configurable = interceptors_controller.interceptor_is_configurable(interceptor.type)
+        interceptor_configuration_example = interceptors_controller.interceptor_configuration_example(interceptor.type.value)
+        interceptor_is_configurable = interceptors_controller.interceptor_is_configurable(interceptor.type.value)
         return self.render('admin/interceptors/interceptors.html', mock_id=mock_id, response_id=response_id,
                            interceptor=interceptor, interceptor_configuration_example=interceptor_configuration_example,
                            interceptor_is_configurable=interceptor_is_configurable)

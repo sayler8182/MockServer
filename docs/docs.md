@@ -231,7 +231,7 @@ I suggest You to import the postman collection - `./docs/postman_collection.json
 In order to check the real use case, check [use_case directory](./example/use_case/use_case.md).
 
 - import [postman collection](./example/use_case/postman_collection.json) in postman.
-- import [mocks and configuration](./example/use_case/use_case.json) in web panel (any import button).
+- import [mocks and configuration](./example/use_case/use_case.zip) in web panel (any import button).
 - check [use case documentation](./example/use_case/use_case.md).
 
 # FAQ

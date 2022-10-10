@@ -1,4 +1,5 @@
 {% if response %}
+<pre>Absolute or relative path (relative to: `/app/static/`)</pre>
 <div class="form-group form-inline d-flex">
     <form class="d-flex flex-grow-1" method="post"
           action="{{ url_for('mocks.mock_response_update_body_path', mock_id=mock.id, response_id=response.id) }}">

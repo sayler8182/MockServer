@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "d4ae4bcb-4c92-4cec-92b2-cb0dd040ace2",
+		"name": "use_case",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8198514"
+	},
+	"item": [
+		{
+			"name": "TestCase1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/path1",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"path1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TestCase2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/path2",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"path2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TestCase3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/v1/be865410-fafd-4248-ad4b-f7879a6446ef",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"v1",
+						"be865410-fafd-4248-ad4b-f7879a6446ef"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "http://127.0.0.1",
+			"type": "string"
+		},
+		{
+			"key": "PORT",
+			"value": "5012",
+			"type": "string"
+		}
+	]
+}

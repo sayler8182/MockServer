@@ -31,7 +31,7 @@ class ResponseStoreLogInterceptor(object):
 
     def __log_data_for_mock_json(self, response: ProxyResponse, mock: Mock,
                                  mock_response: MockResponse) -> MockResponseLogData:
-        body = b64encode(response.body).decode()
+        body = b64encode(response.body).decode() if response.body else None
         return MockResponseLogData(type=ProxyResponseType.json,
                                    mock_name=mock.description,
                                    method=mock.request.method,

@@ -11,7 +11,7 @@ default_mimetype = 'application/json'
 
 # response_dumps
 def response_dumps(flask_app, response: ProxyResponse):
-    data = chunked(response.body)
+    data = chunked(response.body) if response.body else ''
     return flask_app.response_class(
         response=data,
         status=response.status_code,

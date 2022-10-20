@@ -11,7 +11,7 @@ from app.utils.utils import to_list, to_binary
 
 class ResponseValueReplaceInterceptor(object):
     def intercept(self, response, mock: Mock, mock_response: MockResponse, interceptor: MockResponseInterceptor):
-        if response and response.body:
+        if response and response.body and interceptor.configuration:
             body = to_binary(response.body)
             configurations = to_list(json.loads(interceptor.configuration))
             for configuration in configurations:

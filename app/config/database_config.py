@@ -14,5 +14,4 @@ class DatabaseConfig:
         global migrate
         db = SQLAlchemy(self.flask_app)
         migrate = Migrate(self.flask_app, db)
-        db.init_app(self.flask_app)
         migrate.init_app(self.flask_app, db)

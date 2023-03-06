@@ -24,7 +24,10 @@ class ResponseValueReplaceInterceptor(object):
                     if not skip_templating:
                         template_manager = TemplateManager()
                         value = template_manager.apply_templating(value)
-                    data = expression.update(object, value)
+                    if value:
+                        data = expression.update_or_create(object, value)
+                    else:
+                        data = expression.filter(lambda item: True, object)
                     new_body = json.dumps(data, separators=(',', ':'))
                     body = new_body.encode()
             response.body = body

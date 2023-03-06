@@ -81,10 +81,20 @@ class PathMatcher(object):
 
     # validate
     def __validate(self) -> bool:
+        # validation will path when
+        # and mock pattern has at least the same elements count
+        # and mock pattern has match_any_deep as last component (if pattent contains /**)
         return self.__validate_length() and self.__validate_match_any_deep()
 
     def __validate_length(self) -> bool:
-        return len(self.pattern.path_components) <= len(self.components)
+        path_components = self.pattern.path_components
+        items = list(filter(lambda item: item.type == PathComponentType.match_any_deep, path_components))
+        if len(items) == 0:
+            return len(path_components) == len(self.components)
+        elif len(items) == 1:
+            return len(path_components) <= len(self.components)
+        else:
+            return False
 
     def __validate_match_any_deep(self) -> bool:
         path_components = self.pattern.path_components

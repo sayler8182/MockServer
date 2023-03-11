@@ -6,6 +6,7 @@ from app.views.interceptors import interceptors_view
 from app.views.logs import logs_view
 from app.views.mocks import mocks_view
 from app.views.settings import settings_view
+from app.views.templating import templating_view
 
 admin: Admin = None
 
@@ -24,6 +25,8 @@ class PanelConfig(object):
             logs_view.View(name='Logs', endpoint='logs'))
         admin.add_view(
             environment_view.View(name='Environment', endpoint='environment'))
+        admin.add_view(
+            templating_view.View(name='Templating', endpoint='templating'))
         admin.add_view(
             settings_view.View(name='Settings', endpoint='settings'))
 

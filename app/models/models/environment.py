@@ -17,7 +17,9 @@ class Environment(object):
 
     @staticmethod
     def static_items() -> [EnvironmentItem]:
-        return list(map(lambda item: EnvironmentItem(name=item.description), EnvironmentStaticKey.available_keys()))
+        return list(
+            map(lambda item: EnvironmentItem(name=item.description, value=item.comment, parameters=item.parameters),
+                EnvironmentStaticKey.available_keys()))
 
     def get_dict(self):
         return {

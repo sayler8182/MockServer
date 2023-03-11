@@ -21,13 +21,15 @@ class TemplateManager(object):
         return items
 
     def __apply(self, string: str, environment: dict) -> [str]:
+        separator = "|"
         result = string
         keys = re.findall(r'{{(.*?)}}', f'{string}')
         for key in keys:
-            value = self.__get_value(key, environment)
+            value = self.__get_value(key, environment, separator)
             if value:
                 result = result.replace(f'{{{{{key}}}}}', value)
         return result
 
-    def __get_value(self, key: str, environment: dict) -> str:
-        return get_value_for_static(key) or environment.get(key, None)
+    def __get_value(self, key: str, environment: dict, separator: str) -> str:
+        head, sep, tail = key.partition(separator)
+        return get_value_for_static(head, tail, separator) or environment.get(head, None)

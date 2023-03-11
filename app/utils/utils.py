@@ -50,6 +50,12 @@ def safe_call_with_result(action):
     return None
 
 
+def safe_call_with_result_and_params(action, params):
+    if action:
+        return action(params)
+    return None
+
+
 def to_bool(value: any) -> bool:
     if isinstance(value, bool):
         return value

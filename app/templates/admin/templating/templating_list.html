@@ -1,0 +1,33 @@
+{% if environment and environment.static %}
+<div class="form-group form-inline">
+    <table class="table table-sm table-striped">
+        <thead>
+        <tr>
+            <th style="width:48px">#</th>
+            <th style="width:150px">Name</th>
+            <th style="width:150px" colspan="3">Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in environment.static %}
+        <tr>
+            <th class="align-middle">{{ loop.index }}</th>
+            <td class="align-middle font-weight-bold">{{ item.name or '' }}</td>
+            <td class="align-middle" colspan="3">{{ item.value or '' }}</td>
+        </tr>
+        {% for key, value in item.parameters.items() %}
+        <tr>
+            <tr>
+                <th></th>
+                <td></td>
+                <td></td>
+                <td class="align-middle font-weight-bold font-italic">{{ key }}</td>
+                <td class="align-middle">{{ value }}</td>
+            </tr>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}

@@ -1,0 +1,14 @@
+{% extends 'admin/base/layout.html' %}
+{% block body %}
+<div>
+    <h1>Templating variables</h1>
+    <!-- Description -->
+    {% include "admin/templating/templating_description.html" %}
+    <!-- templating list -->
+    {% include "admin/templating/templating_list.html" %}
+</div>
+{% endblock %}
+{% block tail_js %}
+{{ super() }}
+{% include "admin/templating/templating.js.html" %}
+{% endblock %}

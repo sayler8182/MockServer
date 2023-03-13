@@ -4,11 +4,14 @@ from os.path import exists
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_interceptor import MockResponseInterceptor
+from app.models.models.proxy_request import ProxyRequest
+from app.models.models.proxy_response import ProxyResponse
 from app.utils.utils import to_list
 
 
 class ResponseCustomInterceptor(object):
-    def intercept(self, response, mock: Mock, mock_response: MockResponse, interceptor: MockResponseInterceptor):
+    def intercept(self, request: ProxyRequest, response: ProxyResponse, mock: Mock, mock_response: MockResponse,
+                  interceptor: MockResponseInterceptor):
         if interceptor.configuration:
             configurations = to_list(json.loads(interceptor.configuration))
             for configuration in configurations:
@@ -17,6 +20,7 @@ class ResponseCustomInterceptor(object):
                     with open(file_path, "r") as file:
                         code = file.read()
                         params = {
+                            'request': request,
                             'response': response,
                             'mock': mock,
                             'mock_response': mock_response,

@@ -1,8 +1,9 @@
-# response - flask response (ProxyResponse)
+# request - request (ProxyRequest)
+# response - response (ProxyResponse)
 # mock - Mock object if found (Mock)
 # mock_response - Mock response object if found (MockResponse)
 # interceptor - Interceptor object  which can send json configuration (MockResponseInterceptor)
-def intercept(response, mock, mock_response, interceptor):
+def intercept(request, response, mock, mock_response, interceptor):
     # custom behaviour
 
     # mutating object is allowed
@@ -17,4 +18,4 @@ def intercept(response, mock, mock_response, interceptor):
     return response
 
 # required to intercept action
-intercept(response, mock, mock_response, interceptor)
+intercept(request, response, mock, mock_response, interceptor)

@@ -8,14 +8,16 @@ from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_interceptor import MockResponseInterceptor
 from app.models.models.mock_response_interceptor_type import MockResponseInterceptorType
+from app.models.models.proxy_request import ProxyRequest
+from app.models.models.proxy_response import ProxyResponse
 
 
 class ResponseInterceptor(object):
-    def intercept(self, response, mock: Mock, mock_response: MockResponse):
+    def intercept(self, request: ProxyRequest, response: ProxyResponse, mock: Mock, mock_response: MockResponse):
         for interceptor in mock_response.response_interceptors:
             if interceptor.is_enabled and interceptor.type.is_available(mock_response.type):
                 implementation = self.__implementation(interceptor)
-                implementation.intercept(response, mock, mock_response, interceptor)
+                implementation.intercept(request, response, mock, mock_response, interceptor)
         return response
 
     def __implementation(self, interceptor: MockResponseInterceptor):

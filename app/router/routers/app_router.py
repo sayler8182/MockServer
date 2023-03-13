@@ -20,6 +20,6 @@ class AppRouter(object):
         def page_not_found(e):
             return render_template('404.html'), 404
 
-        @self.flask_app.errorhandler(Exception)
-        def server_error(e):
-            return response_error(self.flask_app, 500, str(e))
+        # @self.flask_app.errorhandler(Exception)
+        # def server_error(e):
+        #     return response_error(self.flask_app, 500, str(e))

@@ -5,12 +5,14 @@ from app.adapters.proxy_adapter import ProxyAdapter
 from app.models.models.delay_mode import DelayMode
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
+from app.models.models.proxy_request import ProxyRequest
 from app.models.models.proxy_response import ProxyResponse
 from app.utils.utils import safe_call_with_result
 
 
 class ResponseDelayInterceptor(object):
-    def intercept(self, response: ProxyResponse, mock: Mock, mock_response: MockResponse) -> ProxyResponse:
+    def intercept(self, request: ProxyRequest, response: ProxyResponse, mock: Mock,
+                  mock_response: MockResponse) -> ProxyResponse:
         proxy = ProxyAdapter.get_proxy_selected()
         delay = self.__delay(mock_response) or self.__delay(proxy) or 0
         time.sleep(delay / 1000)

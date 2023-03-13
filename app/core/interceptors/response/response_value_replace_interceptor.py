@@ -6,11 +6,14 @@ from app.core.template_manager import TemplateManager
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_interceptor import MockResponseInterceptor
+from app.models.models.proxy_request import ProxyRequest
+from app.models.models.proxy_response import ProxyResponse
 from app.utils.utils import to_list, to_binary
 
 
 class ResponseValueReplaceInterceptor(object):
-    def intercept(self, response, mock: Mock, mock_response: MockResponse, interceptor: MockResponseInterceptor):
+    def intercept(self, request: ProxyRequest, response: ProxyResponse, mock: Mock, mock_response: MockResponse,
+                  interceptor: MockResponseInterceptor):
         if response and response.body and interceptor.configuration:
             body = to_binary(response.body)
             configurations = to_list(json.loads(interceptor.configuration))
@@ -22,7 +25,8 @@ class ResponseValueReplaceInterceptor(object):
                 if object and key_path:
                     expression = jsonpath_ng.parse(key_path)
                     if not skip_templating:
-                        template_manager = TemplateManager()
+                        template_manager = TemplateManager(request=request, response=response, mock=mock,
+                                                           mock_response=mock_response, interceptor=interceptor)
                         value = template_manager.apply_templating(value)
                     if value:
                         data = expression.update_or_create(object, value)

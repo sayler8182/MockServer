@@ -26,29 +26,32 @@ class PathComponent(object):
             pass
 
     def __parse_match_parameter(self):
-        regex = re.compile('(^#{)(.*)(})')
-        match = regex.match(self.component)
-        if match:
-            self.parameter = match.group(2)
-            self.type = PathComponentType.match_parameter
-            return True
+        if self.type is None:
+            regex = re.compile('(^#{)(.*)(})')
+            match = regex.match(self.component)
+            if match:
+                self.parameter = match.group(2)
+                self.type = PathComponentType.match_parameter
+                return True
         return False
 
     def __parse_match_any_deep(self):
-        if self.component == '**':
+        if self.type is None and self.component == '**':
             self.type = PathComponentType.match_any_deep
             return True
         return False
 
     def __parse_match_any(self):
-        if self.component == '*':
+        if self.type is None and self.component == '*':
             self.type = PathComponentType.match_any
             return True
         return False
 
     def __parse_match(self):
-        self.type = PathComponentType.match
-        return True
+        if self.type is None:
+            self.type = PathComponentType.match
+            return True
+        return False
 
     def __repr__(self):
         return f'\ncomponent: {self.component}' \

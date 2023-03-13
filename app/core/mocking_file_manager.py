@@ -1,8 +1,10 @@
 import os
 from os.path import exists
 
+import validators
 from flask import send_file, abort
 
+from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.interceptors.response_interceptor import ResponseInterceptor
 from app.core.interceptors.shared_response.response_delay_interceptor import ResponseDelayInterceptor
 from app.core.interceptors.shared_response.response_headers_interceptor import ResponseHeadersInterceptor
@@ -13,8 +15,10 @@ from app.core.interceptors.shared_response.response_settings_headers_interceptor
 from app.core.interceptors.shared_response.response_single_use_interceptor import ResponseSingleUseInterceptor
 from app.core.interceptors.shared_response.response_store_log_interceptor import ResponseStoreLogInterceptor
 from app.core.interceptors.shared_response_interceptor import SharedResponseInterceptor
+from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
+from app.models.models.proxy_request import ProxyRequest
 from app.models.models.proxy_response import ProxyResponse, ProxyResponseType
 from app.utils.env import Env
 
@@ -48,14 +52,29 @@ class MockingFileManager(object):
                     file_response = send_file(return_path)
 
         if file_response and return_path:
-            response = self.__prepare_response(file_response, return_path)
-            response = self.shared_response_interceptor.intercept(response, mock, mock_response)
-            response = self.response_interceptor.intercept(response, mock, mock_response)
+            request = self.__prepare_request(request, path)
+            response = self.__prepare_response(request, file_response, return_path)
+            response = self.shared_response_interceptor.intercept(request, response, mock, mock_response)
+            response = self.response_interceptor.intercept(request, response, mock, mock_response)
             return response.response
         return abort(404)
 
-    def __prepare_response(self, response, path: str) -> ProxyResponse:
-        return ProxyResponse(request=None,
+    def __prepare_request(self, request, path: str) -> ProxyRequest:
+        proxy = ProxyAdapter.get_proxy_selected()
+        proxy_path = proxy.path or ''
+        path = path or ''
+        url = proxy_path + path
+        if not validators.url(url):
+            return None
+        return ProxyRequest(method=HTTPMethod[request.method],
+                            url=url,
+                            params=request.args,
+                            data=request.get_data(),
+                            headers=dict(request.headers),
+                            json=request.get_json(silent=True))
+
+    def __prepare_response(self, request, response, path: str) -> ProxyResponse:
+        return ProxyResponse(request=request,
                              response=response,
                              type=ProxyResponseType.file,
                              status_code=response.status_code,

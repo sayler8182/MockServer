@@ -51,9 +51,9 @@ class MockingProxyManager(object):
         response = self.__prepare_response(request)
         if not response:
             return response_error(self.flask_app, 500, 'Incorrect proxy response')
-        response = self.shared_response_interceptor.intercept(response, mock, mock_response)
+        response = self.shared_response_interceptor.intercept(request, response, mock, mock_response)
         if mock and mock_response:
-            response = self.response_interceptor.intercept(response, mock, mock_response)
+            response = self.response_interceptor.intercept(request, response, mock, mock_response)
         return response_dumps(self.flask_app, response)
 
     def __prepare_request(self, request, path: str) -> ProxyRequest:

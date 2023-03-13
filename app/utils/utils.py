@@ -2,6 +2,7 @@ import subprocess
 import uuid
 from os.path import exists
 from typing import Iterable
+from urllib.parse import urlparse
 from zipfile import ZipFile
 
 from flask import flash
@@ -73,6 +74,19 @@ def to_int(value: any) -> int:
     if isinstance(value, int):
         return value
     return None
+
+
+def to_type(value: any, type: str) -> any:
+    if value and type:
+        result = {
+            "bool": lambda x: to_bool(x),
+            "str": lambda x: f"{x}",
+            "int": lambda x: to_int(x)
+        }.get(type.lower())
+        if result is not None:
+            return result(value)
+        return value
+    return value
 
 
 def conditional_value(condition: bool, if_value: any, else_value: any = '') -> any:
@@ -186,3 +200,8 @@ def clean_nones(value):
         }
     else:
         return value
+
+
+def parse_url(url):
+    result = urlparse(url)
+    return result

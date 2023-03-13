@@ -5,11 +5,13 @@ from app.models.models.mock import Mock
 from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_log import MockResponseLog, MockResponseLogData
 from app.models.models.mock_response_type import MockResponseType
+from app.models.models.proxy_request import ProxyRequest
 from app.models.models.proxy_response import ProxyResponse, ProxyResponseType
 
 
 class ResponseStoreLogInterceptor(object):
-    def intercept(self, response: ProxyResponse, mock: Mock, mock_response: MockResponse) -> ProxyResponse:
+    def intercept(self, request: ProxyRequest, response: ProxyResponse, mock: Mock,
+                  mock_response: MockResponse) -> ProxyResponse:
         mock_id = mock.id if mock else None
         response_id = mock_response.id if mock_response else None
         data = self.__log_data(response, mock, mock_response)

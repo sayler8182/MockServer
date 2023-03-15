@@ -68,8 +68,8 @@ class MockingFileManager(object):
             return None
         return ProxyRequest(method=HTTPMethod[request.method],
                             url=url,
-                            params=request.args,
-                            data=request.get_data(),
+                            params=request.args.to_dict(flat=False),
+                            data=request.get_data().decode(),
                             headers=dict(request.headers),
                             json=request.get_json(silent=True))
 

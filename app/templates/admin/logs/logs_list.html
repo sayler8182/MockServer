@@ -12,7 +12,7 @@
         {% for log_item in logs %}
         <tr>
             <th class="align-middle p-0">
-                <div class="d-flex" style="height:44px">
+                <div class="d-flex" style="height:88px">
                         {% set style = conditional_value(log_item.response_id, 'bg-success', 'bg-warning') %}
                         <div style="width:4px;" class="h-100 {{ style }}"></div>
                     <span class="align-self-center ml-2">{{ loop.index }}</span>

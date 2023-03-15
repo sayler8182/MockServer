@@ -1,5 +1,6 @@
 import requests
 import validators
+from werkzeug.datastructures import ImmutableMultiDict
 
 from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.interceptors.response_interceptor import ResponseInterceptor
@@ -65,16 +66,16 @@ class MockingProxyManager(object):
             return None
         return ProxyRequest(method=HTTPMethod[request.method],
                             url=url,
-                            params=request.args,
-                            data=request.get_data(),
+                            params=request.args.to_dict(flat=False),
+                            data=request.get_data().decode(),
                             headers=dict(request.headers),
                             json=request.get_json(silent=True))
 
     def __prepare_response(self, request: ProxyRequest) -> ProxyResponse:
         response = requests.request(method=request.method.get_dict(),
                                     url=request.url,
-                                    params=request.params,
-                                    data=request.data,
+                                    params=ImmutableMultiDict(request.params),
+                                    data=request.data.encode(),
                                     headers=request.headers,
                                     json=request.json)
         return ProxyResponse(request=request,

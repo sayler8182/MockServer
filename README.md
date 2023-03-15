@@ -27,5 +27,6 @@ You can find full documentation [here](./docs/docs.md).
 - mock connection errors
 - conditional mocks
 - faker for mocking response
-- python template editor - define python methods in one place
+- custom template executor
+- log details UI
 - integration with firebase https://github.com/firebase/quickstart-python

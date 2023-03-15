@@ -3,6 +3,7 @@ from enum import Enum
 
 class EnvironmentStaticKey(Enum):
     date = 'date'
+    env = 'env'
     request_body = 'request.body'
     request_header = 'request.header'
     request_headers = 'request.headers'
@@ -16,6 +17,7 @@ class EnvironmentStaticKey(Enum):
     def available_keys():
         return [
             EnvironmentStaticKey.date,
+            EnvironmentStaticKey.env,
             EnvironmentStaticKey.request_body,
             EnvironmentStaticKey.request_header,
             EnvironmentStaticKey.request_headers,
@@ -34,6 +36,7 @@ class EnvironmentStaticKey(Enum):
     def comment(self) -> str:
         return {
             EnvironmentStaticKey.date: "Current date in ISO format",
+            EnvironmentStaticKey.env: "Environment variable",
             EnvironmentStaticKey.request_body: "Body from request",
             EnvironmentStaticKey.request_header: "Header from request",
             EnvironmentStaticKey.request_headers: "Headers from request",
@@ -51,6 +54,9 @@ class EnvironmentStaticKey(Enum):
                 "format": "Date format (in python style)",
                 "shift": "shift between current date, separated with space: 1d 13h 2m 11s",
                 "shift_direction": "shift direction 1 or -1 (add or subtract date)"
+            },
+            EnvironmentStaticKey.env: {
+                "name": "Variable name",
             },
             EnvironmentStaticKey.request_body: {},
             EnvironmentStaticKey.request_header: {

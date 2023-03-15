@@ -1,5 +1,5 @@
+import os
 import uuid
-
 from datetime import datetime
 
 from app.core.path_matcher import PathMatcher
@@ -13,6 +13,7 @@ def get_value_for_static(manager, key: str, parameters: str, separator: str) -> 
     parameters = get_parameters(manager, parameters, separator)
     value = {
         EnvironmentStaticKey.date.description: __get_date,
+        EnvironmentStaticKey.env.description: __get_env,
         EnvironmentStaticKey.request_body.description: __get_request_body,
         EnvironmentStaticKey.request_header.description: __get_request_header,
         EnvironmentStaticKey.request_headers.description: __get_request_headers,
@@ -51,6 +52,11 @@ def __get_date(manager, parameters: dict) -> str:
     return date.isoformat()
 
 
+def __get_env(manager, parameters: dict) -> str:
+    name = parameters.get("name", "")
+    return os.getenv(name)
+
+
 def __get_request_body(manager, parameters: dict) -> str:
     if manager and manager.request and manager.request.json:
         return manager.request.json
@@ -58,8 +64,8 @@ def __get_request_body(manager, parameters: dict) -> str:
 
 
 def __get_request_header(manager, parameters: dict) -> str:
-    name = parameters.get("name", None)
-    type = parameters.get("type", None)
+    name = parameters.get("name", "")
+    type = parameters.get("type", "str")
     if manager and manager.request:
         if manager.request.headers:
             header = manager.request.headers.get(name, None)
@@ -82,8 +88,8 @@ def __get_request_method(manager, parameters: dict) -> str:
 
 
 def __get_request_param(manager, parameters: dict) -> str:
-    name = parameters.get("name", None)
-    type = parameters.get("type", None)
+    name = parameters.get("name", "")
+    type = parameters.get("type", "str")
     if manager and manager.request:
         if manager.request.params:
             param = manager.request.params.get(name, None)
@@ -123,7 +129,8 @@ def __get_request_url(manager, parameters: dict) -> str:
 def __get_uuid(manager, parameters: dict) -> str:
     return str(uuid.uuid4())
 
-### UTILS
+
+# Utils
 def ____get_params(manager) -> dict:
     if manager.request.url and manager.mock and manager.mock.request and manager.mock.request.path:
         url = parse_url(manager.request.url)

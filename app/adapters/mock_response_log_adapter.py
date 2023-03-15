@@ -1,6 +1,6 @@
 from app.config.database_config import db
 from app.models.db.mock_response_log_db import MockResponseLogDb
-from app.models.models.mock_response_log import MockResponseLog, MockResponseLogData
+from app.models.models.mock_response_log import MockResponseLog, MockResponseLogData, MockResponseLogDataRequest
 
 
 class MockResponseLogAdapter(object):
@@ -48,11 +48,13 @@ class MockResponseLogAdapter(object):
     @staticmethod
     def log_from_object(object: MockResponseLog) -> MockResponseLogDb:
         if object:
+            data_request = MockResponseLogDataRequest.encode(object.data_request)
             data = MockResponseLogData.encode(object.data)
             return MockResponseLogDb(id=object.id,
                                      mock_id=object.mock_id,
                                      response_id=object.response_id,
                                      date=object.date,
+                                     data_request=data_request,
                                      data=data)
         return None
 
@@ -63,5 +65,6 @@ class MockResponseLogAdapter(object):
                                    mock_id=entity.mock_id,
                                    response_id=entity.response_id,
                                    date=entity.date,
+                                   data_request=entity.data_request,
                                    data=entity.data)
         return None

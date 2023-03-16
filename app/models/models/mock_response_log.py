@@ -133,6 +133,8 @@ class MockResponseLogData(object):
 
     @staticmethod
     def decode(data: str) -> any:
+        if not data:
+            return None
         object = json.loads(data)
         type_string = object.get('type', None)
         type = ProxyResponseType[type_string] if type_string else None
@@ -212,6 +214,8 @@ class MockResponseLogDataRequest(object):
 
     @staticmethod
     def decode(data: str) -> any:
+        if not data:
+            return None
         object = json.loads(data)
         method_string = object.get('method', None)
         method = HTTPMethod[method_string] if method_string else None

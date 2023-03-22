@@ -1,0 +1,54 @@
+{% if mock.request and mock.request.rules %}
+<div class="form-group form-inline">
+    <table class="table table-sm table-striped">
+        <thead>
+        <tr>
+            <th style="width:48px;padding-left:12px">#</th>
+            <th>Type</th>
+            <th>Key</th>
+            <th></th>
+            <th>Value</th>
+            <th style="width:48px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rule_item in mock.request.rules %}
+        <tr>
+            <th class="align-middle p-0">
+                <div class="d-flex" style="height:44px">
+                    {% set style = conditional_value(rule_item.is_enabled, 'bg-success', 'bg-warning') %}
+                    <div style="width:4px;" class="h-100 {{ style }}"></div>
+                    <span class="align-self-center ml-2">{{ loop.index }}</span>
+                </div>
+            </th>
+            <td class="align-middle">{{ rule_item.type.description }}</td>
+            <td class="align-middle">
+                <input id="request_rule_{{rule_item.mock_id}}_{{rule_item.id}}_key" name="mocks_definition_request_form_input_request_rules_key" type="text" class="form-control"
+                       placeholder="Key" value="{{rule_item.key or ''}}">
+            </td>
+            <td class="align-middle">equal</td>
+            <td class="align-middle">
+                <input id="request_rule_{{rule_item.mock_id}}_{{rule_item.id}}_value" name="mocks_definition_request_form_input_request_rules_value" type="text" class="form-control"
+                       placeholder="Value" value="{{rule_item.value or '' }}">
+            </td>
+            <td>
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-success mr-1 mocks_definition_request_rules_save" data-toggle="tooltip" title="Save rule"
+                            data-mock-id="{{ rule_item.mock_id }}" data-rule-id="{{ rule_item.id }}">
+                        <i class="fa fa-save"></i>
+                    </button>
+                    <form method="post"
+                          action="{{ url_for('mocks.mock_request_rules_remove', mock_id=mock.id, rule_id=rule_item.id) }}">
+                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endif %}

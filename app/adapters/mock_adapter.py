@@ -2,6 +2,7 @@ from app.adapters.request_header_adapter import RequestHeaderAdapter
 from app.config.database_config import db
 from app.models.db.mock_db import MockDb
 from app.models.db.mock_request_db import MockRequestDb
+from app.models.db.mock_request_rule_db import MockRequestRuleDb
 from app.models.db.mock_response_db import MockResponseDb
 from app.models.db.mock_response_interceptor_db import MockResponseInterceptorDb
 from app.models.db.request_header_db import RequestHeaderDb
@@ -9,6 +10,8 @@ from app.models.models.delay_mode import DelayMode
 from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock, MockMethod
 from app.models.models.mock_request import MockRequest
+from app.models.models.mock_request_rule import MockRequestRule
+from app.models.models.mock_request_rule_type import MockRequestRuleType
 from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_interceptor import MockResponseInterceptor
 from app.models.models.mock_response_interceptor_type import MockResponseInterceptorType
@@ -58,6 +61,16 @@ class MockAdapter(object):
         return MockAdapter.mock_request_from_entity(query)
 
     @staticmethod
+    def get_mock_request_rule_for_mock(mock_id: str, rule_id: str) -> [MockRequestRule]:
+        query = MockRequestRuleDb.query.filter_by(mock_id=mock_id, id=rule_id).first()
+        return MockAdapter.mock_request_rule_from_entity(query)
+
+    @staticmethod
+    def get_mock_request_rules_for_mock(mock_id: str) -> [MockRequestRule]:
+        query = MockRequestRuleDb.query.filter_by(mock_id=mock_id)
+        return list(map(lambda item: MockAdapter.mock_request_rule_from_entity(item), query))
+
+    @staticmethod
     def get_mock_response(mock_id: str, id: str) -> MockResponse:
         query = MockResponseDb.query.filter_by(mock_id=mock_id, id=id).first()
         return MockAdapter.mock_response_from_entity(query)
@@ -100,6 +113,20 @@ class MockAdapter(object):
             db.session.commit()
 
     @staticmethod
+    def add_mock_request_rule(mock_request_rule: MockRequestRule, commit: bool = True):
+        entity = MockAdapter.mock_request_rule_from_object(mock_request_rule)
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def add_mock_request_rules(mock_request_rules: [MockRequestRule], commit: bool = True):
+        for mock_request_rule in mock_request_rules:
+            MockAdapter.mock_request_rule_from_object(mock_request_rule, False)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
     def add_mock_response(mock_response: MockResponse, commit: bool = True):
         entity = MockAdapter.mock_response_from_object(mock_response)
         MockAdapter.add_mock_response_interceptors(mock_response.response_interceptors, commit=False)
@@ -132,6 +159,7 @@ class MockAdapter(object):
     def remove_all(commit: bool = True):
         MockDb.query.delete()
         MockRequestDb.query.filter_by().delete()
+        MockRequestRuleDb.query.filter_by().delete()
         MockResponseDb.query.filter_by().delete()
         RequestHeaderDb.query.filter_by(type=RequestHeaderType.mock_request.value).delete()
         RequestHeaderDb.query.filter_by(type=RequestHeaderType.mock_response.value).delete()
@@ -143,9 +171,22 @@ class MockAdapter(object):
     def remove_mock(mock_id: str, commit: bool = True):
         MockDb.query.filter_by(id=mock_id).delete()
         MockRequestDb.query.filter_by(mock_id=mock_id).delete()
+        MockRequestRuleDb.query.filter_by(mock_id=mock_id).delete()
         MockResponseDb.query.filter_by(mock_id=mock_id).delete()
         RequestHeaderDb.query.filter_by(mock_id=mock_id).delete()
         MockResponseInterceptorDb.query.filter_by(mock_id=mock_id).delete()
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def remove_mock_request_rule(rule_id: str, commit: bool = True):
+        MockRequestRuleDb.query.filter_by(id=rule_id).delete()
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def remove_mock_request_rules(mock_id: str, commit: bool = True):
+        MockRequestRuleDb.query.filter_by(mock_id=mock_id).delete()
         if commit:
             db.session.commit()
 
@@ -206,6 +247,17 @@ class MockAdapter(object):
         entity = MockAdapter.mock_request_from_object(request)
         entity.method = method.value
         entity.path = path
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def set_mock_request_rule(mock_id: str, rule_id: str, key: str, value: str, commit: bool = True):
+        mock = MockAdapter.get_mock(mock_id)
+        rule = MockAdapter.get_mock_request_rule_for_mock(mock.id, rule_id)
+        entity = MockAdapter.mock_request_rule_from_object(rule)
+        entity.key = key
+        entity.value = value
         db.session.merge(entity)
         if commit:
             db.session.commit()
@@ -442,11 +494,35 @@ class MockAdapter(object):
     @staticmethod
     def mock_request_from_entity(entity: MockRequestDb) -> MockRequest:
         if entity:
+            rules = MockAdapter.get_mock_request_rules_for_mock(entity.mock_id)
             return MockRequest(mock_id=entity.mock_id,
                                id=entity.id,
                                method=HTTPMethod[entity.method],
                                proxy=entity.proxy,
-                               path=entity.path)
+                               path=entity.path,
+                               rules=rules)
+        return None
+
+    @staticmethod
+    def mock_request_rule_from_object(object: MockRequestRule) -> MockRequestRuleDb:
+        if object:
+            return MockRequestRuleDb(mock_id=object.mock_id,
+                                     id=object.id,
+                                     type=object.type.value,
+                                     is_enabled=object.is_enabled,
+                                     key=object.key,
+                                     value=object.value)
+        return None
+
+    @staticmethod
+    def mock_request_rule_from_entity(entity: MockRequestRuleDb) -> MockRequestRule:
+        if entity:
+            return MockRequestRule(mock_id=entity.mock_id,
+                                   id=entity.id,
+                                   type=MockRequestRuleType[entity.type],
+                                   is_enabled=entity.is_enabled,
+                                   key=entity.key,
+                                   value=entity.value)
         return None
 
     @staticmethod

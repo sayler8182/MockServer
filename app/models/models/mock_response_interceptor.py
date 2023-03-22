@@ -40,6 +40,7 @@ class MockResponseInterceptor(object):
             'mock_id': self.mock_id,
             'response_id': self.response_id,
             'type': self.type.get_dict(),
+            'is_enabled': self.is_enabled,
             'name': self.name,
             'configuration': self.configuration
         }
@@ -54,11 +55,13 @@ class MockResponseInterceptor(object):
         response_id = object.get('response_id', None)
         type_string = object.get('type', None)
         type = MockResponseInterceptorType[type_string]
+        is_enabled = object.get('is_enabled', None)
         name = object.get('name', None)
         configuration = object.get('configuration', None)
         return MockResponseInterceptor(id=id,
                                        mock_id=mock_id,
                                        response_id=response_id,
                                        type=type,
+                                       is_enabled=is_enabled,
                                        name=name,
                                        configuration=configuration)

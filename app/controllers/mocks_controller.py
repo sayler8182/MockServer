@@ -12,6 +12,8 @@ from app.models.models.delay import Delay
 from app.models.models.delay_mode import DelayMode
 from app.models.models.http_method import HTTPMethod
 from app.models.models.mock import Mock, MockMethod
+from app.models.models.mock_request_rule import MockRequestRule
+from app.models.models.mock_request_rule_type import MockRequestRuleType
 from app.models.models.mock_response import MockResponse
 from app.models.models.mock_response_interceptor import MockResponseInterceptor
 from app.models.models.mock_response_interceptor_type import MockResponseInterceptorType
@@ -34,6 +36,7 @@ def configuration(mock_id: str = None, response_id: str = None) -> MocksConfigur
         mocks_conflict=mocks_conflict,
         mock_supported_methods=MockMethod.supported_methods(),
         request_supported_methods=HTTPMethod.supported_methods(),
+        request_supported_rules=MockRequestRuleType.supported_rules(),
         response_supported_types=MockResponseType.supported_types(),
         response_supported_delay_modes=DelayMode.supported_modes(),
         response_supported_delays=Delay.supported_delays(),
@@ -116,8 +119,33 @@ def mock_request_update(mock_id: str, method: str, path: str):
     http_method = HTTPMethod[method]
     validate_not_empty(mock_id, 'Mock should be provided')
     validate_not_empty(http_method, 'Correct HTTPMethod should be provided')
-    validate_not_empty(path, 'Path should be empty')
+    validate_not_empty(path, 'Path should not be empty')
     MockAdapter.set_mock_request(mock_id, http_method, path)
+
+
+# mock request rules
+def mock_request_rules_update(mock_id: str, rule_id: str, key: str, value: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(rule_id, 'Mock request rule should be provided')
+    validate_not_empty(key, 'Key should not be provided')
+    validate_not_empty(value, 'Value should not be empty')
+    MockAdapter.set_mock_request_rule(mock_id, rule_id, key, value)
+
+
+def mock_request_rules_remove(mock_id: str, rule_id: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(rule_id, 'Mock request rule should be provided')
+    MockAdapter.remove_mock_request_rule(rule_id)
+
+
+def mock_request_rules_new(mock_id: str, type: str):
+    type = MockRequestRuleType[type]
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(type, 'Type should not be empty')
+    rule = MockRequestRule(mock_id=mock_id,
+                           type=type)
+    MockAdapter.add_mock_request_rule(rule)
+    return rule
 
 
 # mock response

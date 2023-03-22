@@ -116,6 +116,33 @@ class View(BaseView):
         )
         return redirect(url_for('mocks.mock', mock_id=mock_id))
 
+    # mock request rules
+    @expose('/<mock_id>/request/rules/<rule_id>/update', methods=[HTTPMethod.POST.value])
+    def mock_request_rules_update(self, mock_id, rule_id):
+        key = request.form.get('key')
+        value = request.form.get('value')
+        call(
+            lambda: mocks_controller.mock_request_rules_update(mock_id, rule_id, key, value),
+            lambda: toast('Rule has been updated', category='success')
+        )
+        return url_for('mocks.mock', mock_id=mock_id)
+
+    @expose('/<mock_id>/request/rules/<rule_id>/remove', methods=[HTTPMethod.POST.value])
+    def mock_request_rules_remove(self, mock_id, rule_id):
+        call(
+            lambda: mocks_controller.mock_request_rules_remove(mock_id, rule_id),
+            lambda: toast('Rule has been removed', category='success')
+        )
+        return redirect(url_for('mocks.mock', mock_id=mock_id))
+
+    @expose('/<mock_id>/request/rules/new', methods=[HTTPMethod.POST.value])
+    def mock_request_rules_new(self, mock_id):
+        type = request.form.get('mocks_definition_request_form_input_request_rules_type')
+        call(
+            lambda: mocks_controller.mock_request_rules_new(mock_id, type),
+            lambda: toast('Rule has been added', category='success'))
+        return redirect(url_for('mocks.mock', mock_id=mock_id))
+
     # mock response
     @expose('/<mock_id>/method/update', methods=[HTTPMethod.POST.value])
     def mock_method_update(self, mock_id):

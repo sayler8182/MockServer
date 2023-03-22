@@ -16,7 +16,7 @@ class MockingManager(object):
         self.response_calculator = MockingResponseCalculator()
 
     def response(self, request, path: str):
-        mock = self.mocking_filter.find(method=HTTPMethod[request.method], path=path)
+        mock = self.mocking_filter.find(request=request, method=HTTPMethod[request.method], path=path)
         mock_response = self.response_calculator.calculate(request, mock)
         if mock and mock_response and mock_response.type == MockResponseType.mock_json:
             manager = MockingMockManager(self.flask_app)

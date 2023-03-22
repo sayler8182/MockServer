@@ -1,0 +1,21 @@
+{% if mock.request %}
+<form method="post" action="{{ url_for('mocks.mock_request_rules_new', mock_id=mock.id) }}">
+    <div class="form-group form-inline">
+        <div class="input-group">
+            <select id="mocks_definition_request_form_input_request_rules_type" name="mocks_definition_request_form_input_request_rules_type"
+                    class="custom-select btn btn-primary">
+                {% for type in configuration.request_supported_rules %}
+                <option class="text-left" value="{{ type.value }}">
+                    {{ type.description }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="ml-2">
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Add rule">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</form>
+{% endif %}

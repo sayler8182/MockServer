@@ -23,6 +23,18 @@
             });
         });
 
+        $('.mocks_definition_request_rules_save').click(function() {
+            let mock_id = $(this).data('mock-id')
+            let rule_id = $(this).data('rule-id')
+            console.log(`#request_rule_${mock_id}_${rule_id}_key`)
+            let key = $(`#request_rule_${mock_id}_${rule_id}_key`).val()
+            let value = $(`#request_rule_${mock_id}_${rule_id}_value`).val()
+            let params = { "key": key, "value": value }
+            $.post(`/admin/mocks/${mock_id}/request/rules/${rule_id}/update`, params, function(response) {
+                window.location = response
+            })
+        });
+
         $('#mocks_definition_response_form_force').change(function () {
             let mock_id = $(this).data('mock-id')
             let response_id = $(this).data('response-id')

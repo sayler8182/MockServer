@@ -66,6 +66,11 @@ class MocksRouter(object):
                     type: string
                   path:
                     type: string
+                  rules:
+                    type: array
+                    required: true
+                    items:
+                      $ref: '#/definitions/RequestRule'
               MockResponse:
                 type: object
                 properties:
@@ -136,6 +141,21 @@ class MocksRouter(object):
                   response_id:
                     type: string
                   name:
+                    type: string
+                  value:
+                    type: string
+              RequestRule:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  mock_id:
+                    type: string
+                  type:
+                    type: string
+                    enum: [match_header, match_parameter]
+                  key:
                     type: string
                   value:
                     type: string
@@ -615,6 +635,122 @@ class MocksRouter(object):
             method = content.get('method', None)
             path = content.get('path', None)
             mocks_controller.mock_request_update(mock_id, method, path)
+            return response_dumps_object(self.flask_app)
+
+        # mock request
+        @self.flask_app.route('/api/mocks/<mock_id>/request/rules/new', methods=[HTTPMethod.POST.value])
+        def post_mock_request_rules_new(mock_id: str):
+            """Add mock request rule
+            ---
+            tags: [mocks]
+            parameters:
+            - name: mock_id
+              in: path
+              required: true
+              schema:
+                type: string
+            - name: body
+              in: body
+              required: true
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    required: true
+                    enum: [match_header, match_parameter]
+            responses:
+              200:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/RequestRule'
+              404:
+                type: object
+                required: true
+                schema:
+                  $ref: '#/definitions/Error'
+            """
+            content = request.get_json(force=False)
+            type = content.get('type', None)
+            rule = mocks_controller.mock_request_rules_new(mock_id, type)
+            return response_dumps_object(self.flask_app, 200, rule)
+
+        @self.flask_app.route('/api/mocks/<mock_id>/request/rules/<rule_id>', methods=[HTTPMethod.DELETE.value])
+        def delete_mock_request_rule(mock_id: str, rule_id: str):
+            """Delete mock request rule
+             ---
+             tags: [mocks]
+             parameters:
+             - name: mock_id
+               in: path
+               required: true
+               schema:
+                 type: string
+             - name: rule_id
+               in: path
+               required: true
+               schema:
+                 type: string
+             responses:
+               200:
+                 type: object
+                 required: true
+                 schema:
+                     $ref: '#/definitions/Empty'
+               404:
+                 type: object
+                 required: true
+                 schema:
+                   $ref: '#/definitions/Error'
+             """
+            mocks_controller.mock_request_rules_remove(mock_id, rule_id)
+            return response_dumps_object(self.flask_app)
+
+        @self.flask_app.route('/api/mocks/<mock_id>/request/rules/<rule_id>/update', methods=[HTTPMethod.POST.value])
+        def post_mock_request_rule_update(mock_id: str, rule_id: str):
+            """Update mock request rule
+             ---
+             tags: [mocks]
+             parameters:
+             - name: mock_id
+               in: path
+               required: true
+               schema:
+                 type: string
+             - name: rule_id
+               in: path
+               required: true
+               schema:
+                 type: string
+             - name: body
+               in: body
+               required: true
+               schema:
+                 type: object
+                 properties:
+                   key:
+                     type: string
+                     required: true
+                   value:
+                     type: string
+                     required: true
+             responses:
+               200:
+                 type: object
+                 required: true
+                 schema:
+                     $ref: '#/definitions/Empty'
+               404:
+                 type: object
+                 required: true
+                 schema:
+                   $ref: '#/definitions/Error'
+             """
+            content = request.get_json(force=False)
+            key = content.get('key', None)
+            value = content.get('value', None)
+            mocks_controller.mock_request_rules_update(mock_id, rule_id, key, value)
             return response_dumps_object(self.flask_app)
 
         # mock response
@@ -1431,7 +1567,7 @@ class MocksRouter(object):
 
         @self.flask_app.route('/api/mocks/<mock_id>/<response_id>/interceptors/new', methods=[HTTPMethod.POST.value])
         def post_mock_response_interceptors_new(mock_id: str, response_id: str):
-            """Delete mock response interceptor
+            """Add mock response interceptor
              ---
              tags: [mocks]
              parameters:

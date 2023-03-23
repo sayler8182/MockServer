@@ -150,6 +150,50 @@
 					"response": []
 				},
 				{
+					"name": "api/settings/proxy/<proxy_id>/templating/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/ab76a89cfe5649d2ad961629e2a8d68f/templating/enable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"ab76a89cfe5649d2ad961629e2a8d68f",
+								"templating",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/templating/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/ab76a89cfe5649d2ad961629e2a8d68f/templating/disable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"ab76a89cfe5649d2ad961629e2a8d68f",
+								"templating",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "api/settings/proxy/<proxy_id>/update",
 					"request": {
 						"method": "POST",
@@ -169,6 +213,87 @@
 								"proxy",
 								"629e2e515da845078d27dcc29128dcd7",
 								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/delay/mode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"delay_mode\": \"random\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/ab76a89cfe5649d2ad961629e2a8d68f/update/delay/mode",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"ab76a89cfe5649d2ad961629e2a8d68f",
+								"update",
+								"delay",
+								"mode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/delay/static",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"delay\": \"200\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/ab76a89cfe5649d2ad961629e2a8d68f/update/delay/static",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"ab76a89cfe5649d2ad961629e2a8d68f",
+								"update",
+								"delay",
+								"static"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/settings/proxy/<proxy_id>/delay/random",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"delay_from\": \"300\",\n    \"delay_to\": \"400\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/settings/proxy/ab76a89cfe5649d2ad961629e2a8d68f/update/delay/random",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"proxy",
+								"ab76a89cfe5649d2ad961629e2a8d68f",
+								"update",
+								"delay",
+								"random"
 							]
 						}
 					},
@@ -306,19 +431,59 @@
 					"response": []
 				},
 				{
-					"name": "api/mocks/<mock_id>",
+					"name": "api/mocks/conflicts",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/mocks/75888b16baa549bf842de1b10f8e4abe",
+							"raw": "{{BASE_URL}}/api/mocks/conflicts",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
 								"mocks",
-								"75888b16baa549bf842de1b10f8e4abe"
+								"conflicts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/d8e68d75957440c0ad4497abee883cce",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"d8e68d75957440c0ad4497abee883cce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/logs/count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/logs/count",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"logs",
+								"count"
 							]
 						}
 					},
@@ -330,15 +495,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/mocks/75888b16baa549bf842de1b10f8e4abe/c776ca0bf6bb463ba37fd00059f4820d",
+							"raw": "{{BASE_URL}}/api/mocks/d8e68d75957440c0ad4497abee883cce/0d0c7d615c8f43968f1db1b1971ebed7",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
 								"mocks",
-								"75888b16baa549bf842de1b10f8e4abe",
-								"c776ca0bf6bb463ba37fd00059f4820d"
+								"d8e68d75957440c0ad4497abee883cce",
+								"0d0c7d615c8f43968f1db1b1971ebed7"
 							]
 						}
 					},
@@ -406,14 +571,14 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/enable",
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/enable",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
 								"mocks",
-								"d45062c905844caca9f1248962623d63",
+								"4cce30b3679e4eaea63016beba422aac",
 								"enable"
 							]
 						}
@@ -450,14 +615,14 @@
 							"raw": "{\n    \"name\": \"Some name\"\n}"
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/update",
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/update",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
 								"mocks",
-								"d45062c905844caca9f1248962623d63",
+								"4cce30b3679e4eaea63016beba422aac",
 								"update"
 							]
 						}
@@ -474,16 +639,101 @@
 							"raw": "{\n    \"method\": \"PUT\",\n    \"path\": \"/some/path\"\n}"
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/request/update",
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/request/update",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
 								"mocks",
-								"d45062c905844caca9f1248962623d63",
+								"4cce30b3679e4eaea63016beba422aac",
 								"request",
 								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/request/rules/<rule_id>/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"Some Key\",\n    \"value\": \"Some value\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/1c5e39df4cc44da48963e736309175f9/request/rules/a3f9af15a2bf4a9d9b2f2997f85c59eb/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"1c5e39df4cc44da48963e736309175f9",
+								"request",
+								"rules",
+								"a3f9af15a2bf4a9d9b2f2997f85c59eb",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/request/rules/<rule_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/1c5e39df4cc44da48963e736309175f9/request/rules/7234cfa9d050403cb9d4d47c7cce82d7",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"1c5e39df4cc44da48963e736309175f9",
+								"request",
+								"rules",
+								"7234cfa9d050403cb9d4d47c7cce82d7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/request/rules/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"match_parameter\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/1c5e39df4cc44da48963e736309175f9/request/rules/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"1c5e39df4cc44da48963e736309175f9",
+								"request",
+								"rules",
+								"new"
 							]
 						}
 					},
@@ -521,7 +771,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"method\": \"sequential\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/new",
@@ -553,6 +803,48 @@
 								"mocks",
 								"d45062c905844caca9f1248962623d63",
 								"c5460f0f935b45d1bbeabbb427377894"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/order_up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/order_up",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"order_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/order_down",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519s/order_down",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519s",
+								"order_down"
 							]
 						}
 					},
@@ -643,6 +935,48 @@
 					"response": []
 				},
 				{
+					"name": "api/mocks/<mock_id>/<response_id>/single_use",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/872aa34ce2464b938987db718af642c3/single_use",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"872aa34ce2464b938987db718af642c3",
+								"single_use"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/not_single_use",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/872aa34ce2464b938987db718af642c3/not_single_use",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"872aa34ce2464b938987db718af642c3",
+								"not_single_use"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "api/mocks/<mock_id>/<response_id>/update",
 					"request": {
 						"method": "POST",
@@ -688,6 +1022,87 @@
 								"840384db59a141fe8676ada5b1a4a16d",
 								"update",
 								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/delay/mode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"delay_mode\": \"random\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/update/delay/mode",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"update",
+								"delay",
+								"mode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/delay/static",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"delay\": \"200\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/update/delay/static",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"update",
+								"delay",
+								"static"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/delay/random",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"delay_from\": \"300\",\n    \"delay_to\": \"400\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/update/delay/random",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"update",
+								"delay",
+								"random"
 							]
 						}
 					},
@@ -768,7 +1183,7 @@
 					"response": []
 				},
 				{
-					"name": "api/mocks/<mock_id>/<response_id>/update/body",
+					"name": "api/mocks/<mock_id>/<response_id>/update/body/json",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -777,7 +1192,7 @@
 							"raw": "{\n    \"body\": \"{}\"\n}"
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/update/body",
+							"raw": "{{BASE_URL}}/api/mocks/d45062c905844caca9f1248962623d63/840384db59a141fe8676ada5b1a4a16d/update/body/json",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -787,7 +1202,88 @@
 								"d45062c905844caca9f1248962623d63",
 								"840384db59a141fe8676ada5b1a4a16d",
 								"update",
-								"body"
+								"body",
+								"json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/body/path",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body_path\": \"../../docs/resources/panel_mocks.png\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/update/body/path",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"update",
+								"body",
+								"path"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/interceptors/<interceptor_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/interceptors/fc5fb5258bae484288648083e9e887e8",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"interceptors",
+								"fc5fb5258bae484288648083e9e887e8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/mocks/<mock_id>/<response_id>/interceptors/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Some name\",\n    \"type\": \"custom\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/interceptors/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"interceptors",
+								"new"
 							]
 						}
 					},
@@ -823,7 +1319,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"key\": \"ios_record\",\n    \"file_path\": \"{{HOME}}/Documents/MockServer/docs/example/simulator_recording.sh\"\n}",
+							"raw": "{\n    \"key\": \"ios_record\",\n    \"file_path\": \"{{DOCS_PATH}}/example/simulator_recording.sh\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -851,7 +1347,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"key\": \"ios_record\"\n}"
+							"raw": "{\n    \"key\": \"ios_record\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/api/process/stop",
@@ -874,7 +1375,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"key\": \"ios_record\",\n    \"file_path\": \"{{HOME}}/Documents/MockServer/docs/example/simulator_recording_compress.sh\"\n}",
+							"raw": "{\n    \"file_path\": \"{{HOME}}/Documents/MockServer/docs/example/simulator_recording_compress.sh\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -898,16 +1399,599 @@
 			]
 		},
 		{
+			"name": "Environment",
+			"item": [
+				{
+					"name": "api/environment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/environment",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"environment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/environment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/environment",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"environment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/environment/<item_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/environment/c7c7d2468f2f418289ed0b4eeb979a79",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"environment",
+								"c7c7d2468f2f418289ed0b4eeb979a79"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/environment/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SOME_NAME\",\n    \"value\": \"SOME_VALUE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/environment/new",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"environment",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/environment/<item_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/environment/eef0d4ab781a4d8baa4de4c654797122",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"environment",
+								"eef0d4ab781a4d8baa4de4c654797122"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/environment/<item_id>/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SOME_NAME_NEW\",\n    \"value\": \"SOME_VALUE_NEW\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/environment/eef0d4ab781a4d8baa4de4c654797122/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"environment",
+								"eef0d4ab781a4d8baa4de4c654797122",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Interceptors",
+			"item": [
+				{
+					"name": "api/interceptors/<mock_id>/<response_id>/interceptors/<interceptor_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/interceptors/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/interceptors/39e3aa17fae74d7da9f68708e3e23dd6",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"interceptors",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"interceptors",
+								"39e3aa17fae74d7da9f68708e3e23dd6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/interceptors/<type>/configuration/example",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/interceptors/value_replace/configuration/example",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"interceptors",
+								"value_replace",
+								"configuration",
+								"example"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/interceptors/<type>/is_configurable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/interceptors/value_replace/is_configurable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"interceptors",
+								"value_replace",
+								"is_configurable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/interceptors/<mock_id>/<response_id>/interceptors/<interceptor_id>/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Some new name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/interceptors/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/interceptors/39e3aa17fae74d7da9f68708e3e23dd6/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"interceptors",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"interceptors",
+								"39e3aa17fae74d7da9f68708e3e23dd6",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/interceptors/<mock_id>/<response_id>/interceptors/<interceptor_id>/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Some new name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/interceptors/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/interceptors/39e3aa17fae74d7da9f68708e3e23dd6/enable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"interceptors",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"interceptors",
+								"39e3aa17fae74d7da9f68708e3e23dd6",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/interceptors/<mock_id>/<response_id>/interceptors/<interceptor_id>/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Some new name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/interceptors/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/interceptors/39e3aa17fae74d7da9f68708e3e23dd6/disable",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"interceptors",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"interceptors",
+								"39e3aa17fae74d7da9f68708e3e23dd6",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/interceptors/<mock_id>/<response_id>/interceptors/<interceptor_id>/update/configuration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"file_path\": \"some/absolute/path\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/interceptors/4cce30b3679e4eaea63016beba422aac/2f9dc90bd6d64797be62103b73d3e519/interceptors/39e3aa17fae74d7da9f68708e3e23dd6/update/configuration",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"interceptors",
+								"4cce30b3679e4eaea63016beba422aac",
+								"2f9dc90bd6d64797be62103b73d3e519",
+								"interceptors",
+								"39e3aa17fae74d7da9f68708e3e23dd6",
+								"update",
+								"configuration"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "api/logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/logs",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/logs/<mock_id>/logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/logs/937c1ed053c84d708d713e32dc99ca79/logs",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"937c1ed053c84d708d713e32dc99ca79",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/logs/<log_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/logs/3d963336e03f453cb5c26c72ea5bd4aa",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"3d963336e03f453cb5c26c72ea5bd4aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/logs",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/logs",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/logs/<mock_id>/logs",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/logs/937c1ed053c84d708d713e32dc99ca79/logs",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"937c1ed053c84d708d713e32dc99ca79",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/logs/<log_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/logs/7208424e0a8d42cea2a9f27140b39f37",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"7208424e0a8d42cea2a9f27140b39f37"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Importing / exporting",
+			"item": [
+				{
+					"name": "api/import",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/konrad/Desktop/mocks.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/import",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"import"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/export/mocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/export/mocks",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"export",
+								"mocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/export/mocks/<mock_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/export/mocks/d8e68d75957440c0ad4497abee883cce",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"export",
+								"mocks",
+								"d8e68d75957440c0ad4497abee883cce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/export/environment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/export/environment",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"export",
+								"environment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/export/proxies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/export/proxies",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"export",
+								"proxies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/export/proxies/<proxy_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/export/proxies/ab76a89cfe5649d2ad961629e2a8d68f",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"export",
+								"proxies",
+								"ab76a89cfe5649d2ad961629e2a8d68f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "terminate",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{BASE_URL}}/terminate",
+					"raw": "{{BASE_URL}}/api/terminate",
 					"host": [
 						"{{BASE_URL}}"
 					],
 					"path": [
+						"api",
 						"terminate"
 					]
 				}
@@ -949,6 +2033,11 @@
 		{
 			"key": "HOME",
 			"value": "/Users/konrad",
+			"type": "string"
+		},
+		{
+			"key": "DOCS_PATH",
+			"value": "/Users/konrad/Documents/MockServer/docs",
 			"type": "string"
 		}
 	]

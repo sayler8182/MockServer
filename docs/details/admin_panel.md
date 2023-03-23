@@ -75,6 +75,8 @@ You can modify `host` and `port`, check [Launching the MockServer section](../do
 20. Change mock response order - move up
 21. Remove mock response
 22. Add new mock response
+23. Some elements are not visible on screen
+    - request rules
 
 ## Mock
 

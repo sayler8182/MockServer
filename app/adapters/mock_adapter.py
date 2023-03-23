@@ -109,6 +109,7 @@ class MockAdapter(object):
     def add_mock_request(mock_request: MockRequest, commit: bool = True):
         entity = MockAdapter.mock_request_from_object(mock_request)
         db.session.merge(entity)
+        MockAdapter.add_mock_request_rules(mock_request.rules, commit=False)
         if commit:
             db.session.commit()
 
@@ -122,7 +123,7 @@ class MockAdapter(object):
     @staticmethod
     def add_mock_request_rules(mock_request_rules: [MockRequestRule], commit: bool = True):
         for mock_request_rule in mock_request_rules:
-            MockAdapter.mock_request_rule_from_object(mock_request_rule, False)
+            MockAdapter.add_mock_request_rule(mock_request_rule, False)
         if commit:
             db.session.commit()
 

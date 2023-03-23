@@ -131,6 +131,12 @@ For multiple mocks there are a few method to calculate which response will be mo
 
 You can also force response to be mocked ([see mocks](./details/admin_panel.md)).
 
+# Request rules
+
+Mocks can be matched by header or parameter.
+- match header - request needs to contain header with specific key and value ('*' match any value) 
+- match parameter - request needs to contain url parameter with specific key and value ('*' match any value)
+
 # Response interceptors
 
 Mock and proxy response can be modified in some specific way. You can define an interceptor which transform the response
@@ -184,10 +190,7 @@ specific response, You should disable templating in proxy and use [Templating in
 ## Static variables
 
 Predefined variables or computed properties:
-
-| key  | description                | example                    |
-|------|----------------------------|----------------------------|
-| date | current date in iso format | 2022-10-07T19:38:43.049640 |
+Check `Templating` tab in admin panel.
 
 ## Dynamic variable
 

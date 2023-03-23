@@ -55,8 +55,11 @@ class MockRequest(object):
         method = HTTPMethod[method_string]
         proxy = object.get('proxy', None)
         path = object.get('path', None)
+        rules_list = object.get('rules', None) or []
+        rules = list(map(lambda item: MockRequestRule.mock_request_rule_from_dict(item), rules_list))
         return MockRequest(id=id,
                            mock_id=mock_id,
                            method=method,
                            proxy=proxy,
-                           path=path)
+                           path=path,
+                           rules=rules)

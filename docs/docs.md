@@ -121,6 +121,7 @@ criteria are meet:
 
 - mock is enabled
 - methods are equal
+- rules values are correct
 - full requests paths are equal
 - at least one defined mock is enabled
 
@@ -260,6 +261,7 @@ section.
 - the proxy is correctly set end enabled - pay attention on `/` at the end (the slash depends on Your app configuration)
 - the mock is enabled
 - the mock has proper path and method set
+- the mock has correctly rules set
 - the logs history recognize the request
 - the request call correct host and port
 - the MockServer doesn't catch an error in logs

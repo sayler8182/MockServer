@@ -21,7 +21,8 @@
                 data-target="#panel_rules">
             Rules
         </button>
-        <button id="panel_interceptors_parent" class="btn btn-primary" data-toggle="collapse" data-target="#panel_interceptors">
+        <button id="panel_interceptors_parent" class="btn btn-primary" data-toggle="collapse"
+                data-target="#panel_interceptors">
             Interceptors
         </button>
     </p>
@@ -52,11 +53,16 @@
             <div class="dropdown-divider"></div>
         </div>
         {% endif %}
-        {% if response.type.value in ['mock_file'] %}
+        {% if response.type.value in ['mock_file', 'mock_script'] %}
         <div class="show response_option" id="panel_file">
             <h5>File body</h5>
             <div class="py-3">
+                {% if response.type.value in ['mock_file'] %}
                 {% include "admin/mocks/mocks_definition_response_body_file.html" %}
+                {% endif %}
+                {% if response.type.value in ['mock_script'] %}
+                {% include "admin/mocks/mocks_definition_response_body_script.html" %}
+                {% endif %}
             </div>
             <div class="dropdown-divider"></div>
         </div>

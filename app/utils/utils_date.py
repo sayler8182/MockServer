@@ -26,15 +26,16 @@ def add_component(date: datetime, component: tuple, shift_direction: int):
 
 def get_components(shift: str) -> dict:
     result = {}
-    regex = r"([0-9]+)([a-z]+)"
-    components = shift.split(" ")
-    for component in components:
-        match = re.match(regex, component)
-        if match:
-            groups = match.groups()
-            if len(groups) == 2:
-                key = groups[1]
-                value = to_int(groups[0])
-                if key and value:
-                    result[key] = value
+    if shift:
+        regex = r"([0-9]+)([a-z]+)"
+        components = shift.split(" ")
+        for component in components:
+            match = re.match(regex, component)
+            if match:
+                groups = match.groups()
+                if len(groups) == 2:
+                    key = groups[1]
+                    value = to_int(groups[0])
+                    if key and value:
+                        result[key] = value
     return result

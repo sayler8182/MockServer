@@ -1237,6 +1237,38 @@
 					"response": []
 				},
 				{
+					"name": "api/mocks/<mock_id>/<response_id>/update/body/script",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body_script\": \"../../docs/example/custom_response.py\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/mocks/fbe9617ce7514939b606abc8588ca1b6/a560de703c7e414fa9ddb64f075594a5/update/body/script",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								"fbe9617ce7514939b606abc8588ca1b6",
+								"a560de703c7e414fa9ddb64f075594a5",
+								"update",
+								"body",
+								"script"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "api/mocks/<mock_id>/<response_id>/interceptors/<interceptor_id>",
 					"request": {
 						"method": "DELETE",

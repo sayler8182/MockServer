@@ -321,6 +321,24 @@ def mock_response_update_body_path_import(mock_id: str, response_id: str, file):
     MockAdapter.set_mock_response_body_path(mock_id, response_id, path)
 
 
+def mock_response_update_body_script(mock_id: str, response_id: str, body_script: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    MockAdapter.set_mock_response_body_script(mock_id, response_id, body_script)
+
+
+def mock_response_update_body_script_open(mock_id: str, response_id: str, body_script: str):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    open_directory(body_script)
+
+
+def mock_response_update_body_script_import(mock_id: str, response_id: str, file):
+    validate_not_empty(mock_id, 'Mock should be provided')
+    validate_not_empty(response_id, 'Mock response should be provided')
+    path = ImporterManager.upload_file(file)
+    MockAdapter.set_mock_response_body_script(mock_id, response_id, path)
+
 # mock response interceptors
 def mock_response_interceptors_remove(mock_id: str, response_id: str, interceptor_id: str):
     validate_not_empty(mock_id, 'Mock should be provided')

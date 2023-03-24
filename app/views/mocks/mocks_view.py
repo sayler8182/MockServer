@@ -332,6 +332,32 @@ class View(BaseView):
         )
         return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
 
+    @expose('/<mock_id>/<response_id>/update/body/script', methods=[HTTPMethod.POST.value])
+    def mock_response_update_body_script(self, mock_id, response_id):
+        body_script = request.form.get("mocks_definition_response_form_body_script")
+        call(
+            lambda: mocks_controller.mock_response_update_body_script(mock_id, response_id, body_script),
+            lambda: toast('Mock has been updated', category='success'))
+        return redirect(url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id))
+
+    @expose('/<mock_id>/<response_id>/update/body/script/open', methods=[HTTPMethod.POST.value])
+    def mock_response_update_body_script_open(self, mock_id, response_id):
+        body_script = request.form.get("mocks_definition_response_form_body_script")
+        call(
+            lambda: mocks_controller.mock_response_update_body_script_open(mock_id, response_id, body_script),
+            lambda: toast('File have been imported', category='success')
+        )
+        return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
+
+    @expose('/<mock_id>/<response_id>/update/body/script/import', methods=[HTTPMethod.POST.value])
+    def mock_response_update_body_script_import(self, mock_id, response_id):
+        file = request.files.get('mocks_definition_response_form_file_body_script_import')
+        call(
+            lambda: mocks_controller.mock_response_update_body_script_import(mock_id, response_id, file),
+            lambda: toast('File have been imported', category='success')
+        )
+        return url_for('mocks.mock_response', mock_id=mock_id, response_id=response_id)
+
     # mock response interceptors
     @expose('/<mock_id>/<response_id>/interceptors/<interceptor_id>/remove', methods=[HTTPMethod.POST.value])
     def mock_response_interceptors_remove(self, mock_id, response_id, interceptor_id):

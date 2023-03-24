@@ -1,4 +1,5 @@
 import json
+import os
 import re
 
 from app.adapters.environment_adapter import EnvironmentAdapter
@@ -57,7 +58,17 @@ class TemplateManager(object):
 
     def __get_value(self, key: str, environment: dict, separator: str) -> str:
         head, sep, tail = key.partition(separator)
+
         static = get_value_for_static(self, head, tail, separator)
-        if static is None:
-            return environment.get(head, None)
-        return static
+        if static is not None:
+            return static
+
+        dynamic = environment.get(head, None)
+        if dynamic is not None:
+            return dynamic
+
+        system = os.getenv(head)
+        if system is not None:
+            return system
+
+        return None

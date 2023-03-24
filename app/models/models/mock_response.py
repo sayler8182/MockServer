@@ -20,6 +20,7 @@ class MockResponse(object):
                  delay: int = None,
                  body: str = None,
                  body_path: str = None,
+                 body_script: str = None,
                  order: int = None,
                  response_headers: [RequestHeader] = None,
                  response_interceptors: [MockResponseInterceptor] = None):
@@ -36,6 +37,7 @@ class MockResponse(object):
         self.delay = delay
         self.body = body
         self.body_path = body_path
+        self.body_script = body_script
         self.order = order
         self.response_headers = response_headers
         self.response_interceptors = response_interceptors
@@ -56,6 +58,7 @@ class MockResponse(object):
         return {
             MockResponseType.mock_json: f'Mock - [{self.status}] {self.name or ""}',
             MockResponseType.mock_file: f'Mock - [{self.status}] {self.name or ""}',
+            MockResponseType.mock_script: f'Mock - [{self.status}] {self.name or ""}',
             MockResponseType.proxy: f'Proxy - {self.name or ""}',
         }.get(self.type)
 
@@ -118,6 +121,7 @@ class MockResponse(object):
             'delay': self.delay,
             'body': self.body,
             'body_path': self.body_path,
+            'body_script': self.body_script,
             'order': self.order,
             'response_headers': get_dict(self.response_headers),
             'response_interceptors': get_dict(self.response_interceptors)
@@ -143,6 +147,7 @@ class MockResponse(object):
         delay = object.get('delay', None)
         body = object.get('body', None)
         body_path = object.get('body_path', None)
+        body_script = object.get('body_script', None)
         order = object.get('order', None)
         response_headers_list = object.get('response_headers', None) or []
         response_headers = list(map(lambda item: RequestHeader.request_header_from_dict(item), response_headers_list))
@@ -162,6 +167,7 @@ class MockResponse(object):
                             delay=delay,
                             body=body,
                             body_path=body_path,
+                            body_script=body_script,
                             order=order,
                             response_headers=response_headers,
                             response_interceptors=response_interceptors)

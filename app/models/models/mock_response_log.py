@@ -95,7 +95,8 @@ class MockResponseLogData(object):
                  delay_to: int = None,
                  delay: int = None,
                  body: str = None,
-                 body_path: str = None):
+                 body_path: str = None,
+                 body_script: str = None):
         self.type = type
         self.mock_name = mock_name
         self.method = method
@@ -111,6 +112,7 @@ class MockResponseLogData(object):
         self.delay = delay
         self.body = body
         self.body_path = body_path
+        self.body_script = body_script
 
     def get_dict(self):
         return {
@@ -129,6 +131,7 @@ class MockResponseLogData(object):
             'delay': self.delay,
             'body': self.__get_body(),
             'body_path': self.body_path,
+            'body_script': self.body_script
         }
 
     @staticmethod
@@ -155,6 +158,7 @@ class MockResponseLogData(object):
         delay = object.get('delay', None)
         body = object.get('body', None)
         body_path = object.get('body_path', None)
+        body_script = object.get('body_script', None)
         return MockResponseLogData(type=type,
                                    mock_name=mock_name,
                                    method=method,
@@ -169,7 +173,8 @@ class MockResponseLogData(object):
                                    delay_to=delay_to,
                                    delay=delay,
                                    body=body,
-                                   body_path=body_path)
+                                   body_path=body_path,
+                                   body_script=body_script)
 
     @staticmethod
     def encode(data) -> str:

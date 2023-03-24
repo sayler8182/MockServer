@@ -1,6 +1,8 @@
 {% extends 'admin/base/layout.html' %}
 {% block body %}
-<pre>
+<div class="ml-4">
+    <h3><b>VERSION: 2.1.0</b></h3>
+    <pre>
     MockServer is easy and quic way to run mock APIs locally.
     No remote deployment, no account required, free and open-source.
 
@@ -8,5 +10,16 @@
     Integrate third-party APIs quicker, improve your integration tests, speed up your development, etc.
 
     You can find full documentation in ./docs/docs.md file.
-</pre>
+    </pre>
+
+    <h3><b>CHANGELOG</b></h3>
+    <ul>
+        <!-- <b>{{version}}</b> -->
+        <!-- <li>{{description}}</li> -->
+        <b>2.1.0 - migration required</b>
+        <li>Add changelog</li>
+        <li>Possibility to mock response via python script</li>
+        <li>Templating is able to apply system environment variables</li>
+    </ul>
+</div>
 {% endblock %}

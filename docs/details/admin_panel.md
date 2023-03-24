@@ -90,6 +90,7 @@ You can modify `host` and `port`, check [Launching the MockServer section](../do
 6. Response type
     - mock json - returns json value
     - mock file - returns file stream from path
+    - mock script - returns result of executed script from path, see [Example response script](../example/custom_response.py)
     - proxy - proxy request
 7. Delay mode - response delay or settings delay if not set, see [Settings section](#settings)
 8. Response tabs
@@ -106,7 +107,7 @@ You can modify `host` and `port`, check [Launching the MockServer section](../do
 ### The configuration for mock file response
 
 ![panel mocks](../resources/panel_mock_file.png)
-
+Notice: Similar screen for `mock file` and `mock script` response type
 1. Path to file - absolute or relative to `MOCK_SERVER_RESOURCES` or `/app/static/` path see [Env section](../docs.md)
 2. Show directory - may not work on every machine
 3. Upload file
@@ -149,3 +150,7 @@ modified by API calls. See [Templating section](../docs.md), [Interceptors secti
 7. Add / save environment variable
 8. Edit environment variable
 9. Remove environment variable
+
+# Templating
+
+**TBD**

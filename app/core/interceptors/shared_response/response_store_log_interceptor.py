@@ -39,6 +39,7 @@ class ResponseStoreLogInterceptor(object):
             value = {
                 MockResponseType.mock_json: lambda: self.__log_data_for_mock_json(proxy, response, mock, mock_response),
                 MockResponseType.mock_file: lambda: self.__log_data_for_mock_file(proxy, response, mock, mock_response),
+                MockResponseType.mock_script: lambda: self.__log_data_for_mock_script(proxy, response, mock, mock_response),
                 MockResponseType.proxy: lambda: self.__log_data_for_proxy(proxy, response, mock, mock_response)
             }.get(mock_response.type)
             return value()
@@ -61,7 +62,8 @@ class ResponseStoreLogInterceptor(object):
                                    delay_to=mock_response.delay_to,
                                    delay=mock_response.delay,
                                    body=body,
-                                   body_path=None)
+                                   body_path=None,
+                                   body_script=None)
 
     def __log_data_for_mock_file(self, proxy: Proxy, response: ProxyResponse, mock: Mock,
                                  mock_response: MockResponse) -> MockResponseLogData:
@@ -80,7 +82,28 @@ class ResponseStoreLogInterceptor(object):
                                    delay_to=mock_response.delay_to,
                                    delay=mock_response.delay,
                                    body=None,
-                                   body_path=body)
+                                   body_path=body,
+                                   body_script=None)
+
+    def __log_data_for_mock_script(self, proxy: Proxy, response: ProxyResponse, mock: Mock,
+                                   mock_response: MockResponse) -> MockResponseLogData:
+        body = response.body
+        return MockResponseLogData(type=ProxyResponseType.file,
+                                   mock_name=mock.description,
+                                   method=mock.request.method,
+                                   proxy=proxy.path,
+                                   path=mock.request.path,
+                                   is_single_use=mock_response.is_single_use,
+                                   response_type=mock_response.type,
+                                   response_name=mock_response.description,
+                                   status_code=mock_response.status,
+                                   delay_mode=mock_response.delay_mode,
+                                   delay_from=mock_response.delay_from,
+                                   delay_to=mock_response.delay_to,
+                                   delay=mock_response.delay,
+                                   body=body,
+                                   body_path=None,
+                                   body_script=None)
 
     def __log_data_for_proxy(self, proxy: Proxy, response: ProxyResponse, mock: Mock,
                              mock_response: MockResponse) -> MockResponseLogData:
@@ -100,7 +123,8 @@ class ResponseStoreLogInterceptor(object):
                                        delay_to=mock_response.delay_to,
                                        delay=mock_response.delay,
                                        body=body,
-                                       body_path=None)
+                                       body_path=None,
+                                       body_script=None)
         return MockResponseLogData(type=ProxyResponseType.proxy,
                                    method=response.request.method,
                                    path=response.request.url)

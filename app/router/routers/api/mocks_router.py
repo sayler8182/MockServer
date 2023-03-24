@@ -334,7 +334,7 @@ class MocksRouter(object):
                 enum: [custom, templating, update_environment, value_replace]
               MockResponseType:
                 type: string
-                enum: [mock_json, mock_file, proxy]
+                enum: [mock_json, mock_file, mock_script, proxy]
               RequestHeaderType:
                 type: string
                 enum: [proxy_request, proxy_response, mock_request, mock_response]
@@ -1526,6 +1526,48 @@ class MocksRouter(object):
             content = request.get_json(force=False)
             body_path = content.get('body_path', None)
             mocks_controller.mock_response_update_body_path(mock_id, response_id, body_path)
+            return response_dumps_object(self.flask_app)
+
+        @self.flask_app.route('/api/mocks/<mock_id>/<response_id>/update/body/script', methods=[HTTPMethod.POST.value])
+        def post_mock_response_update_body_script(mock_id: str, response_id: str):
+            """Update mock response body
+             ---
+             tags: [mocks]
+             parameters:
+             - name: mock_id
+               in: path
+               required: true
+               schema:
+                 type: string
+             - name: response_id
+               in: path
+               required: true
+               schema:
+                 type: string
+             - name: body
+               in: body
+               required: true
+               schema:
+                 type: object
+                 properties:
+                   body_script:
+                     type: string
+                     required: true
+             responses:
+               200:
+                 type: object
+                 required: true
+                 schema:
+                     $ref: '#/definitions/Empty'
+               404:
+                 type: object
+                 required: true
+                 schema:
+                   $ref: '#/definitions/Error'
+             """
+            content = request.get_json(force=False)
+            body_script = content.get('body_script', None)
+            mocks_controller.mock_response_update_body_script(mock_id, response_id, body_script)
             return response_dumps_object(self.flask_app)
 
         @self.flask_app.route('/api/mocks/<mock_id>/<response_id>/interceptors/<interceptor_id>',

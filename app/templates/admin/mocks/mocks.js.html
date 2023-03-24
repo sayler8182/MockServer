@@ -171,5 +171,36 @@
             let data = { "mocks_definition_response_form_body_path": body_path }
             $.post(`/admin/mocks/${mock_id}/${response_id}/update/body/path/open`, data, function (response) { })
         });
+
+        // response body script
+        $('#mocks_definition_response_form_file_body_script_import_picker').click(function () {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            openFileDialog(importPythonAccept, function (event) {
+                if (this.files.length > 0) {
+                    var formData = new FormData();
+                    let extension = this.files[0].name.split('.').pop();
+                    formData.append("mocks_definition_response_form_file_body_script_import", this.files[0], `file.${extension}`);
+                    $.ajax({
+                        url: `/admin/mocks/${mock_id}/${response_id}/update/body/script/import`,
+                        type: `post`,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            window.location = response
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#mocks_definition_response_form_file_body_script_open').click(function () {
+            let mock_id = $(this).data('mock-id')
+            let response_id = $(this).data('response-id')
+            let body_script = $(mocks_definition_response_form_body_script).val()
+            let data = { "mocks_definition_response_form_body_script": body_script }
+            $.post(`/admin/mocks/${mock_id}/${response_id}/update/body/script/open`, data, function (response) { })
+        });
     });
 </script>

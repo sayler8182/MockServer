@@ -65,4 +65,4 @@ class MockingMockManager(object):
                              type=ProxyResponseType.json,
                              status_code=status_code,
                              headers=headers,
-                             body=mock_response.body)
+                             body=body)

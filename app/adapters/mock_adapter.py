@@ -420,6 +420,15 @@ class MockAdapter(object):
             db.session.commit()
 
     @staticmethod
+    def set_mock_response_body_script(mock_id: str, response_id: str, body_script: str, commit: bool = True):
+        response = MockAdapter.get_mock_response(mock_id, response_id)
+        entity = MockAdapter.mock_response_from_object(response)
+        entity.body_script = body_script
+        db.session.merge(entity)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
     def set_mock_response_interceptor(mock_id: str, response_id: str, interceptor_id: str, name: str,
                                       commit: bool = True):
         interceptor = MockAdapter.get_mock_response_interceptor(mock_id, response_id, interceptor_id)
@@ -542,6 +551,7 @@ class MockAdapter(object):
                                   delay=object.delay,
                                   body=object.body,
                                   body_path=object.body_path,
+                                  body_script=object.body_script,
                                   order=object.order)
         return None
 
@@ -564,6 +574,7 @@ class MockAdapter(object):
                                 delay=entity.delay,
                                 body=entity.body,
                                 body_path=entity.body_path,
+                                body_script=entity.body_script,
                                 order=entity.order,
                                 response_headers=response_headers,
                                 response_interceptors=response_interceptors)

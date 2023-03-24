@@ -25,6 +25,5 @@ You can find full documentation [here](./docs/docs.md).
 ## Feature requests
 - random mock rotation
 - mock connection errors
-- python script as response
 - log details UI
 - integration with firebase https://github.com/firebase/quickstart-python

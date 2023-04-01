@@ -28,10 +28,10 @@ class ResponseValueReplaceInterceptor(object):
                         template_manager = TemplateManager(request=request, response=response, mock=mock,
                                                            mock_response=mock_response, interceptor=interceptor)
                         value = template_manager.apply_templating(value)
-                    if value:
-                        data = expression.update_or_create(object, value)
-                    else:
+                    if value is None:
                         data = expression.filter(lambda item: True, object)
+                    else:
+                        data = expression.update_or_create(object, value)
                     new_body = json.dumps(data, separators=(',', ':'))
                     body = new_body.encode()
             response.body = body

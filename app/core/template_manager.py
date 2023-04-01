@@ -25,6 +25,8 @@ class TemplateManager(object):
         self.interceptor = interceptor
 
     def apply_templating(self, string: str) -> str:
+        if string is None:
+            return None
         environment = self.__get_environment()
         return self.__apply(string, environment)
 

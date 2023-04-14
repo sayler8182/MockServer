@@ -1,6 +1,6 @@
 import requests
 import validators
-from werkzeug.datastructures import ImmutableMultiDict
+from werkzeug.datastructures import ImmutableMultiDict, MultiDict
 
 from app.adapters.proxy_adapter import ProxyAdapter
 from app.core.interceptors.response_interceptor import ResponseInterceptor
@@ -64,9 +64,10 @@ class MockingProxyManager(object):
         url = proxy_path + path
         if not validators.url(url):
             return None
+        params = self.__prepare_params(request.args)
         return ProxyRequest(method=HTTPMethod[request.method],
                             url=url,
-                            params=request.args.to_dict(flat=False),
+                            params=params,
                             data=request.get_data().decode(),
                             headers=dict(request.headers),
                             json=request.get_json(silent=True))
@@ -84,3 +85,26 @@ class MockingProxyManager(object):
                              status_code=response.status_code,
                              headers=dict(response.headers),
                              body=response.content)
+    
+    # we need to convert all params to int if possible
+    # because werkzeug.datastructures.MultiDict doesn't support int values
+    # and we need to use it for correct request params
+    def __prepare_params(self, args):
+        params = args.to_dict(flat=False)
+        new_params = MultiDict([])
+        for param in params:
+            # list
+            items = args.getlist(param)
+            if len(items) > 1:
+                value = []
+                for item in items:
+                    try: 
+                        int_item = int(item)
+                        value.append(int_item)
+                    except ValueError:
+                        value.append(item)
+            else:
+                # single
+                value = args.get(param)
+                new_params.add(param, value)
+        return new_params

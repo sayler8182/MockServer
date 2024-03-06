@@ -65,7 +65,8 @@ class ImporterManager(object):
     def import_environment(data: dict):
         object = ImporterManager.__object(data)
         environment = Environment.environment_from_dict(object)
-        for item in environment.items:
+        print(environment)
+        for item in environment.dynamic:
             EnvironmentAdapter.add_environment(item)
 
     @staticmethod

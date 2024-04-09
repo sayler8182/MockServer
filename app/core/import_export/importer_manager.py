@@ -6,6 +6,7 @@ from werkzeug.datastructures import FileStorage
 from app.adapters.environment_adapter import EnvironmentAdapter
 from app.adapters.mock_adapter import MockAdapter
 from app.adapters.proxy_adapter import ProxyAdapter
+from app.adapters.request_header_adapter import RequestHeaderAdapter
 from app.core.import_export.import_export_type import ImportExportType
 from app.models.models.environment import Environment
 from app.models.models.mock import Mock
@@ -54,18 +55,23 @@ class ImporterManager(object):
         for object in objects:
             mock = Mock.mock_from_dict(object)
             MockAdapter.add_mock(mock)
+            for response in mock.responses:
+                for header in response.response_headers:
+                    RequestHeaderAdapter.add_request_header(header)
 
     @staticmethod
     def import_mock(data: dict):
         object = ImporterManager.__object(data)
         mock = Mock.mock_from_dict(object)
         MockAdapter.add_mock(mock)
+        for response in mock.responses:
+            for header in response.response_headers:
+                RequestHeaderAdapter.add_request_header(header)
 
     @staticmethod
     def import_environment(data: dict):
         object = ImporterManager.__object(data)
         environment = Environment.environment_from_dict(object)
-        print(environment)
         for item in environment.dynamic:
             EnvironmentAdapter.add_environment(item)
 
@@ -75,12 +81,20 @@ class ImporterManager(object):
         for object in objects:
             proxy = Proxy.proxy_from_dict(object)
             ProxyAdapter.add_proxy(proxy)
+            for header in proxy.request_headers:
+                RequestHeaderAdapter.add_request_header(header)
+            for header in proxy.response_headers:
+                RequestHeaderAdapter.add_request_header(header)
 
     @staticmethod
     def import_proxy(data: dict):
         object = ImporterManager.__object(data)
         proxy = Proxy.proxy_from_dict(object)
         ProxyAdapter.add_proxy(proxy)
+        for header in proxy.request_headers:
+            RequestHeaderAdapter.add_request_header(header)
+        for header in proxy.response_headers:
+            RequestHeaderAdapter.add_request_header(header)
 
     # utils
     @staticmethod

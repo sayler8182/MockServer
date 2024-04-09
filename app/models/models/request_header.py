@@ -55,7 +55,8 @@ class RequestHeader(object):
             return None
 
         id = object.get('id', None)
-        type = object.get('type', None)
+        type_string = object.get('type', None)
+        type = RequestHeaderType[type_string]
         proxy_id = object.get('proxy_id', None)
         mock_id = object.get('mock_id', None)
         request_id = object.get('request_id', None)

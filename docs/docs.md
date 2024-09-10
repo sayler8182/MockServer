@@ -6,7 +6,7 @@ Integrate third-party APIs quicker, improve your integration tests, speed up you
 
 # Requirements
 
-- python3
+- python 3.12.6
 - tested only on macOS (12.5+)
 
 # Installation

@@ -19,6 +19,8 @@ class ProxyRouter(object):
 
     def __normalize_path(self, path: str) -> str:
         proxy = ProxyAdapter.get_proxy_selected()
+        if not proxy.path:
+            raise RuntimeError("Proxy address not set. See FAQ")
         if proxy.path.endswith('/'):
             return f'{path}'
         return f'/{path}'
